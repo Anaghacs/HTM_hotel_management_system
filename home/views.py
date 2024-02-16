@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def index(request):
-      return render(request,'commons/base.html')
+      return render(request,'commons/index.html')
 
 def signup(request):
       if request.method == "POST":
