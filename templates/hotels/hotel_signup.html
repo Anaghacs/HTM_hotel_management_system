@@ -8,8 +8,16 @@
 <body>
     <h1>Hotel SignUp</h1>  
     <div>
-      <form action="" method="post">
+      <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <input type="text" name="hotel_name" placeholder="Enter your hotel name"><br><br>
+            <input type="text" name="address" placeholder="Enter hotel address"><br><br>
+            <input type="text" name="place" placeholder="Enter place"><br><br>
+            <input type="text" name="phone" placeholder="Enter phone number"><br><br>
+            <input type="email" name="email" placeholder="Email id"><br><br>
+            <label>Upload Photo</label>
+            <input type="file" name="photo"><br><br>
+            <input type="submit" value="SignUp">
       </form>
     </div>
 </body>
