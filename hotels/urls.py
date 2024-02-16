@@ -1,0 +1,8 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # Add more URL patterns as needed
+#     path('', views.index, name='index'),
+    path('hotel_signup',views.hotel_signup, name='hotel_signup'),
+]
