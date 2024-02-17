@@ -22,9 +22,7 @@ def signup(request):
             return redirect('logins')
       return render(request,'commons/signup.html')
 
-# def hotel_signup(request):
 
-#       return render(request,'commons/hotel_signup.html')
 
 def logins(request):
       return render(request,'commons/logins.html')
