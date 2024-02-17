@@ -10,4 +10,6 @@ urlpatterns = [
     path('admin_home',views.admin_home, name='admin_home'),
     path('admin_view_hotels',views.admin_view_hotels, name='admin_view_hotels'),
     path('admin_view_users',views.admin_view_users, name='admin_view_users'),
+    path('approve/<int:id>/',views.approve, name='approve'),
+
 ]

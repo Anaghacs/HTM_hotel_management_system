@@ -110,7 +110,12 @@
                         <img src="{{i.photo.url}}" alt="hotel_photos" style="height: 49px; width: 49px;">
                       </td>
                       <td>
-                        <button>approve</button>
+                        {% if not hotels.approve %}
+                        <a href="approve/{{ i.id }}">
+                              <button>approve</button>
+                        </a>
+                        {% endif %}
+
                       </td>
                       <td>
                         <button>block</button>

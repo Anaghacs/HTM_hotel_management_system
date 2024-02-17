@@ -42,8 +42,9 @@ def logins(request):
                         return redirect(admin_home)
                   
                   elif user.is_staff:
-                        # return redirect(user_home)
-                        return render(request,'users/user_home.html')
+                        return render(request,'users.user_home.html')
+                  # else:
+                  #       return render(request,'hotels.hotel_home.html')
                   
       return render(request,'commons/logins.html')
 
@@ -57,3 +58,10 @@ def admin_view_hotels(request):
 def admin_view_users(request):
       users = User.objects.filter(is_superuser=False)
       return render(request,'commons/admin_view_users.html', { 'users' : users })
+
+def approve(request,id):
+      hotels = Hotels.objects.get(id = id)
+      print("======================================",hotels)
+      hotels.approved = True
+      hotels.save()
+      return redirect(admin_view_users)
