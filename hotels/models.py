@@ -10,6 +10,7 @@ class Hotels(models.Model):
       email = models.EmailField(max_length = 20)
       phone = models.CharField(max_length = 12)
       photo = models.ImageField(upload_to = 'media', blank = True, null = True)
+      approved = models.BooleanField(default=False)
       
       #display hotelname
       def __str__(self):

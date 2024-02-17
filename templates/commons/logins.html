@@ -1,32 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-{% load static %}
-<link rel="stylesheet" href="{% static 'login.css' %}">
-<body>
-    <div class="login-page">
-        <div class="form">
-
-          <form class="login-form" action="" method="post">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="username" />
-            <input type="password" name="password1" placeholder="password" />
-            <button type="submit" value="submit" >Login</button>
-
-            {% for messages in messages %}
-              <p style="color: red;">{{messages}}</p>
-            {% endfor %}
-
-            <p class="message">Not registered? <a href="/signup">Create an account</a></p>
-          </form>
-        </div>
-      </div>
-</body>
-</html> -->
+<!
 
 {% load static %}
 <!DOCTYPE html>
@@ -82,17 +54,19 @@
                   {% csrf_token %}
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                   </div>
                   
-                  <a href="./index.html" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign In</a>
+                  <button type="submit" value="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" >Login</button>
+
+                  <!-- <a href="logins" >Sign In</a> -->
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">New to Modernize?</p>
-                    <a class="text-primary fw-bold ms-2" href="index.html">Create an account</a>
+                    <p class="fs-4 mb-0 fw-bold">New to create an account?</p>
+                    <a class="text-primary fw-bold ms-2" href="">Create an account</a>
                   </div>
                 </form>
               </div>

@@ -1,0 +1,134 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modernize Free</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'assets/images/logos/favicon.png' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/styles.min.css' %}" />
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <ul id="sidebarnav">
+                  <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">Home</span>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-layout-dashboard"></i>
+                      </span>
+                      <span class="hide-menu">Dashboard</span>
+                    </a>
+                  </li>
+                
+                  <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">AUTH</span>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="admin_view_hotels" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-home">Hotels</i>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link" href="admin_view_users" aria-expanded="false">
+                      <span>
+                        <i class="ti ti-users">Users</i>
+                      </span>
+                    </a>
+                  </li>
+                  
+          </ul>
+          
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h1 style="text-align: center;">Hotel details</h1>
+
+            <table class="table table-dark table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Hotel Name</th>
+                      <th scope="col">Address</th>
+                      <th scope="col">Place</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Pictures</th>
+                      <th colspan="2" >Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for i in hotels %}
+                    <tr>
+                      <td>{{i.hotel_name}}</td>
+                      <td>{{i.address}}</td>
+                      <td>{{i.place}}</td>
+                      <td>{{i.phone}}</td>
+                      <td>{{i.email}}</td>
+                      <td>
+                        <img src="{{i.photo.url}}" alt="hotel_photos" style="height: 49px; width: 49px;">
+                      </td>
+                      <td>
+                        <button>approve</button>
+                      </td>
+                      <td>
+                        <button>block</button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/sidebarmenu.js' %}"></script>
+  <script src="{% static 'assets/js/app.min.js' %}"></script>
+  <script src="{% static 'assets/libs/simplebar/dist/simplebar.js' %}"></script>
+</body>
+
+</html>

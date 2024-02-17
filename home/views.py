@@ -1,5 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from hotels.models import Hotels
 
 # Create your views here.
 
@@ -19,9 +22,38 @@ def signup(request):
             my_user.first_name = first_name
             my_user.last_name = last_name
             my_user.save()
-            return redirect('login')
+            return redirect('logins')
       return render(request,'commons/signup.html')
 
 def logins(request):
-      
+      if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+
+            user = authenticate(username = username, password = password)
+
+            print("+++++++++++++============",user)
+
+            if user is not None:
+                  auth_login(request, user)
+
+                  if user.is_superuser:
+                        request.session['username'] = username
+                        return redirect(admin_home)
+                  
+                  elif user.is_staff:
+                        # return redirect(user_home)
+                        return render(request,'users/user_home.html')
+                  
       return render(request,'commons/logins.html')
+
+def admin_home(request):
+      return render(request, 'commons/sample-page.html')
+
+def admin_view_hotels(request):
+      hotels = Hotels.objects.all()
+      return render(request,'commons/admin_view_hotels.html', { 'hotels' : hotels })
+
+def admin_view_users(request):
+      users = User.objects.filter(is_superuser=False)
+      return render(request,'commons/admin_view_users.html', { 'users' : users })
