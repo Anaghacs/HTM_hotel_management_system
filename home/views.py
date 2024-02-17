@@ -19,7 +19,7 @@ def signup(request):
             my_user.first_name = first_name
             my_user.last_name = last_name
             my_user.save()
-            return redirect('logins')
+            return redirect('login')
       return render(request,'commons/signup.html')
 
 
