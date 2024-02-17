@@ -22,7 +22,6 @@ def signup(request):
             return redirect('login')
       return render(request,'commons/signup.html')
 
-
-
 def logins(request):
+      
       return render(request,'commons/logins.html')

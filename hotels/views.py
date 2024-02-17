@@ -19,7 +19,7 @@ def hotel_signup(request):
             #create hotel model and insert the data
             hotels = Hotels.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, email = email, photo = photo)
             hotels.save()
-            return redirect('hotel_home')
+            return redirect('logins')
       return render(request,'hotels/hotel_signup.html')
 
 def hotel_home(request):
