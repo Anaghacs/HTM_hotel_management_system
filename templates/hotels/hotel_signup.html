@@ -61,6 +61,12 @@
                         <div class="agileits-top">
                               <form action="" method="post" enctype="multipart/form-data" >
                                     {% csrf_token %}
+
+                                    <!-- print the validation msgs -->
+                                    {% for messages in messages %}
+					                            <p style="color: red;">{{messages}}</p>
+				                            {% endfor %}<br>
+
                                     <input type="text" name="hotel_name" placeholder="Enter your hotel name"><br><br>
                                     <input type="text" name="address" placeholder="Enter hotel address"><br><br>
                                     <input type="text" name="place" placeholder="Enter place"><br><br>
