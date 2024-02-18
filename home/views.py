@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from hotels.models import Hotels
+from django.contrib.auth import logout
+from users.views import user_home
 
 # Create your views here.
 
@@ -32,7 +34,7 @@ def logins(request):
 
             user = authenticate(username = username, password = password)
 
-            print("+++++++++++++============",user)
+            print("+++++++++++++============",user.__dict__)
 
             if user is not None:
                   auth_login(request, user)
@@ -41,10 +43,11 @@ def logins(request):
                         request.session['username'] = username
                         return redirect(admin_home)
                   
-                  elif user.is_staff:
-                        return render(request,'users.user_home.html')
-                  # else:
-                  #       return render(request,'hotels.hotel_home.html')
+                  elif user:
+                        return redirect(user_home)
+                  
+                  elif user.approved == True:
+                        return render(request,'hotels.hotel_home.html')
                   
       return render(request,'commons/logins.html')
 
@@ -65,3 +68,7 @@ def approve(request,id):
       hotels.approved = True
       hotels.save()
       return redirect(admin_view_users)
+
+def signout(request):
+    logout(request)
+    return redirect('index')
