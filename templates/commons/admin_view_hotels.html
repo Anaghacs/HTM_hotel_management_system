@@ -106,17 +106,19 @@
                       <td>{{i.place}}</td>
                       <td>{{i.phone}}</td>
                       <td>{{i.email}}</td>
+
                       <td>
-                        <img src="{{i.photo.url}}" alt="hotel_photos" style="height: 49px; width: 49px;">
+                        <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
                       </td>
+
                       <td>
                         {% if not hotels.approve %}
                         <a href="approve/{{ i.id }}">
                               <button>approve</button>
                         </a>
                         {% endif %}
-
                       </td>
+
                       <td>
                         <button>block</button>
                       </td>

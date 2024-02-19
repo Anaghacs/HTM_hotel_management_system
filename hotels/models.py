@@ -11,7 +11,7 @@ class Hotels(models.Model):
       phone = models.CharField(max_length = 12)
       photo = models.ImageField(upload_to = 'media', blank = True, null = True)
 
-      user_name = models.CharField(max_length = 25)
+      user_name = models.CharField(max_length = 25, blank = True, null = True)
       password = models.CharField(max_length=32, blank = True, null = True)
 
       #admin approved field

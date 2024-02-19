@@ -41,7 +41,7 @@ def admin_home(request):
 
 def admin_view_hotels(request):
       hotels = Hotels.objects.all()
-      return render(request,'commons/admin_view_hotels.html', { 'hotels' : hotels })
+      return render(request,'commons/admin_view_hotels.html', {'hotels':hotels})
 
 def admin_view_users(request):
       users = User.objects.filter(is_superuser=False)

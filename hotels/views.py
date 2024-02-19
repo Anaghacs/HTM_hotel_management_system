@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib import messages,auth
 from django.contrib.auth.models import User
 from .models import Hotels
 from django.contrib.auth.hashers import make_password
@@ -18,11 +19,24 @@ def hotel_signup(request):
             #photo file get
             photo = request.FILES.get('photo') 
             print("--------------------------",photo)
-
-            #create hotel model and insert the data
-            hotels = Hotels.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, email = email, photo = photo, username = username, password = password)
-            hotels.save()
-            return redirect('logins')
+            
+            if hotel_name == "" or hotel_name == " ":
+                  messages.info(request,"hotelname is not allowed space and blank space and not allowed special characters")
+                  return redirect(hotel_signup)
+            
+            elif address == "" or address == "":
+                  messages.info(request,"address is not allowed space and blank space and not allowed special characte")
+                  return redirect(hotel_signup)
+            
+            elif place == "" or place == "":
+                  messages.info(request,"place is not allowed space and blank space and special character")
+                  return redirect(hotel_signup)
+            
+            else:
+                  #create hotel model and insert the data
+                  hotels = Hotels.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, email = email, photo = photo, user_name = username, password = password)
+                  hotels.save()
+                  return redirect('logins')
       return render(request,'hotels/hotel_signup.html')
 
 def hotel_home(request):
