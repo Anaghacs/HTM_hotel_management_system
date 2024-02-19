@@ -52,7 +52,7 @@ def approve(request,id):
       print("======================================",hotels)
       hotels.approved = True
       hotels.save()
-      return redirect(admin_view_users)
+      return redirect(admin_view_hotels)
 
 def signout(request):
     logout(request)

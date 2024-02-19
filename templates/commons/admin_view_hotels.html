@@ -113,15 +113,16 @@
 
                       <td>
                         {% if not hotels.approve %}
-                        <a href="approve/{{ i.id }}">
-                              <button>approve</button>
-                        </a>
+                            <a href="approve/{{ i.id }}"><button>approve</button></a>
+
+                        {% else %}
+                          <button>block</button>
                         {% endif %}
                       </td>
 
-                      <td>
+                      <!-- <td>
                         <button>block</button>
-                      </td>
+                      </td> -->
                     </tr>
                     {% endfor %}
                   </tbody>

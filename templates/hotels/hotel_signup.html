@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- {% load static %} -->
-      <link rel="stylesheet" href="{% static 'sign_up.css' %}">
+      <link rel="stylesheet" href="{% static 'common/sign_up.css' %}">
   </head>
   <body>
 
@@ -42,7 +42,6 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="signup" class="nav-link">User SignUp</a></li>
 	          <li class="nav-item"><a href="hotel_signup" class="nav-link">Hotel SignUp</a></li>
 	          <li class="nav-item"><a href="logins" class="nav-link">SignIn</a></li>
@@ -58,7 +57,7 @@
             <div class="main-w3layouts wrapper">
                   <!-- <h1>Creative SignUp Form</h1> -->
                   <div class="main-agileinfo">
-                        <div class="agileits-top">
+                        <div class="agileits-top" style="background-color: rgb(147, 204, 236);">
                               <form action="" method="post" enctype="multipart/form-data" >
                                     {% csrf_token %}
 
@@ -76,9 +75,9 @@
                                     <input type="file" name="photo"><br><br>
                                     <input type="text" name="username" placeholder="Enter your username"><br><br>
                                     <input type="password" name="password1" placeholder="Enter your password"><br><br>
-                                    <input type="submit" value="SignUp">
+                                    <input type="submit" value="SignUp" class="btn btn-primary">
                               </form>
-                              <p>Don't have an Account? <a href="/logins"> Login Now!</a></p>
+                              <p style="color: rgb(72, 109, 97);">Don't have an Account? <a href="/logins"> Login Now!</a></p>
                         </div>
                   </div>	
             </div>
