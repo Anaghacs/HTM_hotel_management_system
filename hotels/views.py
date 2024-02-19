@@ -4,6 +4,29 @@ from django.contrib.auth.models import User
 from .models import Hotels
 from django.contrib.auth.hashers import make_password
 
+def hotel_login(request):
+      if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+
+            user = auth.authenticate(username = username, password = password)
+
+            if user is not None:
+                  auth.login(request,user)
+
+                  if user.approved == True:
+                        return redirect('/')
+                  
+                  else:
+                        messages.error("Your account has been not approved by the admin! Please wait !")
+
+
+            else:
+                  messages.info("No such user! Please signup for the website")
+                  return redirect('user_signup') 
+                  
+
+
 # Create your views here.
 def hotel_signup(request):
       if request.method == "POST":

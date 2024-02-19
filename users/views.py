@@ -5,22 +5,24 @@ from django.contrib import messages,auth
 # Create your views here.
 
 #create login for the users.
-def user_logins(request):
+def users_logins(request):
       if request.method == "POST":
             username = request.POST['username']
             password = request.POST['password']
 
             user = auth.authenticate(username = username, password = password)
 
+            print("+++++++++++++============",user)
+
             if user is not None:
                   auth.login(request, user)
 
                   if user.is_staff == False:
-                        return redirect('/')
+                        return redirect('user_home')
             else:
                   messages.info("No such user! Please signup for the website")
                   return redirect('user_signup')
-      return render(request,'users_logins.html')
+      return render(request,'users/users_logins.html')
 
 #create signup for users.
 def user_signup(request):

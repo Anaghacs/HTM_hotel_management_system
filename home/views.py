@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib import messages,auth
 from django.contrib.auth import login as auth_login
 from hotels.models import Hotels
 from django.contrib.auth import logout
-from users.views import user_home
-
+from users.views import users_logins
+from hotels.views import hotel_login
 # Create your views here.
 
 def index(request):
@@ -19,7 +20,7 @@ def logins(request):
 
             user = authenticate(username = username, password = password)
 
-            print("+++++++++++++============",user.__dict__)
+            print("+++++++++++++============",user)
 
             if user is not None:
                   auth_login(request, user)
@@ -28,12 +29,14 @@ def logins(request):
                         request.session['username'] = username
                         return redirect(admin_home)
                   
-                  elif user:
-                        return redirect(user_home)
+                  elif user.is_staff == False:
+                        return redirect(users_logins)
                   
-                  elif user.approved == True:
-                        return render(request,'hotels.hotel_home.html')
-                  
+                  else:
+                        return redirect(hotel_login)
+
+            else:
+                  messages.info(request,"Username and password is not registered! Please signup first.")      
       return render(request,'commons/logins.html')
 
 def admin_home(request):

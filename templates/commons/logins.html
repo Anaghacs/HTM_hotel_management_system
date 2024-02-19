@@ -65,6 +65,10 @@
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
+
+                {% for messages in messages %}
+					        <p style="color: red;">{{messages}}</p>
+				        {% endfor %}<br>
                 
                 <form  action="" method="post">
                   {% csrf_token %}
