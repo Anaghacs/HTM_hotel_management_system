@@ -12,7 +12,7 @@ def hotel_login(request):
             user = auth.authenticate(username = username, password = password)
 
             if user is not None:
-                  auth.login(request,user)
+                  auth.login(request, user)
 
                   if user.approved == True:
                         return redirect('/')

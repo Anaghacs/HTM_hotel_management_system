@@ -18,23 +18,28 @@ def logins(request):
             username = request.POST['username']
             password = request.POST['password']
 
-            user = authenticate(username = username, password = password)
-
+            user = auth.authenticate(username = username, password = password)
             print("+++++++++++++============",user)
 
             if user is not None:
-                  auth_login(request, user)
+                  auth.login(request, user)
 
                   if user.is_superuser:
-                        request.session['username'] = username
                         return redirect(admin_home)
                   
                   elif user.is_staff == False:
                         return redirect(users_logins)
                   
-                  else:
-                        return redirect(hotel_login)
+                  
 
+                  if user.Hotels.approved == True:
+                        print("=================================",user)
+                        return redirect(hotel_login) 
+                  # elif isinstance(user, Hotels):
+                  #       return redirect(hotel_login)
+
+                  # elif isinstance(user, Hotels.approved == True):
+                  #       return redirect(hotel_login)
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")      
       return render(request,'commons/logins.html')
@@ -43,7 +48,7 @@ def admin_home(request):
       return render(request, 'commons/sample-page.html')
 
 def admin_view_hotels(request):
-      hotels = Hotels.objects.all()
+      hotels = Hotels.objects.filter(approved=False)
       return render(request,'commons/admin_view_hotels.html', {'hotels':hotels})
 
 def admin_view_users(request):
@@ -55,8 +60,19 @@ def approve(request,id):
       print("======================================",hotels)
       hotels.approved = True
       hotels.save()
-      return redirect(admin_view_hotels)
+      print(hotels.__dict__)
+      return render(request,"commons/admin_verify_hotels.html")
+
+def admin_verify_hotels(request):
+      hotels = Hotels.objects.filter(approved = True)
+      return render(request,'commons/admin_verify_hotels.html', { 'hotels' : hotels})
+
+# def signout(request):
+#     logout(request)
+#     return redirect('index')
 
 def signout(request):
-    logout(request)
-    return redirect('index')
+      logout(request)
+      return redirect('index')
+
+
