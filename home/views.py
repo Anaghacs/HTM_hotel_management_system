@@ -31,15 +31,16 @@ def logins(request):
                         return redirect(users_logins)
                   
                   
+                  # if user.Hotels.approved == True:
+                  #       print("=================================",user)
+                  #       return redirect(hotel_login) 
 
-                  if user.Hotels.approved == True:
-                        print("=================================",user)
-                        return redirect(hotel_login) 
                   # elif isinstance(user, Hotels):
                   #       return redirect(hotel_login)
 
-                  # elif isinstance(user, Hotels.approved == True):
-                  #       return redirect(hotel_login)
+                  elif isinstance(user, Hotels.approved == True):
+                        print("================================",user)
+                        return redirect(hotel_login)
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")      
       return render(request,'commons/logins.html')

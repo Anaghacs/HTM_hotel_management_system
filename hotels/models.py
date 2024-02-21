@@ -1,9 +1,15 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
+
+# class Customuser(AbstractUser):
+#       user_type = ((1,"Hotels"),)
+#       user_type = models.CharField(default = 1, choices = user_type, max_length = 10 )
 
 class Hotels(models.Model):
       #Create hotel models
+      # admin = models.OneToOneField(Customuser, on_delete = models.CASCADE, blank = True, null = True)
       hotel_name = models.CharField(max_length = 20)      
       address = models.TextField()
       place = models.CharField(max_length = 25)
