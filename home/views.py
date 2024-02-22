@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib import messages,auth
 from django.contrib.auth import login as auth_login
-from hotels.models import Hotels
+# from hotels.models import Hotels
 from django.contrib.auth import logout
-from users.views import users_logins
+from users.views import user_home
 from hotels.views import hotel_login
 # Create your views here.
 
@@ -28,19 +28,14 @@ def logins(request):
                         return redirect(admin_home)
                   
                   elif user.is_staff == False:
-                        return redirect(users_logins)
+                        print("=================================",user)
+                        return redirect(user_home)
                   
                   
-                  # if user.Hotels.approved == True:
-                  #       print("=================================",user)
-                  #       return redirect(hotel_login) 
+                  else:
+                        print("=================================",user)
+                        return redirect(hotel_login) 
 
-                  # elif isinstance(user, Hotels):
-                  #       return redirect(hotel_login)
-
-                  elif isinstance(user, Hotels.approved == True):
-                        print("================================",user)
-                        return redirect(hotel_login)
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")      
       return render(request,'commons/logins.html')

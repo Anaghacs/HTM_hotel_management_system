@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Hotels
+from django.apps import apps
 
-# Register your models here.
+myadmin_models = apps.get_app_config('hotels').get_models()
 
-admin.site.register(Hotels)
-
+# Register all models in the Django admin
+for model in myadmin_models:
+    admin.site.register(model)

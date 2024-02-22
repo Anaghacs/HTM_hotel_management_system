@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages,auth
 from django.contrib.auth.models import User
-from .models import Hotels
+# from .models import Hotels
 from django.contrib.auth.hashers import make_password
 
 def hotel_login(request):
@@ -10,11 +10,13 @@ def hotel_login(request):
             password = request.POST['password']
 
             user = auth.authenticate(username = username, password = password)
+            print("=============================",user)
+
 
             if user is not None:
                   auth.login(request, user)
 
-                  if user.approved == True:
+                  if user.approved == True:              
                         return redirect('/')
                   
                   else:
@@ -50,6 +52,7 @@ def hotel_signup(request):
             elif address == "" or address == "":
                   messages.info(request,"address is not allowed space and blank space and not allowed special characte")
                   return redirect(hotel_signup)
+            
             
             elif place == "" or place == "":
                   messages.info(request,"place is not allowed space and blank space and special character")

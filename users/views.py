@@ -52,6 +52,7 @@ def user_signup(request):
                         messages.info(request,"email id is already exist! Please try some other email address.")
                         return redirect('user_signup')
                   
+
                   elif username == "" or username == " ":
                         messages.info(request,"Username is not allowed space and blank space.")
                         return redirect('user_signup')
@@ -85,5 +86,6 @@ def user_home(request):
 def user_logout(request):
       auth.logout(request)
       return redirect('/')
+
 
 
