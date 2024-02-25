@@ -87,5 +87,8 @@
 #       auth.logout(request)
 #       return redirect('/')
 
-
+from django.urls import path
+from . import views
+urlpatterns = [
+]
 

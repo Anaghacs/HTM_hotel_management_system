@@ -66,15 +66,20 @@
 					                            <p style="color: red;">{{messages}}</p>
 				                            {% endfor %}<br>
 
-                                    <input type="text" name="hotel_name" placeholder="Enter your hotel name"><br><br>
-                                    <input type="text" name="address" placeholder="Enter hotel address"><br><br>
-                                    <input type="text" name="place" placeholder="Enter place"><br><br>
-                                    <input type="text" name="phone" placeholder="Enter phone number"><br><br>
-                                    <input type="email" name="email" placeholder="Email id"><br><br>
+                                    <input type="text" name="hotel_name" placeholder="Enter your hotel name"><br>
+                                    <input type="text" name="address" placeholder="Enter hotel address"><br>
+                                    <input type="text" name="place" placeholder="Enter place"><br>                                    
+                                    <input type="text" name="phone" placeholder="Enter phone number"><br>
+                                    <input type="email" name="emails" placeholder="Email id"><br>
                                     <label style="color: white;">Upload Photo</label>
-                                    <input type="file" name="photo"><br><br>
-                                    <input type="text" name="username" placeholder="Enter your username"><br><br>
-                                    <input type="password" name="password1" placeholder="Enter your password"><br><br>
+                                    <input type="file" name="photo"><br>
+                                    <input type="text" name="username" placeholder="Enter your username"><br>
+                                    <input type="password" name="password" placeholder="Enter your password"><br>
+                                    <label for="role">Type of User:</label><br>
+                                    <select id="role" name="role">
+                                          <option value="CUSTOMER">Customer</option>
+                                          <option value="HOTEL">Hotel</option>
+                                    </select><br><br>
                                     <input type="submit" value="SignUp" class="btn btn-primary">
                               </form>
                               <p style="color: rgb(72, 109, 97);">Don't have an Account? <a href="/logins"> Login Now!</a></p>
