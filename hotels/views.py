@@ -1,4 +1,4 @@
-# from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect
 from django.contrib import messages,auth
 # from django.contrib.auth.models import User
 from home.models import Hotel,User,Customer
@@ -101,12 +101,16 @@ def hotel_signup(request):
                   return redirect(hotel_signup)
             
             else:
+                  try:
                   #create hotel model and insert the data
-                  if role == "HOTEL":
+                        if role == "HOTEL":
                         # hotels = Hotel.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, emails = emails, photo = photo, user_name = username, password = password, role = role)
-                        customer=Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
-
-                        customer.save()
-
-                        return redirect('logins')
-      return render(request, 'hotels/hotel_signup.html')
+                              customer=Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
+                              customer.save()
+                              error = 'no'
+                        else:
+                              error = 'yes'
+                  except:
+                        error = 'yes'
+      content = {'error':error}
+      return render(request,'hotels/hotel_signup.html',content)

@@ -40,6 +40,19 @@
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
+        {% if error == "no" %}
+        <script>
+              alert('Hotel records save successfullt.');
+              window.location = "{% url 'hotel_login' %}";
+        </script>
+        {% endif %}
+
+        {% if error == "yes" %}
+        <script>
+              alert('Hotel records is not saved! please try again');
+        </script>
+        {% endif %}
+
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="signup" class="nav-link">User SignUp</a></li>
@@ -49,10 +62,11 @@
 	      </div>
 	    </div>
 	  </nav>
+    <!-- style="background-image:url({% static 'images/bg_1.jpg'%});" -->
     <!-- END nav -->
 		<div class="hero">
 	    <section class="home-slider owl-carousel">
-	      <div class="slider-item" style="background-image:url(static/images/bg_1.jpg);">
+	      <div class="slider-item" style="background-image:url('../../static/images/bg_1.jpg');">
 
             <div class="main-w3layouts wrapper">
                   <!-- <h1>Creative SignUp Form</h1> -->
@@ -66,15 +80,15 @@
 					                            <p style="color: red;">{{messages}}</p>
 				                            {% endfor %}<br>
 
-                                    <input type="text" name="hotel_name" placeholder="Enter your hotel name"><br>
-                                    <input type="text" name="address" placeholder="Enter hotel address"><br>
-                                    <input type="text" name="place" placeholder="Enter place"><br>                                    
-                                    <input type="text" name="phone" placeholder="Enter phone number"><br>
-                                    <input type="email" name="emails" placeholder="Email id"><br>
+                                    <input type="text" name="hotel_name" placeholder="Hotel Name "><br>
+                                    <input type="text" name="address" placeholder="Address"><br>
+                                    <input type="text" name="place" placeholder="Place"><br>                                    
+                                    <input type="text" name="phone" placeholder="Phone No"><br>
+                                    <input type="email" name="emails" placeholder="Email"><br>
+                                    <input type="text" name="username" placeholder="Username"><br>
+                                    <input type="password" name="password" placeholder="Password"><br>
                                     <label style="color: white;">Upload Photo</label>
-                                    <input type="file" name="photo"><br>
-                                    <input type="text" name="username" placeholder="Enter your username"><br>
-                                    <input type="password" name="password" placeholder="Enter your password"><br>
+                                    <input type="file" name="photo"><br><br>
                                     <label for="role">Type of User:</label><br>
                                     <select id="role" name="role">
                                           <option value="CUSTOMER">Customer</option>

@@ -30,8 +30,6 @@ class Customer(User):
     base_role = User.Role.CUSTOMER
     address = models.CharField(blank=True, max_length=100)
     place = models.CharField(blank=True, max_length=20)
-    district = models.CharField(blank=True, max_length=20)
-    state = models.CharField(blank=True, max_length=20)
     emails = models.EmailField(max_length=100, unique=True)
     phone = models.CharField(max_length = 12, unique = True)
 
