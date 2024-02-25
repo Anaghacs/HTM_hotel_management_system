@@ -1,5 +1,3 @@
-<!
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -37,16 +35,32 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <!-- <a class="navbar-brand" href="index.html">Harbor<span>lights</span></a>
+	      <a class="navbar-brand" href="index.html">Harbor<span>lights</span></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
-	      </button> -->
+	      </button>
 
-	      <div class="collapse navbar-collapse" id="ftco-nav" >
-	        <ul class="navbar-nav ml-auto" style="width: 600px;">
-	          <li class="nav-item"><a href="user_signup" class="nav-link">User SignUp</a></li>
-	          <li class="nav-item"><a href="hotel_signup" class="nav-link">Hotel SignUp</a></li>
-	          <li class="nav-item"><a href="logins" class="nav-link">SignIn</a></li>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Signup
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="hotel_signup">Hotels</a></li>
+                    <a class="dropdown-item" href="user_signup">Users</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Login
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="admin_login">Admins</a></li>
+                        <a class="dropdown-item" href="#">Hotels</a></li>
+                        <a class="dropdown-item" href="#">Users</a></li>
+                  </ul>
+                </li>
 	        </ul>
 	      </div>
 	    </div>
