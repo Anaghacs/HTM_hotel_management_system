@@ -75,3 +75,4 @@ def hotel_login(request):
 
 def hotel_dashboard(request):
        return render(request,'hotels/hotel_home.html')
+
