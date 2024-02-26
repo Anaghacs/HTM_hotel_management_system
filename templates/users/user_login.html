@@ -57,31 +57,19 @@
             <div class="main-w3layouts wrapper" >
                   <!-- <h1>Creative SignUp Form</h1> -->
                   <div class="main-agileinfo"  >
-                        <div class="agileits-top" style="background-color: rgb(147, 204, 236); ">
+                        <div class="agileits-top" style="background-color: rgb(61, 117, 150); ">
                               <form action="" method="post">
                                     {% csrf_token %}
 
                                     {% for messages in messages %}
-					                            <p style="color: red;">{{messages}}</p>
-				                            {% endfor %}
-                                    <input type="text" name="username" placeholder="Username"> <br>  
-                                    <input type="text" name="first_name" placeholder="First Name"><br>
-                                    <input type="text" name="last_name" placeholder="Last Name"><br>
-                                    <input type="text" name="address" placeholder="Address"><br>
-                                    <input type="text" name="place" placeholder="Place"><br>
-                                    <input type="text" name="phone" placeholder="Phone No"><br>
-                                    <input type="email" name="email" placeholder="Email"><br>
-                                    <input type="password" name="password1" placeholder="Password"><br>
-                                    <input type="password" name="password2" placeholder="Confirm Password"><br>
+					                              <p style="color: red;">{{messages}}</p>
+				                            {% endfor %}<br>
 
-                                    <label for="role">Type of User:</label><br>
-                                    <select id="role" name="role">
-                                          <option value="CUSTOMER">Customer</option>
-                                          <option value="HOTEL">Hotel</option>
-                                    </select>
-                                    <input type="submit" value="SIGNUP" class="btn btn-primary"/>
+                                    <input type="text" name="username" placeholder="Username"/> <br>                                      
+						                        <input type="password" name="password" placeholder="Password"/> <br>                
+                                    <input type="submit" value="LOGIN"  style="background-color: rgb(129, 129, 184); border: none;"/>
                               </form>
-                              <p style="color: rgb(72, 109, 97);">Don't have an Account? <a href="/logins"> Login Now!</a></p><br>
+                              <p style="color: rgb(54, 204, 157);">Don't have an Account? <a href="/logins"> Signup!</a></p><br>
                         </div>
                   </div>	
             </div>

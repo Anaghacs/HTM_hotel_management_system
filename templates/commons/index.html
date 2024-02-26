@@ -54,9 +54,9 @@
 			    Login
 			  </a>
 			  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-				  <a class="dropdown-item" href="admin_login">Admins</a></li>
+				  <a class="dropdown-item" href="{% url 'admin_login' %}">Admins</a></li>
 				  <a class="dropdown-item" href="#">Hotels</a></li>
-				  <a class="dropdown-item" href="#">Users</a></li>
+				  <a class="dropdown-item" href="{% url 'user_login' %}">Users</a></li>
 			  </ul>
 			</li>
 		    </ul>

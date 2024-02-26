@@ -75,11 +75,7 @@ def user_signup(request):
                         return redirect('user_signup')
             
                   else:
-                        # my_user = User.objects.create_user(username,emails,password)
-                        # my_user.first_name = first_name
-                        # my_user.last_name = last_name
-                        # my_user.save()
-
+                   
                         try:
                               if role == "CUSTOMER":
                                     users=Customer.objects.create(username = username, password = password, address = address, place = place, emails = emails, phone = phone, role = role)
@@ -97,8 +93,8 @@ def user_signup(request):
       return render(request,'users/signup.html')
 
 # #login then move user-home page
-# def user_home(request):
-#       return render(request, 'users/users_home.html')
+def user_home(request):
+      return render(request,'users/users_home.html')
 
 # #create user logout
 # def user_logout(request):
@@ -107,3 +103,23 @@ def user_signup(request):
 
 
 
+def user_login(request):
+      print("===============================")
+      if request.method == "POST":
+            print("===============================")
+            username = request.POST['username']
+            password = request.POST['password']
+
+            customer = auth.authenticate(username = username, password = password)
+            
+            print("===============================",username,password)
+            # customer =Customer.objects.get(username = username, password = password)
+            print("+++++++++++++============",customer)
+
+            if customer is not None:
+                  if customer.role == 'CUSTOMER':
+                        auth.login(request,customer)
+                        return redirect(user_home)        
+            else:
+                  messages.info(request,"Username and password is not registered! Please signup first.")  
+      return render(request,'users/user_login.html')
