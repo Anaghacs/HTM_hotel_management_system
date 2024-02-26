@@ -43,15 +43,15 @@
                     <div class="submenu">
                         <!-- <a href="page-products-list.html">Product List</a> -->
                         <a href="{% url 'admin_view_hotel' %}">Hotel List </a>
-                        <a href="page-products-grid-2.html">Approved Hotel List</a>
+                        <a href="{% url 'approve_view_hotels' %}">Approved Hotel List</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                    <a class="menu-link" href=""> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Customers</span>
                     </a>
                     <div class="submenu">
-                        <a href="page-orders-2.html">customers deatils</a>
+                        <a href="{% url 'admin_view_customers' %}">customers deatils</a>
                     </div>
                 </li>
                 <!-- <li class="menu-item has-submenu">

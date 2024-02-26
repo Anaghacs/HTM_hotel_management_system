@@ -47,13 +47,14 @@
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                    <a class="menu-link" href="{% url 'admin_view_customers' %}"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Customers</span>
                     </a>
-                    <div class="submenu">
-                        <a href="{% url 'admin_view_customers' %}">customers deatils</a>
-                    </div>
+                    <!-- <div class="submenu">
+                        <a href="page-orders-2.html">customers deatils</a>
+                    </div> -->
                 </li>
+            
                 <li class="menu-item">
                     <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
                         <span class="text">Reviews</span>
@@ -122,9 +123,10 @@
             
             <div class="card mb-4">
                 <header class="card-header">
-                    <h4 class="card-title">All Hotel Details</h4>
+                    <h4 class="card-title">All Customers Details</h4>
                     <div class="row align-items-center">
-                        <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">    
+                        <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                            
                         </div>
                         <div class="col-md-2 col-6">
                             <input type="date" value="02.05.2021" class="form-control">
@@ -148,33 +150,22 @@
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="align-middle" scope="col">Hotel Name</th>
+                                        <th class="align-middle" scope="col">Username</th>
                                         <th class="align-middle" scope="col">Address</th>
                                         <th class="align-middle" scope="col">Place</th>
                                         <th class="align-middle" scope="col">Email</th>
                                         <th class="align-middle" scope="col">Phone</th>
-                                        <th class="align-middle" scope="col">Photo</th>
-                                        <th class="align-middle" scope="col">Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for i in hotels %}
+                                    {% for i in customers %}
                                     <tr>
-                                        <td>{{i.hotel_name}}</td>
+                                        <td>{{i.username}}</td>
                                         <td>{{i.address}}</td>
                                         <td>{{i.place}}</td>
                                         <td>{{i.emails}}</td>
                                         <td>{{i.phone}}</td>
-                                        <td>
-                                            <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
-                                        </td>
-                                        
-                                        <td>
-                                          {% if not hotels.approved %}
-                                              <a class="btn btn-xs" href="{% url 'approve' i.id %}">Approve Hotel</a>
-                                          {% endif %}
-                                        </td>                                        
                                     </tr>
                                     {% endfor %}      
                                 </tbody>
@@ -182,9 +173,7 @@
                         </div>
                     </div> <!-- table-responsive end// -->
                 </div>
-            </div>
-            
-         
+            </div>   
     </main>
     <script src="{% static 'asset/js/vendors/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'asset/js/vendors/bootstrap.bundle.min.js' %}"></script>

@@ -47,13 +47,14 @@
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                    <a class="menu-link" href="{% url 'admin_view_customers' %}"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Customers</span>
                     </a>
                     <div class="submenu">
-                        <a href="{% url 'admin_view_customers' %}">customers deatils</a>
+                        <a href="page-orders-2.html">customers deatils</a>
                     </div>
                 </li>
+            
                 <li class="menu-item">
                     <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
                         <span class="text">Reviews</span>
@@ -122,9 +123,10 @@
             
             <div class="card mb-4">
                 <header class="card-header">
-                    <h4 class="card-title">All Hotel Details</h4>
+                    <h4 class="card-title">Approved Hotel Details</h4>
                     <div class="row align-items-center">
-                        <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">    
+                        <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                            
                         </div>
                         <div class="col-md-2 col-6">
                             <input type="date" value="02.05.2021" class="form-control">
@@ -154,7 +156,7 @@
                                         <th class="align-middle" scope="col">Email</th>
                                         <th class="align-middle" scope="col">Phone</th>
                                         <th class="align-middle" scope="col">Photo</th>
-                                        <th class="align-middle" scope="col">Action</th>
+                                        <!-- <th class="align-middle" scope="col">Action</th> -->
 
                                     </tr>
                                 </thead>
@@ -170,11 +172,11 @@
                                             <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
                                         </td>
                                         
-                                        <td>
-                                          {% if not hotels.approved %}
-                                              <a class="btn btn-xs" href="{% url 'approve' i.id %}">Approve Hotel</a>
+                                        <!-- <td>
+                                          {% if hotels.approved %}
+                                              <a class="btn btn-xs" href="{% url 'approve' i.id %}">Block</a>
                                           {% endif %}
-                                        </td>                                        
+                                        </td>                                         -->
                                     </tr>
                                     {% endfor %}      
                                 </tbody>

@@ -74,5 +74,12 @@ def hotel_login(request):
       return render(request,'hotels/hotel_login.html')
 
 def hotel_dashboard(request):
-       return render(request,'hotels/hotel_home.html')
+
+      customers = Customer.objects.all()
+
+      return render(request,'hotels/hotel_home.html',{'customers':customers})
+
+def hotel_view_customers(request):
+      customers = Customer.objects.all()
+      return render(request,"admin/admin_view_customers.html", {'customers':customers})
 

@@ -52,8 +52,14 @@ def approve(request,id):
 
       # hotels.is_staff = True
       hotels.save()
-      return render(request,"index.html")
+      return render(request,"admin/admin_view_approved_hotels.html")
 
-# def view_hotels(request):
-#       hotels = Hotel.objects.all()
-#       return render(request, "admin_view_hotels.html",{'hotels':hotels})
+
+def approve_view_hotels(request):
+
+      hotels = Hotel.objects.filter(approved = True)
+      return render(request,"admin/admin_view_approved_hotels.html",{'hotels':hotels})
+
+def admin_view_customers(request):
+      customers = Customer.objects.all()
+      return render(request,"admin/admin_view_customers.html", {'customers':customers})

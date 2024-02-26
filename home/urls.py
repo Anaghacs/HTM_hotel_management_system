@@ -9,6 +9,6 @@ urlpatterns = [
     path('Admin/Home/',views.admin_home, name ='admin_home'),
     path('Admin/View/Hotels',views.admin_view_hotel, name= 'admin_view_hotel'),
     path('Admin/Hotel/approve/<int:id>/',views.approve, name='approve'),
-
-
+    path('Admin/View/Approved/Hotels/',views.approve_view_hotels, name = 'approve_view_hotels'),
+    path('Admin/View/Users/',views.admin_view_customers, name='admin_view_customers')
 ]
