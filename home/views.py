@@ -3,7 +3,7 @@ from django.contrib import messages,auth
 from home.models import Hotel,User,Customer
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
 
 # # Create your views here.
 
@@ -29,37 +29,39 @@ def login_admin(request):
                         return redirect(admin_home)        
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")  
-      return render(request,'admin/login_admin.html')
+      return render(request,'admin/page-account-login.html')
 
+@login_required
 def admin_home(request):
       hotels = Hotel.objects.all()
       # users = Customer.objects.all()
       return render(request,'admin/admin-dashboard.html',{'hotels':hotels})
 
+@login_required
 def admin_view_hotel(request):
       hotels = Hotel.objects.all()
       return render(request,'admin/admin-view-hotel.html',{'hotels':hotels})
 
+@login_required
 def approve(request,id):
-      print("++++++++++++++++++++++++++++++++======")
 
       hotels = Hotel.objects.get(id = id)
-      print("++++++++++++++++++++++++++++++++======",hotels)
-      
-      print("==================================",hotels.approved)
       hotels.approved = True
-      print("==================================",hotels.approved)
-
-      # hotels.is_staff = True
       hotels.save()
       return render(request,"admin/admin_view_approved_hotels.html")
 
-
+@login_required
 def approve_view_hotels(request):
 
       hotels = Hotel.objects.filter(approved = True)
       return render(request,"admin/admin_view_approved_hotels.html",{'hotels':hotels})
 
+@login_required
 def admin_view_customers(request):
       customers = Customer.objects.all()
       return render(request,"admin/admin_view_customers.html", {'customers':customers})
+
+@login_required
+def admin_logout(request):
+      logout(request)
+      return redirect('index')

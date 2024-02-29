@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
 from home.models import Hotel,User,Customer
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -89,6 +91,7 @@ def user_login(request):
       print("===============================")
       if request.method == "POST":
             print("===============================")
+  
             username = request.POST['username']
             password = request.POST['password']
 
@@ -105,3 +108,8 @@ def user_login(request):
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")  
       return render(request,'users/user_login.html')
+
+@login_required
+def user_logout(request):
+      logout(request)
+      return redirect('index')

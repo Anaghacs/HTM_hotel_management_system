@@ -13,7 +13,7 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'asset/imgs/theme/favicon.svg' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/theme/favicon.svg' %}">
     <!-- Template CSS -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" type="text/css" />
 </head>
@@ -75,6 +75,12 @@
                 <li class="menu-item">
                     <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
                         <span class="text">Reviews</span>
+                    </a>
+                </li> 
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{% url 'admin_logout' %}"> <i class="icon material-icons md-comment"></i>
+                        <span class="text">LogOut</span>
                     </a>
                 </li> 
             </ul> 
@@ -420,7 +426,7 @@
                                         <td>{{i.emails}}</td>
                                         <td>{{i.phone}}</td>
                                         <td>
-                                            <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
+                                            <img src="{{'i.photo.url'}}" alt="hotel_photo" style="height:49px; width:49px;">
                                         </td>
                                     </tr>
                                     {% endfor %}      
