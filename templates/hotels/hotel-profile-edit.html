@@ -1,4 +1,4 @@
-<!-- {% load static %}
+{% load static %}
 <!DOCTYPE HTML>
 <html lang="en">
 
@@ -12,7 +12,7 @@
     <meta property="og:type" content="">
     <meta property="og:url" content="">
     <meta property="og:image" content="">
-    <!-- Favicon -->
+     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'asset/imgs/theme/favicon.svg' %}">
     <!-- Template CSS -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" type="text/css" />
@@ -39,11 +39,21 @@
                     </a>
                 </li>
                 <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-form-product-1.html"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Details</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-form-product-1.html">Add Facilities</a>
+                        <a href="page-form-product-2.html">Edit Rooms </a>
+                        <a href="page-form-product-3.html">Add Rooms</a>
+                        <a href="page-form-product-4.html">Edit Facilities</a>
+                    </div>
+                </li>
+                <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Hotels</span>
                     </a>
                     <div class="submenu">
-                        <!-- <a href="page-products-list.html">Product List</a> -->
                         <a href="{% url 'admin_view_hotel' %}">Hotel List </a>
                         <a href="{% url 'approve_view_hotels' %}">Approved Hotel List</a>
                     </div>
@@ -56,6 +66,8 @@
                         <a href="page-orders-2.html">customers deatils</a>
                     </div> -->
                 </li>
+
+                
             
                 <li class="menu-item">
                     <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
@@ -194,4 +206,4 @@
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:32:57 GMT -->
-</html> -->
+</html> 

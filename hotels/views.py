@@ -54,68 +54,44 @@ def hotel_signup(request):
       content = {'error':error}
       return render(request,'hotels/hotel_signup.html',content)
 
-# def hotel_login(request):
-
-#       if request.method == "POST":
-#             username = request.POST['username']
-#             password = request.POST['password']
-
-#             customer = auth.authenticate(username = username, password = password)
-
-#             customers = Hotel.objects.filter(username=username,password=password,approved=True)
-
-#             if customers.exists():
-#                   auth.login(request,customer)
-#                   return redirect(hotel_dashboard)      
-#             else:
-#                   messages.info(request,"your account is not approved! Please wait.")
-#                   return redirect(hotel_login)
-            
-#                   # messages.info(request,"Username and password is not registered! Please signup first.")      
-#       return render(request,'hotels/hotel_login.html')
-
-
-# def hotel_login(request):
-#       return render(request,'hotels/hotel_login.html')
-
-
 def hotel_login(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
 
-        # Authenticate the user
-        customer = auth.authenticate(username=username, password=password)
-        customers = Hotel.objects.filter(username=username,password=password,approved=True)
+      if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
 
+            customer = auth.authenticate(username = username, password = password)
 
-        if customers is not None:
-            # Check if the user is approved
+            customers = Hotel.objects.filter(username=username,password=password,approved=True)
+
             if customers.exists():
-                # Log the user in
-                login(request,customers)
-                return redirect(hotel_dashboard)
+                  auth.login(request,customer)
+                  return redirect(hotel_dashboard)      
             else:
-                messages.info(request, "Your account is not approved! Please wait.")
-      #   else:
-      #       messages.info(request, "Username and password combination is incorrect.")
-      #       return redirect('hotel_login')  # Redirect back to the login page
-
-    # Handle GET request or unsuccessful POST request
-    return render(request, 'hotels/hotel_login.html')
+                  messages.info(request,"your account is not approved! Please wait.")
+                  return redirect(hotel_login)
+            
+                  # messages.info(request,"Username and password is not registered! Please signup first.")      
+      return render(request,'hotels/hotel_login.html')
 
 
-@login_required
+# def hotel_login(request):
+#       return render(request,'hotels/hotel_login.html')
+
+
+# @login_required
 def hotel_dashboard(request):
 
       customers = Customer.objects.all()
       return render(request,'hotels/hotel_home.html',{'customers':customers})
 
-@login_required
+# @login_required
 def hotel_view_customers(request):
       customers = Customer.objects.all()
       return render(request,"admin/admin_view_customers.html", {'customers':customers})
 
+def add_hotel_room(request):
+      return render(request,'hotels/add-hotel-rooms.html')
 # def hotel_logout(request):
 #       logout(request)
 #       return redirect('index')

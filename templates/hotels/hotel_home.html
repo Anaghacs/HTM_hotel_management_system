@@ -38,15 +38,28 @@
                 </li>
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Profile</span>
+                        <span class="text">Avilability</span>
                     </a>
                     <div class="submenu">
-                        <!-- <a href="page-products-list.html">Product List</a> -->
 
-                        <a href="#">Edit Profile</a>
-                        <a href="{% url 'approve_view_hotels' %}">Delete Profile</a>
+                        <a href="#">Room</a>
+                        <a href="#">Facilities</a>
+
                     </div>
                 </li>
+
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="page-form-product-1.html"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Details</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="">Add Facilities</a>
+                        <a href="page-form-product-2.html">Edit Rooms </a>
+                        <a href="{% url 'add_hotel_room' %}">Add Rooms</a>
+                        <a href="page-form-product-4.html">Edit Facilities</a>
+                    </div>
+                </li>
+
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href=""> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Customers</span>
@@ -77,6 +90,7 @@
                         <span class="text">LogOut</span>
                     </a>
                 </li>
+                
             </ul> 
         </nav>
     </aside>
@@ -374,30 +388,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
-                <header class="card-header">
-                    <h4 class="card-title">Hotel Details</h4>
-                    <div class="row align-items-center">
-                        <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
-                            
-                        </div>
-                        <div class="col-md-2 col-6">
-                            <input type="date" value="02.05.2021" class="form-control">
-                        </div>
-                        <div class="col-md-2 col-6">
-                            <div class="custom_select">
-                                <select class="form-select select-nice">
-                                    <option selected>Status</option>
-                                    <option>All</option>
-                                    <option>Paid</option>
-                                    <option>Chargeback</option>
-                                    <option>Refund</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                <div class="card-body">
+        
+                <!-- <div class="card-body">
                     <div class="table-responsive">
                         <div class="table-responsive">
                             <table class="table align-middle table-nowrap mb-0">
@@ -423,9 +415,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div> <!-- table-responsive end// -->
+                    </div> 
                 </div>
-            </div>
+            </div> -->
             
          
     </main>
