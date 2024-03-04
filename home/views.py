@@ -17,15 +17,15 @@ def login_admin(request):
             username = request.POST['username']
             password = request.POST['password']
 
-            customer = auth.authenticate(username = username, password = password)
+            customers = auth.authenticate(username = username, password = password)
             
             print("===============================",username,password)
             # customer =Customer.objects.get(username = username, password = password)
-            print("+++++++++++++============",customer)
+            print("+++++++++++++============",customers)
 
-            if customer is not None:
-                  if customer.role == 'ADMIN':
-                        auth.login(request,customer)
+            if customers is not None:
+                  if customers.role == 'ADMIN':
+                        auth.login(request,customers)
                         return redirect(admin_home)        
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")  

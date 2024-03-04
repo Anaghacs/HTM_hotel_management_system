@@ -190,6 +190,7 @@
             </div>
         </header>
         <section class="content-main">
+            <h1>welcome{{username}}</h1>
             <div class="row">
                 <div class="col-9">
                     <div class="content-header">
@@ -207,20 +208,37 @@
                                 <input type="text" placeholder="Type here" class="form-control" id="product_title" name="room_number">
                             </div>
 
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Room Type</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="room_type">
-                            </div>
-
+                        
                             <div class="mb-4">
                                 <label for="product_title" class="form-label">Floor</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="floor_no">
+                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="floor_number">
                             </div>
 
                             <div class="mb-4">
                                 <label for="product_title" class="form-label">Capacity</label>
                                 <input type="text" placeholder="Type here" class="form-control" id="product_title" name="capacity">
                             </div>
+
+                            <div class="mb-4">
+                                <label for="product_title" class="form-label">Number of beds</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="number_of_beds">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="product_title" class="form-label">Price</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="price">
+                            </div>
+                            <div class="mb-4">
+                                <label for="product_title" class="form-label">Room Type</label><br><br>
+                                <select id="room_type" name="room_type">
+                                    <option value="King">King</option>
+                                    <option value="Luxury">Luxury</option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Economic">Economic</option>
+
+                                </select><br><br>
+                            </div>
+                            
                     <div class="card mb-4">
                         <div class="card-body">
                             <div>
@@ -229,11 +247,12 @@
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <button class="btn btn-md rounded font-sm hover-up ml-150" type="submit">Add Room</button>
+                    </div>
                 </form>
 
-                    <div>
-                        <button class="btn btn-md rounded font-sm hover-up ml-150">Add Room</button>
-                    </div>
+                    
                     <!-- card end// -->
                 </div>
             </div>

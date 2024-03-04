@@ -97,7 +97,7 @@ def user_login(request):
 
             customer = auth.authenticate(username = username, password = password)
             
-            print("===============================",username,password)
+            print("===============================", username, password)
             # customer =Customer.objects.get(username = username, password = password)
             print("+++++++++++++============",customer)
 

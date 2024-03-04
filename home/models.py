@@ -69,6 +69,36 @@ class Hotel(User):
     def welcome(self):
         return "Only for Hotels"
 
+# class RoomType(models.Model):
+#     types = models.CharField(max_length = 10)
+#     price = models.DecimalField(max_digits = 12, decimal_places = 2, default = 0.00)
+#     number_of_bed = models.PositiveIntegerField(default = 0)
+#     room_capacity = models.PositiveIntegerField(default = 0)
+#     rtid = models.UUIDField(unique = True, length = 10, max_length = 20, alphabet = "abcdefghijklmnopqrstuvwxyz")
+#     slug = models.SlugField(unique = True)
+
+class Room(models.Model):
+    ROOM_TYPES = (
+        ('King', 'King'),
+        ('Luxury', 'Luxury'),
+        ('Normal', 'Normal'),
+        ('Economic', 'Economic'),
+
+    )
+
+    hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE)
+    room_number = models.IntegerField(primary_key=True)
+    capacity = models.SmallIntegerField()
+    number_of_beds = models.SmallIntegerField()
+    room_type = models.CharField(max_length=20, choices=ROOM_TYPES)
+    price = models.FloatField()
+    floor_number = models.IntegerField()
+    photo = models.ImageField(upload_to = 'media', blank = True, null = True)
+
+
+    def __str__(self):
+        return str(self.room_number)
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

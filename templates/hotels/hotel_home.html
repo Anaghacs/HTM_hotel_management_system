@@ -55,19 +55,17 @@
                     <div class="submenu">
                         <a href="">Add Facilities</a>
                         <a href="page-form-product-2.html">Edit Rooms </a>
-                        <a href="{% url 'add_hotel_room' %}">Add Rooms</a>
+                        <a href="{% url 'add_hotel_room'  %}">Add Rooms</a>
                         <a href="page-form-product-4.html">Edit Facilities</a>
                     </div>
                 </li>
 
-                <li class="menu-item has-submenu">
+                <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href=""> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Customers</span>
                     </a>
-                    <div class="submenu">
-                        <a href="{% url 'hotel_view_customers' %}">customers deatils</a>
-                    </div>
-                </li>
+                    
+                </li> -->
                 
 
                 <li class="menu-item has-submenu">
@@ -95,6 +93,10 @@
         </nav>
     </aside>
     <main class="main-wrap">
+        <h1>welcome {{hotel_name}}</h1>
+        <h1>{{request.user}}</h1>
+        <!-- <h1>{{request.user.pk}}</h1> -->
+
         <header class="main-header navbar">
             <div class="col-search">
                 <form class="searchform">
@@ -152,7 +154,7 @@
         <section class="content-main">
             <div class="content-header">
                 <div>
-                    <h2 class="content-title card-title">Dashboard </h2>
+                    <h2 class="content-title card-title">Dashboard</h2>
                     <p>Whole data about your business here</p>
                 </div>
                 <div>

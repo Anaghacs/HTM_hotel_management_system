@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
-from home.models import Hotel, User, Customer
+from home.models import Hotel, User, Customer, Room
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -60,18 +60,31 @@ def hotel_login(request):
             username = request.POST['username']
             password = request.POST['password']
 
-            customer = auth.authenticate(username = username, password = password)
+            # customer = auth.authenticate(username = username, password = password)
+            # print("===============================", username, password)
 
-            customers = Hotel.objects.filter(username=username,password=password,approved=True)
+            # customers = Hotel.objects.filter(username=username,password=password,approved=True)
+            # if customers is not None:
+            #       if customers.exists():
+            #             auth.login(request,customer)
+            #             return redirect(hotel_dashboard)      
+            # else:
+            #       messages.info(request,"your account is not approved! Please wait.")
+            #       return redirect(hotel_login)
 
-            if customers.exists():
-                  auth.login(request,customer)
-                  return redirect(hotel_dashboard)      
-            else:
-                  messages.info(request,"your account is not approved! Please wait.")
-                  return redirect(hotel_login)
-            
-                  # messages.info(request,"Username and password is not registered! Please signup first.")      
+            try:
+            # Query the database for the hotel user with the provided username and password
+                  hotel = Hotel.objects.get(username=username, password=password, approved=True)
+                  # print("===================================",username, password)
+            except Hotel.DoesNotExist:
+            # Hotel user with the provided credentials or approval status does not exist
+                  messages.error(request, "Invalid credentials or account not approved.")
+                  return redirect('hotel_login')
+
+        # If hotel user exists and is approved, log in the user
+            if hotel.role == 'HOTEL':
+                  request.session['hotel_id'] = hotel.id
+                  return redirect('hotel_dashboard')
       return render(request,'hotels/hotel_login.html')
 
 
@@ -86,12 +99,32 @@ def hotel_dashboard(request):
       return render(request,'hotels/hotel_home.html',{'customers':customers})
 
 # @login_required
-def hotel_view_customers(request):
-      customers = Customer.objects.all()
-      return render(request,"admin/admin_view_customers.html", {'customers':customers})
+# def hotel_view_customers(request):
+#       customers = Customer.objects.all()
+#       return render(request,"admin/admin_view_customers.html", {'customers':customers})
 
 def add_hotel_room(request):
+      # hotels = Hotel.objects.get(id = hotel_id)
+      # print("===================================",hotels)
+      if request.method == "POST":
+           room_number = request.POST['room_number']
+           capacity = request.POST['capacity']
+           number_of_beds = request.POST['number_of_beds']
+           room_type = request.POST['room_type']
+           price = request.POST['price']
+           floor_number = request.POST['floor_number']
+           photo = request.FILES.get('photo')
+      #      hotel = Hotel.objects.get(id=id)
+           print("==============================================",room_number,capacity,number_of_beds,room_type)
+
+           rooms = Room.objects.create(room_number = room_number, capacity = capacity, number_of_beds = number_of_beds, room_type = room_type, price = price, floor_number = floor_number, photo = photo)
+           rooms.save()
+
+           return redirect('hotels_view_room_details')
       return render(request,'hotels/add-hotel-rooms.html')
+
+def hotels_view_room_details(request):
+      return render(request,'hotels/hotels_view_room_details.html')
 # def hotel_logout(request):
 #       logout(request)
 #       return redirect('index')
@@ -103,6 +136,7 @@ def add_hotel_room(request):
 #             hotelname = request.POST.get('hotelname')
 
 #       return render(request,'hotels/hotel-profile-edit.html')
+
 
 
 # def edit_hotel_details(request,id):
