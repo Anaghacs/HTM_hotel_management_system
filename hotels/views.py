@@ -54,49 +54,74 @@ def hotel_signup(request):
       content = {'error':error}
       return render(request,'hotels/hotel_signup.html',content)
 
-def hotel_login(request):
-
-      if request.method == "POST":
-            username = request.POST['username']
-            password = request.POST['password']
-
-            # customer = auth.authenticate(username = username, password = password)
-            # print("===============================", username, password)
-
-            # customers = Hotel.objects.filter(username=username,password=password,approved=True)
-            # if customers is not None:
-            #       if customers.exists():
-            #             auth.login(request,customer)
-            #             return redirect(hotel_dashboard)      
-            # else:
-            #       messages.info(request,"your account is not approved! Please wait.")
-            #       return redirect(hotel_login)
-
-            try:
-            # Query the database for the hotel user with the provided username and password
-                  hotel = Hotel.objects.get(username=username, password=password, approved=True)
-                  # print("===================================",username, password)
-            except Hotel.DoesNotExist:
-            # Hotel user with the provided credentials or approval status does not exist
-                  messages.error(request, "Invalid credentials or account not approved.")
-                  return redirect('hotel_login')
-
-        # If hotel user exists and is approved, log in the user
-            if hotel.role == 'HOTEL':
-                  request.session['hotel_id'] = hotel.id
-                  return redirect('hotel_dashboard')
-      return render(request,'hotels/hotel_login.html')
-
-
 # def hotel_login(request):
+
+#       if request.method == "POST":
+#             username = request.POST['username']
+#             password = request.POST['password']
+
+#             # customer = auth.authenticate(username = username, password = password)
+#             # print("===============================", username, password)
+
+#             # customers = Hotel.objects.filter(username=username,password=password,approved=True)
+#             # if customers is not None:
+#             #       if customers.exists():
+#             #             auth.login(request,customer)
+#             #             return redirect(hotel_dashboard)      
+#             # else:
+#             #       messages.info(request,"your account is not approved! Please wait.")
+#             #       return redirect(hotel_login)
+
+#             try:
+#             # Query the database for the hotel user with the provided username and password
+#                   hotel = Hotel.objects.get(username=username, password=password, approved=True)
+#                   # print("===================================",username, password)
+#             except Hotel.DoesNotExist:
+#             # Hotel user with the provided credentials or approval status does not exist
+#                   messages.error(request, "Invalid credentials or account not approved.")
+#                   return redirect('hotel_login')
+
+#         # If hotel user exists and is approved, log in the user
+#             if hotel.role == 'HOTEL':
+#                   request.session['hotel_id'] = hotel.id
+#                   print("===================================",hotel.id)
+#                   return redirect('hotel_dashboard')
 #       return render(request,'hotels/hotel_login.html')
 
 
-# @login_required
-def hotel_dashboard(request):
+def hotel_login(request):
+      if request.method == "POST":
+            username = request.POST['username']
+            password = request.POST['password']
+            try:
+                  hotel = Hotel.objects.get(username=username, password = password, approved = True)
 
-      customers = Customer.objects.all()
-      return render(request,'hotels/hotel_home.html',{'customers':customers})
+                  # Set session variable for authenticated hotel user
+                  request.session['hotel_id'] = hotel.id
+                  return redirect('hotel_dashboard')
+      
+            except Hotel.DoesNotExist:
+                  messages.error(request, "Invalid credentials or account not approved.")
+    
+      return render(request, 'hotels/hotel_login.html')
+
+
+@login_required
+def hotel_dashboard(request):
+    if 'hotel_id' in request.session:
+        hotel_id = request.session['hotel_id']
+        try:
+            hotel = Hotel.objects.get(id=hotel_id)
+            customers = Customer.objects.all()
+            return render(request, 'hotels/hotel_home.html', {'customers': customers, 'hotel': hotel})
+        except Hotel.DoesNotExist:
+            # Handle case where hotel with given ID does not exist
+            del request.session['hotel_id']
+    
+    # Redirect to login page if user is not authenticated
+    return redirect('hotel_login')
+
+
 
 # @login_required
 # def hotel_view_customers(request):
@@ -125,41 +150,3 @@ def add_hotel_room(request):
 
 def hotels_view_room_details(request):
       return render(request,'hotels/hotels_view_room_details.html')
-# def hotel_logout(request):
-#       logout(request)
-#       return redirect('index')
-
-# def edit_hotel_profile(request,id):
-
-#       hotel = Hotel.objects.get(id = id)
-#       if request.method == 'POST':
-#             hotelname = request.POST.get('hotelname')
-
-#       return render(request,'hotels/hotel-profile-edit.html')
-
-
-
-# def edit_hotel_details(request,id):
-#     hotel = Hotel.objects.get(id = id)  # Assuming each user is associated with one hotel
-#     error = ""
-#     if request.method == 'POST':
-#         # Extract form data
-#         hotel.hotel_name = request.POST.get('hotel_name')
-#         hotel.username = request.POST.get('username')
-#         hotel.password = request.POST.get('password')
-#         hotel.address = request.POST.get('address')
-#         hotel.place = request.POST.get('place')
-#         hotel.emails = request.POST.get('emails')
-#         hotel.phone = request.POST.get('phone')
-#         # Assuming 'photo' is the name attribute of the file input field for the photo
-#         hotel.photo = request.FILES.get('photo')
-#         hotel.role = request.POST.get('role')
-        
-#         try:
-#             hotel.save()
-#             # Redirect to a success page or back to the hotel profile page
-#             return redirect('success_url')
-#         except:
-#             error = 'An error occurred while saving the hotel details.'
-
-#     return render(request, 'hotels/hotel-profile-edit.html', {'hotel': hotel, 'error': error})

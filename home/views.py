@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 # # Create your views here.
 
 def index(request):
-      return render(request,'commons/index.html')
+      return render(request,'commons/indexs.html')
 
 def login_admin(request):
       print("===============================")

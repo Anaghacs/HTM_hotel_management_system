@@ -35,11 +35,6 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Harbor<span>lights</span></a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="user_signup" class="nav-link">User SignUp</a></li>
@@ -56,9 +51,10 @@
 
             <div class="main-w3layouts wrapper" >
                   <!-- <h1>Creative SignUp Form</h1> -->
-                  <div class="main-agileinfo"  >
+                  <div class="main-agileinfo"><br><br>
+                    <h1>User Login page</h1><br><br>
+
                         <div class="agileits-top" style="background-color: rgb(61, 117, 150); ">
-                          <h1>User Login Page</h1>
                               <form action="" method="post">
                                     {% csrf_token %}
 
@@ -68,7 +64,7 @@
 
                                     <input type="text" name="username" placeholder="Username"/> <br> <br>                                     
 						                        <input type="password" name="password" placeholder="Password"/> <br>                
-                                    <input type="submit" value="LOGIN" style="background-color: rgb(129, 129, 184); border: none; width: 380px;"/>
+                                    <input type="submit" value="LOGIN" style="background-color: rgb(129, 129, 184); border: none; width: 364px;"/>
                               </form>
                               <p style="color: rgb(54, 204, 157);">Don't have an Account? <a href="/logins"> Signup!</a></p><br>
                         </div>
