@@ -9,6 +9,7 @@ urlpatterns = [
     # path('Hotel/View/Users/', views.hotel_view_customers, name = 'hotel_view_customers'),
     # path('Hotel/Edit/Profile/<int:id>/', views.edit_hotel_details, name = 'edit_hotel_details'),
     # path('Hotel/logout/', views.hotel_logout, name='admin_logout'),
-    path('Hotel/Rooms', views.add_hotel_room, name = 'add_hotel_room')
+    path('Hotel/Rooms/', views.add_hotel_room, name = 'add_hotel_room'),
+    path('Hotel/View/Rooms/', views.hotels_view_room_details, name= 'hotels_view_room_details'),
 
 ]

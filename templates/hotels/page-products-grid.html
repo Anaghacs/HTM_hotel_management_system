@@ -2,10 +2,11 @@
 <!DOCTYPE HTML>
 <html lang="en">
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-products-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:12 GMT -->
 <head>
     <meta charset="utf-8">
-    <title>Evara Dashboard</title>
+    <title>Hotel Dashboard</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,11 +89,48 @@
                         <!-- <a href="page-transactions-2.html">Transaction 2</a> -->
                     </div>
                 </li>
-                
-                
+                <!-- <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
+                        <span class="text">Account</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-account-login.html">User login</a>
+                        <a href="page-account-register.html">User registration</a>
+                        <a href="page-error-404.html">Error 404</a>
+                    </div>
+                </li> -->
+                <!-- <li class="menu-item">
+                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
+                        <span class="text">Reviews</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
+                        <span class="text">Brands</span> </a>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
+                        <span class="text">Statistics</span>
+                    </a>
+                </li> -->
             </ul>
             <hr>
-            
+            <!-- <ul class="menu-aside">
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
+                        <span class="text">Settings</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="page-settings-1.html">Setting sample 1</a>
+                        <a href="page-settings-2.html">Setting sample 2</a>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
+                        <span class="text"> Starter page </span>
+                    </a>
+                </li>
+            </ul> -->
             <br>
             <br>
         </nav>
@@ -131,10 +169,10 @@
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="{% static 'assets/imgs/theme/flag-us.png' %}" alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="{% static 'assets/imgs/theme/flag-fr.png' %}" alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="{% static 'assets/imgs/theme/flag-jp.png' %}" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="{% static 'assets/imgs/theme/flag-cn.png' %}" alt="Français">中国人</a>
+                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English">English</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
                         </div>
                     </li>
                     <li class="dropdown nav-item">
@@ -153,92 +191,85 @@
             </div>
         </header>
         <section class="content-main">
-            <h1>Hotel<span style="color: rgb(209, 80, 80);"> '{{hotel}}' </span>add rooms</h1>
-            <div class="row">
-                
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                <div class="col-lg-6">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Room Number</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="room_number">
-                            </div>
-
-                        
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Floor</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="floor_number">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Capacity</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="capacity">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Number of beds</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="number_of_beds">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Price</label>
-                                <input type="text" placeholder="Type here" class="form-control" id="product_title" name="price">
-                            </div>
-                            <div class="mb-4">
-                                <label for="product_title" class="form-label">Room Type</label><br><br>
-                                <select id="room_type" name="room_type">
-                                    <option value="King">King</option>
-                                    <option value="Luxury">Luxury</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Economic">Economic</option>
-
-                                </select><br><br>
-                            </div>
-                            
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div>
-                                <label class="form-label">Images</label>
-                                <input class="form-control" type="file" name="photo">
-                            </div>
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Rooms Details</h2>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-light rounded font-md">Export</a>
+                    <a href="#" class="btn btn-light rounded  font-md">Import</a>
+                    <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <header class="card-header">
+                    <div class="row gx-3">
+                        <div class="col-lg-4 col-md-6 me-auto">
+                            <input type="text" placeholder="Search..." class="form-control">
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-3">
+                            <select class="form-select">
+                                <option>All category</option>
+                                <option>King</option>
+                                <option>Normal</option>
+                                <option>Luxury</option>
+                                <option>Economic</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-3">
+                            <select class="form-select">
+                                <option>Latest added</option>
+                                <option>Cheap first</option>
+                                <option>Most viewed</option>
+                            </select>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-md rounded font-sm hover-up ml-150" type="submit">Add Room</button>
-                    </div>
-                </form>
+                </header> <!-- card-header end// -->
+                <div class="card-body ">
+                    <div class="row  gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                        {% for i in rooms %}
 
-                    
-                    <!-- card end// -->
-                </div>
-            </div>
-        </section>
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
+                        <div class="col">
+                            <div class="card card-product-grid ">
+                                
+                                <a href="#" class="img-wrap"> <img src="{{i.photo}}" alt="Product"> </a>
+                                <div class="info-wrap">
+
+                                    <p class="title text-truncate">Room No : {{i.room_number}}</p>
+                                    <p class="title text-truncate">Room Type : {{i.room_type}}</p>
+                                    <p class="title text-truncate">Capacity  : {{i.capacity}}</p>
+                                    <p class="title text-truncate">No of Beds : {{i.number_of_beds}}</p>
+
+                                    <div class="price mb-2">Price : {{i.price}}</div> <!-- price.// -->
+                                    <a href="#" class="btn btn-sm font-sm rounded btn-brand">
+                                        <i class="material-icons md-edit"></i> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-sm font-sm btn-light rounded">
+                                        <i class="material-icons md-delete_forever"></i> Delete
+                                    </a>
+                                </div><br>
+
+                            </div> <!-- card-product  end// -->
+                            {% endfor %}
+
+                        </div> <!-- col.// -->
+                        
+                    </div> <!-- row.// -->
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+            
+        </section> <!-- content-main end// -->
+        
     </main>
-    <script src="assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/vendors/select2.min.js"></script>
-    <script src="assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/select2.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery.fullscreen.min.js' %}"></script>
     <!-- Main Script -->
-    <script src="assets/js/main.js" type="text/javascript"></script>
+    <script src="{% static 'assets/js/main.js' %}" type="text/javascript"></script>
 </body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-form-product-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:32 GMT -->
+<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-products-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
 </html>
