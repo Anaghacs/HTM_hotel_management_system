@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     base_role = Role.ADMIN
 
-    role = models.CharField(max_length=50, choices=Role.choices)
+    role = models.CharField(max_length = 50, choices = Role.choices)
 
 
     # def save(self, *args, **kwargs):
@@ -28,10 +28,12 @@ class User(AbstractUser):
 
 class Customer(User):
     base_role = User.Role.CUSTOMER
-    address = models.CharField(blank=True, max_length=100)
-    place = models.CharField(blank=True, max_length=20)
-    emails = models.EmailField(max_length=100, unique=True)
+    address = models.CharField(blank = True, max_length = 100)
+    place = models.CharField(blank = True, max_length = 20)
+    emails = models.EmailField(max_length=100, unique = True)
     phone = models.CharField(max_length = 12, unique = True)
+    is_deleted = models.BooleanField(default = False)
+
 
     # student = CustomerManager()
 
@@ -49,12 +51,14 @@ class Customer(User):
 class Hotel(User):
     base_role = User.Role.HOTEL
     hotel_name = models.CharField(max_length = 20)      
-    address = models.CharField(blank=True, max_length=100)
-    place = models.CharField(blank=True, max_length=20)
-    emails = models.EmailField(max_length=100, unique=True)
+    address = models.CharField(blank = True, max_length = 100)
+    place = models.CharField(blank = True, max_length = 20)
+    emails = models.EmailField(max_length = 100, unique = True)
     phone = models.CharField(max_length = 12, unique = True)
     photo = models.ImageField(upload_to = 'media', blank = True, null = True)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default = False)
+    is_deleted = models.BooleanField(default = False)
+
 
     class Meta:
         verbose_name = "Hotel User"
@@ -94,10 +98,23 @@ class Room(models.Model):
     price = models.FloatField()
     floor_number = models.IntegerField()
     photo = models.ImageField(upload_to = 'media', blank = True, null = True)
+    is_deleted = models.BooleanField(default = False)
 
 
     def __str__(self):
         return str(self.room_number)
+    
+    
+class Facilities(models.Model):
+
+    hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE)
+    facility = models.CharField(max_length = 20)      
+    description = models.TextField(max_length = 20, blank = True )
+    photo = models.ImageField(upload_to = 'media', blank = True, null = True)
+    is_deleted = models.BooleanField(default = False)
+
+    def __str__(self):
+        return str(self.facility)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

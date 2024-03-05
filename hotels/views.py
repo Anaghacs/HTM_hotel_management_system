@@ -122,70 +122,6 @@ def hotel_dashboard(request):
     return redirect('hotel_login')
 
 
-
-# @login_required
-# def hotel_view_customers(request):
-#       customers = Customer.objects.all()
-#       return render(request,"admin/admin_view_customers.html", {'customers':customers})
-
-
-# @login_required
-# def add_hotel_room(request):
-#     print("===========================================hiiiiiiiiiii")
-#     if 'hotel_id' in request.session:
-        
-#         hotel_id = request.session['hotel_id']
-#         print("=============================================",hotel_id)
-#         try:
-#             hotel = Hotel.objects.get(id=hotel_id)
-#             print("==============================",hotel.hotel_name)
-#             if request.method == "POST":
-            
-#                   room_number = request.POST['room_number']
-#                   capacity = request.POST['capacity']
-#                   number_of_beds = request.POST['number_of_beds']
-#                   room_type = request.POST['room_type']
-#                   price = request.POST['price']
-#                   floor_number = request.POST['floor_number']
-#                   photo = request.FILES.get('photo')
-
-#                   print("========================================",hotel.hotel_name, room_number,capacity,number_of_beds,room_type,price)
-#                   room = Room.objects.create(
-#                         hotel = hotel,
-#                         room_number = room_number,
-#                         capacity = capacity,
-#                         number_of_beds = number_of_beds,
-#                         room_type = room_type,
-#                         price = price,
-#                         floor_number = floor_number,
-#                         photo = photo
-#                   )
-#                   room.save()
-#             return redirect('hotels_view_room_details')
-#         except Hotel.DoesNotExist:
-#             # Handle case where hotel with given ID does not exist
-#             del request.session['hotel_id']
-#             return redirect('hotel_login')
-#         except Exception as e:
-#             # Handle other exceptions
-#             print("Error:", e)
-#             return render(request, 'hotels/add-hotel-rooms.html', {'error': str(e)})
-#     else:
-#         # Handle case where hotel_id is not found in session
-#         return redirect('hotel_login')
-
-
-
-def hotels_view_room_details(request):
-      # return render(request,'hotels/hotels_view_room_details.html')
-      if 'hotel_id' in request.session:
-            hotel_id = request.session['hotel_id']
-            hotel = Hotel.objects.get(id = hotel_id)
-            print("================================",hotel.hotel_name)
-            rooms = Room.objects.all()
-      return render(request,'hotels/page-products-grid.html', {'rooms' : rooms})
-
-
 def add_hotel_room(request):
       print("===========================================hiiiiiiiiiii")
       if 'hotel_id' in request.session:
@@ -220,3 +156,29 @@ def add_hotel_room(request):
                   return redirect('hotels_view_room_details')
             
       return render(request, 'hotels/add-hotel-rooms.html', {'hotel': hotel})
+
+
+def hotels_view_room_details(request):
+      # return render(request,'hotels/hotels_view_room_details.html')
+      if 'hotel_id' in request.session:
+            hotel_id = request.session['hotel_id']
+            hotel = Hotel.objects.get(id = hotel_id)
+            print("================================",hotel.hotel_name)
+            rooms = Room.objects.filter(is_deleted = False)
+      return render(request,'hotels/page-products-grid.html', {'rooms' : rooms, 'hotel' : hotel})
+
+
+def delete_room(request, room_number):
+      if 'hotel_id' in request.session:
+            hotel_id = request.session['hotel_id']
+            try:
+                  hotel = Hotel.objects.get(id = hotel_id)
+                  print("===========================",hotel.hotel_name)
+                  room = get_object_or_404(Room, room_number = room_number)
+                  print("===========================",room.room_number)
+                  room.is_deleted = True
+                  room.save()
+            except Hotel.DoesNotExist:
+            # Handle the case where the hotel with the given ID doesn't exist
+                  pass
+      return redirect('hotels_view_room_details')

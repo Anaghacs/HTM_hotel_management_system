@@ -53,10 +53,8 @@
                         <span class="text">Add Details</span>
                     </a>
                     <div class="submenu">
-                        <a href="">Add Facilities</a>
-                        <a href="page-form-product-2.html">Edit Rooms </a>
                         <a href="{% url 'add_hotel_room'  %}">Add Rooms</a>
-                        <a href="page-form-product-4.html">Edit Facilities</a>
+                        <a href="#">Add Facilities</a>
                     </div>
                 </li>
 
@@ -65,7 +63,7 @@
                         <span class="text">Views</span>
                     </a>
                     <div class="submenu">
-                        <a href="page-orders-1.html">Rooms</a>
+                        <a href="{% url 'hotels_view_room_details' %}">Rooms</a>
                         <a href="page-orders-2.html" class="active">Facilities</a>
                         <!-- <a href="page-orders-detail.html">Order detail</a> -->
                     </div>

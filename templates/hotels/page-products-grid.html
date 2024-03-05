@@ -18,6 +18,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/theme/favicon.svg' %}">
     <!-- Template CSS -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" type="text/css" />
+
+    
 </head>
 
 <body>
@@ -54,7 +56,7 @@
                         <span class="text">Details</span>
                     </a>
                     <div class="submenu">
-                        <a href="page-orders-1.html">Rooms</a>
+                        <a href="{% url 'hotels_view_room_details' %}">Rooms</a>
                         <a href="page-orders-2.html" class="active">Facilities</a>
                         <!-- <a href="page-orders-detail.html">Order detail</a> -->
                     </div>
@@ -74,10 +76,9 @@
                         <span class="text">Add Details</span>
                     </a>
                     <div class="submenu">
+                        <a href="{% url 'add_hotel_room'  %}">Add Rooms</a>
+
                         <a href="page-form-product-1.html">Add Facilities</a>
-                        <a href="page-form-product-2.html">Edit Rooms </a>
-                        <a href="page-form-product-3.html">Add Rooms</a>
-                        <a href="page-form-product-4.html">Edit Facilities</a>
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
@@ -232,7 +233,7 @@
                         <div class="col">
                             <div class="card card-product-grid ">
                                 
-                                <a href="#" class="img-wrap"> <img src="{{i.photo}}" alt="Product"> </a>
+                                <a href="#" class="img-wrap"> <img src="{{'i.photo.url'}}" alt="room_photos"> </a>
                                 <div class="info-wrap">
 
                                     <p class="title text-truncate">Room No : {{i.room_number}}</p>
@@ -244,19 +245,23 @@
                                     <a href="#" class="btn btn-sm font-sm rounded btn-brand">
                                         <i class="material-icons md-edit"></i> Edit
                                     </a>
-                                    <a href="#" class="btn btn-sm font-sm btn-light rounded">
+                                    
+                                    <a href="{% url 'delete_room' i.room_number %}" class="btn btn-sm font-sm btn-light  rounded" >
                                         <i class="material-icons md-delete_forever"></i> Delete
                                     </a>
+                                    
                                 </div><br>
 
                             </div> <!-- card-product  end// -->
-                            {% endfor %}
 
                         </div> <!-- col.// -->
-                        
+                        {% endfor %}
+  
                     </div> <!-- row.// -->
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
+
+		
             
         </section> <!-- content-main end// -->
         
