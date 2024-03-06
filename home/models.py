@@ -59,6 +59,8 @@ class Hotel(User):
     approved = models.BooleanField(default = False)
     is_deleted = models.BooleanField(default = False)
 
+    hotel_number = models.IntegerField()
+
 
     class Meta:
         verbose_name = "Hotel User"
@@ -99,6 +101,7 @@ class Room(models.Model):
     floor_number = models.IntegerField()
     photo = models.ImageField(upload_to = 'media', blank = True, null = True)
     is_deleted = models.BooleanField(default = False)
+
 
 
     def __str__(self):

@@ -23,13 +23,15 @@
                   <div class="col">
                       <div class="card card-product-grid ">
                           
-                          <a href="#" class="img-wrap"> <img src="{{'i.photo.url'}}" alt="room_photos"> </a>
+                            <!-- <img src="{{i.photo.url}}" alt="hotel_photo" style="height:100px; width:100px;"> -->
+
+                          <a href="#" class="img-wrap"> <img src="{{i.photo.url}}" alt="room_photos"> </a>
                           <div class="info-wrap">
 
                               <p class="title text-truncate">Facilities : {{i.facility}}</p>
                               <p class="title text-truncate">Description : {{i.description}}</p>
                               
-                              <a href="#" class="btn btn-sm font-sm rounded btn-brand">
+                              <a href="{% url 'hotel_update_facilities' i.id %}" class="btn btn-sm font-sm rounded btn-brand">
                                   <i class="material-icons md-edit"></i> Edit
                               </a>
                               

@@ -78,7 +78,7 @@ def user_signup(request):
 
 # #login then move user-home page
 def user_home(request):
-      return render(request,'users/users_home.html')
+      return render(request,'commons/indexs.html')
 
 # #create user logout
 # def user_logout(request):

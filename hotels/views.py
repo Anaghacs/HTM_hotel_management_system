@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Max
 
 def hotel_signup(request):
       error = ""
@@ -43,8 +43,15 @@ def hotel_signup(request):
                   try:
                   #create hotel model and insert the data
                         if role == "HOTEL":
+                              # H1=Hotel.objects.filter(role = 'HOTEL').aggregate(
+                              #       last_hotel_number=Max('hotel_number')
+                              # )['last_hotel_number']
+
+
+
+                              # H1=customer.objects.filter(role = 'HOTEL')
                               # hotels = Hotel.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, emails = emails, photo = photo, user_name = username, password = password, role = role)
-                              customer=Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
+                              customer = Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
                               customer.save()
                               error = 'no'
                         else:
@@ -177,7 +184,8 @@ def hotels_view_room_details(request):
             # hotel = get_object_or_404(Hotel, id = hotel_id)
 
             print("================================",hotel.hotel_name)
-            rooms = Room.objects.filter(is_deleted = False)
+            rooms = Room.objects.filter(is_deleted = False, hotel = hotel)
+            print("==========================================",rooms)
       return render(request,'hotels/hotels_view_room_details.html', {'rooms' : rooms, 'hotel' : hotel})
 
 
@@ -227,7 +235,7 @@ def hotel_view_facilities(request):
             hotel_id = request.session['hotel_id']
             hotel = Hotel.objects.get(id = hotel_id)
             print("================================",hotel.hotel_name)
-            facilities = Facilities.objects.filter(is_deleted = False)
+            facilities = Facilities.objects.filter(is_deleted = False, hotel = hotel)
       return render(request, "hotels/hotel-view-facilities.html",{'facilities' : facilities, 'hotel': hotel})
 
 
@@ -246,7 +254,7 @@ def hotel_delete_facilities(request, id):
             except Hotel.DoesNotExist:
             # Handle the case where the hotel with the given ID doesn't exist
                   pass
-      return redirect('hotel_view_facilities')
+      return redirect('hotel_view_facilities',{'hotel' : hotel})
 
 # def update_room_details(request, room_number):
 #       if 'hotel_id' in request.session:
@@ -281,16 +289,18 @@ def hotel_delete_facilities(request, id):
 
 #       return render(request,'hotels/update-hotel-room.html')
 
-def update_room_details(request, id):
+def update_room_details(request, room_number):
     if 'hotel_id' in request.session:
         hotel_id = request.session['hotel_id']
-        hotel = get_object_or_404(Hotel, id=hotel_id)
-        
-        room = Room.objects.get(room_number = room_number)
+        hotel = get_object_or_404(Hotel, id = hotel_id)
+        print("============================", hotel.hotel_name) 
+
+        room = get_object_or_404(Room, room_number = room_number)
+
       #   room = get_object_or_404(Room, room_number=room_number)
         print("============================", room.room_number) 
 
-        if request.method == 'POST':
+        if request.method == "POST":
             room_number = request.POST.get('room_number')
             capacity = request.POST.get('capacity')
             number_of_beds = request.POST.get('number_of_beds')
@@ -298,8 +308,9 @@ def update_room_details(request, id):
             price = request.POST.get('price')
             floor_number = request.POST.get('floor_number')
             photo = request.FILES.get('photo')
-
-            print("========================================", hotel.hotel_name, room_number, capacity, number_of_beds, room_type, price)
+            print("==============================",room_number,capacity,room_type,price)
+            print("==============================",capacity)
+            # print("========================================", hotel.hotel_name, room_number, capacity, number_of_beds, room_type, price)
 
             # Update the room object
             room.room_number = room_number
@@ -308,7 +319,9 @@ def update_room_details(request, id):
             room.room_type = room_type
             room.price = price
             room.floor_number = floor_number
-            room.photo = photo
+            # room.photo = photo
+            if photo:
+                  room.photo = photo
 
             room.save()
             print("===========================", room.room_number)
@@ -316,4 +329,31 @@ def update_room_details(request, id):
 
             return redirect('hotels_view_room_details')
 
-    return render(request, 'hotels/update-hotel-room.html')
+    return render(request, 'hotels/update-hotel-room.html',{'hotel' : hotel})
+
+def hotel_update_facilities(request, id):
+      if 'hotel_id' in request.session:
+            hotel_id = request.session['hotel_id']
+            hotel = get_object_or_404(Hotel, id = hotel_id)
+            print("============================", hotel.hotel_name) 
+
+            facilities = get_object_or_404(Facilities, id = id)
+
+      #   room = get_object_or_404(Room, room_number=room_number)
+            print("============================", facilities.description)
+            if request.method == "POST":
+                  facility = request.POST.get('facilities')
+                  description = request.POST.get('description')
+                  photo = request.POST.get('photo')
+
+                  facilities.facility = facility
+                  facilities.description = description
+
+                  if photo:
+                        facilities.photo = photo
+
+                  facilities.save()
+                  messages.success(request, "Your record has been successfully changed!")
+                  return redirect(request, 'hotel_view_facilities')
+
+      return render(request, 'hotels/update-hotel-facilities.html', {'hotel' : hotel})
