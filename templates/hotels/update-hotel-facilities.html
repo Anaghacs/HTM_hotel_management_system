@@ -1,0 +1,44 @@
+{% include 'hotels/hotel-base.html' %}
+{% include 'hotels/hotel-navigation.html' %}
+{% block content %}
+
+<section class="content-main">
+      <h1>Hotel<span style="color: rgb(209, 80, 80);"> '{{hotel}}' </span>Change Facilities</h1>
+
+        {% for messages in messages %}
+            <div class="alert alert-success" role="alert">
+                {{messages}}
+            </div>
+        {% endfor %}<br>
+
+      <div class="row">
+          
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+            <div class="col-lg-6">
+              <div class="card mb-4">
+                  <div class="card-body">
+                      <div class="mb-4">
+                          <label for="product_title" class="form-label">Facilities</label>
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="facility">
+                      </div>
+
+                      <div class="mb-4">
+                          <label for="product_title" class="form-label">Description</label>
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="description">
+                      </div>
+
+                      <div class="card-body">
+                            <label class="form-label">Images</label>
+                            <input class="form-control" type="file" name="photo">
+                      </div>
+
+                      <div>
+                           <button class="btn btn-md rounded font-sm hover-up ml-150" type="submit">Add Facilities</button>
+                      </div>
+            </form>
+
+          </div>
+      </div>
+  </section>
+{% endblock content%}

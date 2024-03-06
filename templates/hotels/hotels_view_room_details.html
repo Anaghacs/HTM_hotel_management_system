@@ -1,1 +1,76 @@
-<h1>Room Details</h1>
+{% include 'hotels/hotel-base.html' %}
+{% include 'hotels/hotel-navigation.html' %}
+{% block content%}
+
+<section class="content-main">
+      <div class="content-header">
+          <div>
+              <h2 class="content-title card-title">Rooms Details</h2>
+          </div>
+          
+          {% for messages in messages %}
+            <div class="alert alert-success" role="alert">
+                {{messages}}
+            </div>
+          {% endfor %}<br>
+      </div>
+
+      <div class="card mb-4">
+          <header class="card-header">
+              <div class="row gx-3">
+                  <div class="col-lg-4 col-md-6 me-auto">
+                      <input type="text" placeholder="Search..." class="form-control">
+                  </div>
+                  <div class="col-lg-2 col-6 col-md-3">
+                      <select class="form-select">
+                          <option>All category</option>
+                          <option>King</option>
+                          <option>Normal</option>
+                          <option>Luxury</option>
+                          <option>Economic</option>
+                      </select>
+                  </div>
+                  
+              </div>
+          </header> <!-- card-header end// -->
+          <div class="card-body ">
+              <div class="row  gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                  {% for i in rooms %}
+
+                  <div class="col">
+                      <div class="card card-product-grid ">
+                          
+                          <a href="#" class="img-wrap"> <img src="{{'i.photo.url'}}" alt="room_photos"> </a>
+                          <div class="info-wrap">
+
+                              <p class="title text-truncate">Room No : {{i.room_number}}</p>
+                              <p class="title text-truncate">Room Type : {{i.room_type}}</p>
+                              <p class="title text-truncate">Capacity  : {{i.capacity}}</p>
+                              <p class="title text-truncate">No of Beds : {{i.number_of_beds}}</p>
+
+                              <div class="price mb-2">Price : {{i.price}}</div> <!-- price.// -->
+                              <!-- <a href="update_room_details/{{i.room_number}}" class="btn btn-sm font-sm rounded btn-brand">
+                                  <i class="material-icons md-edit"></i> Edit
+                              </a> -->
+
+                              <a href="{% url 'update_room_details' i.room_number %}" class="btn btn-sm font-sm rounded btn-brand">
+                                <i class="material-icons md-edit"></i> Edit
+                              </a>
+                              
+                              <a href="{% url 'delete_room' i.room_number %}" class="btn btn-sm font-sm btn-light  rounded" >
+                                  <i class="material-icons md-delete_forever"></i> Delete
+                              </a>
+                              
+                          </div><br>
+
+                      </div> <!-- card-product  end// -->
+
+                  </div> <!-- col.// -->
+                  {% endfor %}
+
+              </div> <!-- row.// -->
+          </div> <!-- card-body end// -->
+      </div> <!-- card end// -->
+
+  </section> <!-- content-main end// -->
+{% endblock content%}

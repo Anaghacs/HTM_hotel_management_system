@@ -1,0 +1,59 @@
+{% include 'hotels/hotel-base.html' %}
+{% include 'hotels/hotel-navigation.html' %}
+{% block content%}
+
+<section class="content-main">
+      <div class="content-header">
+          <div>
+              <h2 class="content-title card-title">Hotel Facilities Details</h2>
+          </div>
+          
+          {% for messages in messages %}
+              <div class="alert alert-success" role="alert">
+                  {{messages}}
+              </div>
+          {% endfor %}<br>
+          
+      </div>
+      <div class="card mb-4">
+          <div class="card-body ">
+              <div class="row  gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                  {% for i in facilities %}
+
+                  <div class="col">
+                      <div class="card card-product-grid ">
+                          
+                          <a href="#" class="img-wrap"> <img src="{{'i.photo.url'}}" alt="room_photos"> </a>
+                          <div class="info-wrap">
+
+                              <p class="title text-truncate">Facilities : {{i.facility}}</p>
+                              <p class="title text-truncate">Description : {{i.description}}</p>
+                              
+                              <a href="#" class="btn btn-sm font-sm rounded btn-brand">
+                                  <i class="material-icons md-edit"></i> Edit
+                              </a>
+                              
+                              <a href="{% url 'hotel_delete_facilities' i.id %}" class="btn btn-sm font-sm btn-light  rounded" >
+                                  <i class="material-icons md-delete_forever"></i> Delete
+                              </a>
+                              
+                              <!-- <a href="" class="btn btn-sm font-sm btn-light  rounded" id="launchid" data-toggle="modal"
+                                data-target="#exampleModal">
+			                    <i class="material-icons md-delete_forever"></i> Delete
+		                      </a> -->
+                              
+                          </div><br>
+
+                      </div> <!-- card-product  end// -->
+
+                  </div> <!-- col.// -->
+                  {% endfor %}
+
+              </div> <!-- row.// -->
+          </div> <!-- card-body end// -->
+      </div> <!-- card end// -->
+
+  </section> <!-- content-main end// -->
+  
+
+{% endblock content%}

@@ -5,11 +5,19 @@ urlpatterns = [
     # Add more URL patterns as needed
     path('Hotel/Signup/', views.hotel_signup, name = 'hotel_signup'),
     path('Hotel/Login/', views.hotel_login, name = 'hotel_login'),
+    path('logout/', views.logout, name = 'logout'),
+
     path('Hotel/Dashboard', views.hotel_dashboard, name = 'hotel_dashboard'),
-    # path('Hotel/View/Users/', views.hotel_view_customers, name = 'hotel_view_customers'),
-    # path('Hotel/Edit/Profile/<int:id>/', views.edit_hotel_details, name = 'edit_hotel_details'),
-    # path('Hotel/logout/', views.hotel_logout, name='admin_logout'),
     path('Hotel/Rooms/', views.add_hotel_room, name = 'add_hotel_room'),
     path('Hotel/View/Rooms/', views.hotels_view_room_details, name= 'hotels_view_room_details'),
     path('Hotel/Delete/Room/<int:room_number>/', views.delete_room, name = 'delete_room'),
+    path('Hotel/Room/update/<int:room_number>/', views.update_room_details, name = 'update_room_details'),
+
+
+    # path('Hotel/View/Rooms/update_room_details/<int:room_number>/', views.update_room_details, name='update_room_details'),
+
+    path('Hotel/Add/Facilities/', views.add_hotel_facilities, name = 'add_hotel_facilities'),
+    path('Hotel/View/Facilities/', views.hotel_view_facilities, name = 'hotel_view_facilities'),
+    path('Hotel/Delete/Facilities/<int:id>/', views.hotel_delete_facilities, name = 'hotel_delete_facilities'),
+
 ]

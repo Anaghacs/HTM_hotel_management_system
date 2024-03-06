@@ -3,42 +3,43 @@
 {% block content%}
 
 <section class="content-main">
-      <h1>Hotel<span style="color: rgb(209, 80, 80);"> '{{hotel}}' </span>add rooms</h1>
+      <h1>Hotel<span style="color: rgb(209, 80, 80);"> '{{hotel}}' </span>Update rooms details</h1>
       <div class="row">
           
           <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-          <div class="col-lg-6">
+            {% csrf_token %}
+            <div class="col-lg-6">
               <div class="card mb-4">
                   <div class="card-body">
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Room Number</label>
-                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="room_number">
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="room_number" value="{{ room.room_number }}">
                       </div>
 
                   
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Floor</label>
-                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="floor_number">
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="floor_number" value="{{ room.floor_number }}">
                       </div>
 
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Capacity</label>
-                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="capacity">
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="capacity" value="{{ room.capacity }}">
                       </div>
 
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Number of beds</label>
-                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="number_of_beds">
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="number_of_beds" value="{{room.number_of_beds}}">
                       </div>
 
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Price</label>
-                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="price">
+                  
+                          <input type="text" placeholder="Type here" class="form-control" id="product_title" name="price" value="{{room.price}}">
                       </div>
                       <div class="mb-4">
                           <label for="product_title" class="form-label">Room Type</label><br><br>
-                          <select id="room_type" name="room_type">
+                          <select id="room_type" name="room_type" >
                               <option value="King">King</option>
                               <option value="Luxury">Luxury</option>
                               <option value="Normal">Normal</option>
@@ -51,12 +52,12 @@
                   <div class="card-body">
                       <div>
                           <label class="form-label">Images</label>
-                          <input class="form-control" type="file" name="photo">
+                          <input class="form-control" type="file" name="photo" value="{{room.photo}}">
                       </div>
                   </div>
               </div>
               <div>
-                  <button class="btn btn-md rounded font-sm hover-up ml-150" type="submit">Add Room</button>
+                  <button class="btn btn-md rounded font-sm hover-up ml-150" type="submit">Save changes</button>
               </div>
           </form>
 

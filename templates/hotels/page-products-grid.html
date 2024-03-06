@@ -19,6 +19,33 @@
     <!-- Template CSS -->
     <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" type="text/css" />
 
+    <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+</script> 
+<script src= 
+"https://cdn.jsdelivr.net/npm/smartwizard@4.3.1/dist/js/jquery.smartWizard.min.js"> 
+</script> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"> 
+</script> 
+<link rel="stylesheet"
+	href= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> 
+<link rel="stylesheet"
+	href= 
+"https://cdn.jsdelivr.net/npm/smartwizard@4.3.1/dist/css/smart_wizard.min.css"> 
+<script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity= 
+"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"> 
+</script> 
+<script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity= 
+"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"> 
+</script> 
     
 </head>
 
@@ -61,16 +88,7 @@
                         <!-- <a href="page-orders-detail.html">Order detail</a> -->
                     </div>
                 </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-sellers-cards.html"> <i class="icon material-icons md-store"></i>
-                        <span class="text">Sellers</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-sellers-cards.html">Sellers cards</a>
-                        <a href="page-sellers-list.html">Sellers list</a>
-                        <a href="page-seller-detail.html">Seller profile</a>
-                    </div>
-                </li> -->
+                
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-form-product-1.html"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add Details</span>
@@ -90,50 +108,9 @@
                         <!-- <a href="page-transactions-2.html">Transaction 2</a> -->
                     </div>
                 </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-account-login.html">User login</a>
-                        <a href="page-account-register.html">User registration</a>
-                        <a href="page-error-404.html">Error 404</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" disabled href="#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
+              
             </ul>
-            <hr>
-            <!-- <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-settings-1.html">Setting sample 1</a>
-                        <a href="page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul> -->
-            <br>
-            <br>
+            
         </nav>
     </aside>
     <main class="main-wrap">
@@ -167,27 +144,8 @@
                     <li class="nav-item">
                         <a href="#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
                     </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="#"><img src="assets/imgs/theme/flag-us.png" alt="English">English</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="#"><img src="assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
-                        </div>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="assets/imgs/people/avatar2.jpg" alt="User"></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="#"><i class="material-icons md-help_outline"></i>Help center</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                        </div>
-                    </li>
+                    
+  
                 </ul>
             </div>
         </header>
@@ -196,11 +154,19 @@
                 <div>
                     <h2 class="content-title card-title">Rooms Details</h2>
                 </div>
-                <div>
-                    <a href="#" class="btn btn-light rounded font-md">Export</a>
-                    <a href="#" class="btn btn-light rounded  font-md">Import</a>
-                    <a href="#" class="btn btn-primary btn-sm rounded">Create new</a>
-                </div>
+                
+                {% for messages in messages %}
+					<!-- <h5 style="color: rgb(20, 113, 156);">{{messages}}</h5> -->
+                    <div class="alert alert-success" role="alert">
+                        {{messages}}
+                    </div>
+                {% endfor %}<br>
+
+                <!-- <div>
+                    <center>
+                        <p>{{messages}}</p>
+                    </center>
+                </div> -->
             </div>
             <div class="card mb-4">
                 <header class="card-header">
@@ -217,13 +183,7 @@
                                 <option>Economic</option>
                             </select>
                         </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Latest added</option>
-                                <option>Cheap first</option>
-                                <option>Most viewed</option>
-                            </select>
-                        </div>
+                        
                     </div>
                 </header> <!-- card-header end// -->
                 <div class="card-body ">
@@ -260,11 +220,83 @@
                     </div> <!-- row.// -->
                 </div> <!-- card-body end// -->
             </div> <!-- card end// -->
-
-		
-            
+    
         </section> <!-- content-main end// -->
         
+        <!-- Modal -->
+		<div class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"> 
+        
+        <div class="modal-dialog"
+            role="document"> 
+            <div class="modal-content"> 
+                <div class="modal-header"> 
+
+                    
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"> 
+                        
+                        <span aria-hidden="true"> 
+                        × 
+                    </span> 
+                    </button> 
+                </div> 
+                <div class="modal-body"> 
+                    Are you sure you want to delete?
+                </div> 
+                <div class="modal-footer">
+                    <form method=""post>
+                        {% csrf_token %}
+                            <a href="/Hotel/View/Rooms/" id="saveid"
+                            class="btn btn-primary">Cancel</a>
+
+                            <button type="submit"
+								id="saveid"
+								class="btn btn-primary"> 
+						        Yes 
+					        </button> 
+                    </form>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+
+    <div class="alert" role="alert" id="result"></div> 
+</center> 
+<script> 
+    var modalConfirm = function(callback) { 
+
+        $("#launchid").on("click", function() { 
+            $("exampleModal").modal('show'); 
+        }); 
+
+        $("#saveid").on("click", function() { 
+            callback(true); 
+            $("#exampleModal").modal('hide'); 
+        }); 
+
+        $("#closeid").on("click", function() { 
+            callback(false); 
+            $("#exampleModal").modal('hide'); 
+        }); 
+    }; 
+
+    modalConfirm(function(confirm) { 
+        if (confirm) { 
+            $("#result").html("Changes Saved"); 
+        } else { 
+
+            $("#result").html("Not Saved"); 
+        } 
+    }); 
+</script> 
+
     </main>
     <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
     <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
