@@ -14,7 +14,7 @@
 
       <div class="row">
           
-          <form method="POST" enctype="multipart/form-data">
+          <form method="POST" action="{% url 'update_facilities' facilities.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             
             <div class="col-lg-6">

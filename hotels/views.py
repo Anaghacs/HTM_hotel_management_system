@@ -331,6 +331,34 @@ def update_room_details(request, room_number):
 
     return render(request, 'hotels/update-hotel-room.html',{'hotel' : hotel})
 
+# def hotel_update_facilities(request, id):
+#       if 'hotel_id' in request.session:
+#             hotel_id = request.session['hotel_id']
+#             hotel = get_object_or_404(Hotel, id = hotel_id)
+#             print("============================", hotel.hotel_name) 
+
+#             facilities = get_object_or_404(Facilities, id = id)
+
+#       #   room = get_object_or_404(Room, room_number=room_number)
+#             print("============================", facilities.description)
+#             if request.method == "POST":
+#                   facility = request.POST.get('facilities')
+#                   description = request.POST.get('description')
+#                   photo = request.POST.get('photo')
+
+#                   facilities.facility = facility
+#                   facilities.description = description
+
+#                   if photo:
+#                         facilities.photo = photo
+
+#                   facilities.save()
+#                   messages.success(request, "Your record has been successfully changed!")
+#                   return redirect(request, 'hotel_view_facilities')
+
+#       return render(request, 'hotels/update-hotel-facilities.html', {'hotel' : hotel})
+
+
 def hotel_update_facilities(request, id):
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
@@ -338,22 +366,33 @@ def hotel_update_facilities(request, id):
             print("============================", hotel.hotel_name) 
 
             facilities = get_object_or_404(Facilities, id = id)
+            return render(request, 'hotels/update-hotel-facilities.html', {'facilities': facilities, 'hotel' : hotel})
 
-      #   room = get_object_or_404(Room, room_number=room_number)
-            print("============================", facilities.description)
-            if request.method == "POST":
-                  facility = request.POST.get('facilities')
-                  description = request.POST.get('description')
-                  photo = request.POST.get('photo')
 
-                  facilities.facility = facility
-                  facilities.description = description
+def update_facilities(request, id):
+      if 'hotel_id' in request.session:
+        hotel_id = request.session['hotel_id']
+        hotel = get_object_or_404(Hotel, id=hotel_id)
+        print("============================", hotel.hotel_name) 
 
-                  if photo:
-                        facilities.photo = photo
+        if 'facility' in request.POST and 'description' in request.POST:
+            facility = request.POST['facility']
+            description = request.POST['description']
+            photo = request.FILES.get('photo')
 
-                  facilities.save()
-                  messages.success(request, "Your record has been successfully changed!")
-                  return redirect(request, 'hotel_view_facilities')
+            facilities = get_object_or_404(Facilities, id=id)
+            
+            facilities.facility = facility
+            facilities.description = description
+            if photo:
+                facilities.photo = photo
 
-      return render(request, 'hotels/update-hotel-facilities.html', {'hotel' : hotel})
+            facilities.save()
+            messages.success(request, "Your record has been successfully updated!")
+            return redirect('hotel_view_facilities')
+        else:
+            messages.error(request, "Missing facility or description in the request.")
+            # Redirect or render a response indicating the error
+        # Handle case where 'hotel_id' is not in session
+      return render(request, 'hotels/hotel-view-facilities.html')
+
