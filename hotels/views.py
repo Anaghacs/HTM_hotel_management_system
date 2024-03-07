@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max
+
 
 def hotel_signup(request):
       error = ""
@@ -43,14 +43,7 @@ def hotel_signup(request):
                   try:
                   #create hotel model and insert the data
                         if role == "HOTEL":
-                              # H1=Hotel.objects.filter(role = 'HOTEL').aggregate(
-                              #       last_hotel_number=Max('hotel_number')
-                              # )['last_hotel_number']
-
-
-
-                              # H1=customer.objects.filter(role = 'HOTEL')
-                              # hotels = Hotel.objects.create(hotel_name = hotel_name, address = address, place = place, phone = phone, emails = emails, photo = photo, user_name = username, password = password, role = role)
+                              
                               customer = Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
                               customer.save()
                               error = 'no'
@@ -60,40 +53,6 @@ def hotel_signup(request):
                         error = 'yes'
       content = {'error':error}
       return render(request,'hotels/hotel_signup.html',content)
-
-# def hotel_login(request):
-
-#       if request.method == "POST":
-#             username = request.POST['username']
-#             password = request.POST['password']
-
-#             # customer = auth.authenticate(username = username, password = password)
-#             # print("===============================", username, password)
-
-#             # customers = Hotel.objects.filter(username=username,password=password,approved=True)
-#             # if customers is not None:
-#             #       if customers.exists():
-#             #             auth.login(request,customer)
-#             #             return redirect(hotel_dashboard)      
-#             # else:
-#             #       messages.info(request,"your account is not approved! Please wait.")
-#             #       return redirect(hotel_login)
-
-#             try:
-#             # Query the database for the hotel user with the provided username and password
-#                   hotel = Hotel.objects.get(username=username, password=password, approved=True)
-#                   # print("===================================",username, password)
-#             except Hotel.DoesNotExist:
-#             # Hotel user with the provided credentials or approval status does not exist
-#                   messages.error(request, "Invalid credentials or account not approved.")
-#                   return redirect('hotel_login')
-
-#         # If hotel user exists and is approved, log in the user
-#             if hotel.role == 'HOTEL':
-#                   request.session['hotel_id'] = hotel.id
-#                   print("===================================",hotel.id)
-#                   return redirect('hotel_dashboard')
-#       return render(request,'hotels/hotel_login.html')
 
 
 def hotel_login(request):
@@ -176,8 +135,9 @@ def add_hotel_room(request):
       return render(request, 'hotels/add-hotel-rooms.html', {'hotel': hotel})
 
 
+@login_required
 def hotels_view_room_details(request):
-      # return render(request,'hotels/hotels_view_room_details.html')
+
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
             hotel = Hotel.objects.get(id = hotel_id)
@@ -189,6 +149,7 @@ def hotels_view_room_details(request):
       return render(request,'hotels/hotels_view_room_details.html', {'rooms' : rooms, 'hotel' : hotel})
 
 
+@login_required
 def delete_room(request, room_number):
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
@@ -206,6 +167,64 @@ def delete_room(request, room_number):
                   pass
       return redirect('hotels_view_room_details')
 
+
+@login_required
+def update_room_details(request, room_number):
+      if 'hotel_id' in request.session:
+            hotel_id = request.session['hotel_id']
+            hotel = get_object_or_404(Hotel, id = hotel_id)
+            
+            room = get_object_or_404(Room, room_number = room_number)
+            return render(request, 'hotels/update-hotel-room.html', {'room': room, 'hotel' : hotel})
+
+
+@login_required     
+def update_rooms(request, room_number):
+    # Check if 'hotel_id' exists in the session
+    if 'hotel_id' in request.session:
+        hotel_id = request.session['hotel_id']
+        hotel = get_object_or_404(Hotel, id=hotel_id)
+
+        # Check if the request method is POST
+        if request.method == "POST":
+            # Get the room details from the POST data
+            capacity = request.POST.get('capacity')
+            number_of_beds = request.POST.get('number_of_beds')
+            room_type = request.POST.get('room_type')
+            price = request.POST.get('price')
+            floor_number = request.POST.get('floor_number')
+            photo = request.FILES.get('photo')
+
+            # Get the room object to update
+            room = get_object_or_404(Room, room_number=room_number)
+
+            # Update room details
+            room.capacity = capacity
+            room.number_of_beds = number_of_beds
+            room.room_type = room_type
+            room.price = price
+            room.floor_number = floor_number
+
+            if photo:
+                room.photo = photo
+
+            room.save()
+            messages.success(request, "Your record has been successfully updated!")
+            return redirect('hotels_view_room_details')
+
+        else:
+            messages.error(request, "Missing field in the request.")
+            # Redirect or render a response indicating the error
+
+    else:
+        # Handle case where 'hotel_id' is not in session
+        # Redirect or render a response indicating the error
+        messages.error(request, "Hotel ID not found in session.")
+
+    return render(request, 'hotels/hotels_view_room_details.html', {'hotel': hotel})
+
+#add hotel facilities
+@login_required
 def add_hotel_facilities(request):
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
@@ -256,108 +275,6 @@ def hotel_delete_facilities(request, id):
                   pass
       return redirect('hotel_view_facilities',{'hotel' : hotel})
 
-# def update_room_details(request, room_number):
-#       if 'hotel_id' in request.session:
-#             hotel_id = request.session['hotel_id']
-#             hotel = get_object_or_404(Hotel, id = hotel_id)
-            
-#             room = get_object_or_404(Room, room_number = room_number)
-#             print("============================",room.room_number) 
-
-#             if request.method == 'POST':
-#                   capacity = request.POST.get('capacity')
-#                   number_of_beds = request.POST.get('number_of_beds')
-#                   room_type = request.POST.get('room_type')
-#                   price = request.POST.get('price')
-#                   floor_number = request.POST.get('floor_number')
-#                   photo = request.FILES.get('photo')
-
-#                   print("========================================",hotel.hotel_name, room_number,capacity,number_of_beds,room_type,price)
-
-#                   # Update the room objects
-#                   room.capacity = capacity
-#                   room.number_of_beds = number_of_beds
-#                   room.room_type = room_type
-#                   room.price = price
-#                   room.floor_number = floor_number
-#                   room.photo = photo
-
-#                   room.save()
-#                   print("===========================",room.room_number)
-
-#                   return redirect('hotels_view_room_details')
-
-#       return render(request,'hotels/update-hotel-room.html')
-
-def update_room_details(request, room_number):
-    if 'hotel_id' in request.session:
-        hotel_id = request.session['hotel_id']
-        hotel = get_object_or_404(Hotel, id = hotel_id)
-        print("============================", hotel.hotel_name) 
-
-        room = get_object_or_404(Room, room_number = room_number)
-
-      #   room = get_object_or_404(Room, room_number=room_number)
-        print("============================", room.room_number) 
-
-        if request.method == "POST":
-            room_number = request.POST.get('room_number')
-            capacity = request.POST.get('capacity')
-            number_of_beds = request.POST.get('number_of_beds')
-            room_type = request.POST.get('room_type')
-            price = request.POST.get('price')
-            floor_number = request.POST.get('floor_number')
-            photo = request.FILES.get('photo')
-            print("==============================",room_number,capacity,room_type,price)
-            print("==============================",capacity)
-            # print("========================================", hotel.hotel_name, room_number, capacity, number_of_beds, room_type, price)
-
-            # Update the room object
-            room.room_number = room_number
-            room.capacity = capacity
-            room.number_of_beds = number_of_beds
-            room.room_type = room_type
-            room.price = price
-            room.floor_number = floor_number
-            # room.photo = photo
-            if photo:
-                  room.photo = photo
-
-            room.save()
-            print("===========================", room.room_number)
-            messages.success(request, "Your record has been successfully changed!")
-
-            return redirect('hotels_view_room_details')
-
-    return render(request, 'hotels/update-hotel-room.html',{'hotel' : hotel})
-
-# def hotel_update_facilities(request, id):
-#       if 'hotel_id' in request.session:
-#             hotel_id = request.session['hotel_id']
-#             hotel = get_object_or_404(Hotel, id = hotel_id)
-#             print("============================", hotel.hotel_name) 
-
-#             facilities = get_object_or_404(Facilities, id = id)
-
-#       #   room = get_object_or_404(Room, room_number=room_number)
-#             print("============================", facilities.description)
-#             if request.method == "POST":
-#                   facility = request.POST.get('facilities')
-#                   description = request.POST.get('description')
-#                   photo = request.POST.get('photo')
-
-#                   facilities.facility = facility
-#                   facilities.description = description
-
-#                   if photo:
-#                         facilities.photo = photo
-
-#                   facilities.save()
-#                   messages.success(request, "Your record has been successfully changed!")
-#                   return redirect(request, 'hotel_view_facilities')
-
-#       return render(request, 'hotels/update-hotel-facilities.html', {'hotel' : hotel})
-
 
 def hotel_update_facilities(request, id):
       if 'hotel_id' in request.session:
@@ -384,6 +301,7 @@ def update_facilities(request, id):
             
             facilities.facility = facility
             facilities.description = description
+
             if photo:
                 facilities.photo = photo
 
@@ -395,4 +313,5 @@ def update_facilities(request, id):
             # Redirect or render a response indicating the error
         # Handle case where 'hotel_id' is not in session
       return render(request, 'hotels/hotel-view-facilities.html')
+
 
