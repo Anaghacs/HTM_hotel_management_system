@@ -80,17 +80,17 @@
 					                            <p style="color: red;">{{messages}}</p>
 				                            {% endfor %}<br>
 
-                                    <input type="text" name="hotel_name" placeholder="Hotel Name "><br>
-                                    <input type="text" name="address" placeholder="Address"><br>
-                                    <input type="text" name="place" placeholder="Place"><br>                                    
-                                    <input type="text" name="phone" placeholder="Phone No"><br>
-                                    <input type="email" name="emails" placeholder="Email"><br>
-                                    <input type="text" name="username" placeholder="Username"><br>
-                                    <input type="password" name="password" placeholder="Password"><br>
+                                    <input type="text" name="hotel_name" placeholder="Hotel Name" required><br>
+                                    <input type="text" name="address" placeholder="Address" required><br>
+                                    <input type="text" name="place" placeholder="Place" required><br>                                    
+                                    <input type="text" name="phone" placeholder="Phone No" required><br>
+                                    <input type="email" name="emails" placeholder="Email" required><br>
+                                    <input type="text" name="username" placeholder="Username" required><br>
+                                    <input type="password" name="password" placeholder="Password" required><br>
                                     <label style="color: white;">Upload Photo</label>
-                                    <input type="file" name="photo"><br><br>
+                                    <input type="file" name="photo" required><br><br>
                                     <label for="role">Type of User:</label><br>
-                                    <select id="role" name="role">
+                                    <select id="role" name="role" required>
                                           <option value="CUSTOMER">Customer</option>
                                           <option value="HOTEL">Hotel</option>
                                     </select><br><br>

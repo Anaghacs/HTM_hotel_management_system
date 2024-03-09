@@ -171,10 +171,13 @@
                                         </td>
                                         
                                         <td>
-                                          {% if not hotels.approved %}
-                                              <a class="btn btn-xs" href="{% url 'approve' i.id %}">Approve Hotel</a>
-                                          {% endif %}
-                                        </td>                                        
+                                            {% if not i.approved %}
+                                                <a class="btn btn-xs" href="{% url 'approve' i.id %}">Approve </a>
+                                            {% else %}
+                                                <a class="btn btn-xs" href="{% url 'block' i.id %}">Block</a>
+                                            {% endif %}
+                                        </td>
+                                                                                    
                                     </tr>
                                     {% endfor %}      
                                 </tbody>

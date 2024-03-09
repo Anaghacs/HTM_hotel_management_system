@@ -156,7 +156,7 @@
                                         <th class="align-middle" scope="col">Email</th>
                                         <th class="align-middle" scope="col">Phone</th>
                                         <th class="align-middle" scope="col">Photo</th>
-                                        <!-- <th class="align-middle" scope="col">Action</th> -->
+                                        <th class="align-middle" scope="col">Action</th>
 
                                     </tr>
                                 </thead>
@@ -172,11 +172,11 @@
                                             <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
                                         </td>
                                         
-                                        <!-- <td>
-                                          {% if hotels.approved %}
-                                              <a class="btn btn-xs" href="{% url 'approve' i.id %}">Block</a>
+                                        <td>
+                                          {% if i.approved %}
+                                              <a class="btn btn-xs" href="{% url 'block' i.id %}">Block</a>
                                           {% endif %}
-                                        </td>                                         -->
+                                        </td>                                        
                                     </tr>
                                     {% endfor %}      
                                 </tbody>

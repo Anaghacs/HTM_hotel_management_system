@@ -13,10 +13,10 @@ from django.contrib.auth.decorators import login_required
 def user_signup(request):
       if request.method == "POST":
             username = request.POST['username']
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            address = request.POST['address']
-            place = request.POST['place']
+            # first_name = request.POST['first_name']
+            # last_name = request.POST['last_name']
+            # address = request.POST['address']
+            # place = request.POST['place']
             emails = request.POST['email']
             password = request.POST['password1']
             confirm_password = request.POST['password2']
@@ -29,52 +29,54 @@ def user_signup(request):
                         messages.info(request,"username is already exist! Please try some other username.")
                         return redirect('user_signup')
 
-                  elif User.objects.filter(first_name = first_name).exists():
-                        messages.info(request,"firstname is already exist! Please try some other username.")
-                        return redirect('user_signup')
+                  # elif User.objects.filter(first_name = first_name).exists():
+                  #       messages.info(request,"firstname is already exist! Please try some other username.")
+                  #       return redirect('user_signup')
 
-                  elif User.objects.filter(last_name = last_name).exists():
-                        messages.info(request,"lastname is already exist! Please try some other username.")
-                        return redirect('user_signup')
+                  # elif User.objects.filter(last_name = last_name).exists():
+                  #       messages.info(request,"lastname is already exist! Please try some other username.")
+                  #       return redirect('user_signup')
 
                   elif User.objects.filter(email = emails).exists():
                         messages.info(request,"email address is already exist! Please try some other email address.")
                         return redirect('user_signup')
                   
-                  elif User.objects.filter(phone = phone).exists():
-                        messages.info(request,"phone number is already exist! Please try some other email address.")
-                        return redirect('user_signup')
+                  # elif User.objects.filter(phone = phone).exists():
+                  #       messages.info(request,"phone number is already exist! Please try some other email address.")
+                  #       return redirect('user_signup')
                   
 
                   elif username == "" or username == " ":
                         messages.info(request,"Username is not allowed space and blank space.")
                         return redirect('user_signup')
 
-                  elif first_name == "" or first_name == " ":
-                        messages.info(request,"firstname is not allowed blank space or space.")
-                        return redirect('user_signup')
+                  # elif first_name == "" or first_name == " ":
+                  #       messages.info(request,"firstname is not allowed blank space or space.")
+                  #       return redirect('user_signup')
 
-                  elif last_name == "" or last_name == " ":
-                        messages.info(request,"lastname is not allowed space and blank space.")
-                        return redirect('user_signup')
+                  # elif last_name == "" or last_name == " ":
+                  #       messages.info(request,"lastname is not allowed space and blank space.")
+                  #       return redirect('user_signup')
             
                   else:
                    
-                        try:
+                        # try:
                               if role == "CUSTOMER":
-                                    users=Customer.objects.create(username = username, password = password, address = address, place = place, emails = emails, phone = phone, role = role)
+                                    users=Customer.objects.create(username = username, password = password, emails = emails, phone = phone, role = role)
                                     users.save()
-                                    error = 'no'
-                        except:
-                              error = 'yes'
+                                    return redirect('user_login')
+                        # except:
             else:
-                  content = {'error':error}
 
                   messages.info(request,"password and confirm password is not equal ! please verify your password.")
                   return redirect('user_signup')
             
             # return redirect('/')
-      return render(request,'users/signup.html')
+      return render(request,'users/user_signup.html')
+
+# def user_signup(request):
+#       return render(request, 'users/user_signup.html')
+
 
 # #login then move user-home page
 def user_home(request):
@@ -108,6 +110,7 @@ def user_login(request):
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")  
       return render(request,'users/user_login.html')
+
 
 @login_required
 def user_logout(request):

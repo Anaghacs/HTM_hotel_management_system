@@ -72,7 +72,7 @@ def hotel_login(request):
       return render(request, 'hotels/hotel_login.html')
 
 
-@login_required
+# @login_required
 def logout(request):
     # Clear the session data
     request.session.flush()
@@ -84,7 +84,7 @@ def hotel_dashboard(request):
     if 'hotel_id' in request.session:
         hotel_id = request.session['hotel_id']
         try:
-            hotel = Hotel.objects.get(id=hotel_id)
+            hotel = Hotel.objects.get(id = hotel_id)
             customers = Customer.objects.all()
             return render(request, 'hotels/hotel_home.html', {'customers': customers, 'hotel': hotel})
         except Hotel.DoesNotExist:
@@ -94,7 +94,7 @@ def hotel_dashboard(request):
     # Redirect to login page if user is not authenticated
     return redirect('hotel_login')
 
-
+@login_required
 def add_hotel_room(request):
       print("===========================================hiiiiiiiiiii")
       if 'hotel_id' in request.session:
@@ -135,13 +135,13 @@ def add_hotel_room(request):
       return render(request, 'hotels/add-hotel-rooms.html', {'hotel': hotel})
 
 
-@login_required
+# @login_required
 def hotels_view_room_details(request):
 
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
-            hotel = Hotel.objects.get(id = hotel_id)
-            # hotel = get_object_or_404(Hotel, id = hotel_id)
+            # hotel = Hotel.objects.get(id = hotel_id)
+            hotel = get_object_or_404(Hotel, id = hotel_id)
 
             print("================================",hotel.hotel_name)
             rooms = Room.objects.filter(is_deleted = False, hotel = hotel)

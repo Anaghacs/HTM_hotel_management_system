@@ -4,11 +4,14 @@ from home.models import Hotel,User,Customer
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 # # Create your views here.
 
 def index(request):
-      return render(request,'commons/indexs.html')
+      hotels = Hotel.objects.all()
+
+      return render(request,'commons/indexs.html', {'hotels' : hotels})
 
 def login_admin(request):
       print("===============================")
@@ -37,18 +40,29 @@ def admin_home(request):
       # users = Customer.objects.all()
       return render(request,'admin/admin-dashboard.html',{'hotels':hotels})
 
+
 @login_required
 def admin_view_hotel(request):
       hotels = Hotel.objects.all()
       return render(request,'admin/admin-view-hotel.html',{'hotels':hotels})
 
+
 @login_required
 def approve(request,id):
 
-      hotels = Hotel.objects.get(id = id)
+      hotels = get_object_or_404(Hotel , id = id)
       hotels.approved = True
       hotels.save()
-      return render(request,"admin/admin_view_approved_hotels.html")
+      return redirect('admin_view_hotel')
+
+@login_required
+def block(request,id):
+      hotels= get_object_or_404(Hotel, id = id)
+      hotels.approved = False
+      hotels.save()
+      return redirect('admin_view_hotel')
+
+
 
 @login_required
 def approve_view_hotels(request):
