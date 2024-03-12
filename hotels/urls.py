@@ -20,6 +20,7 @@ urlpatterns = [
     path('Hotel/Update/Facilities/<int:id>/', views.hotel_update_facilities, name = 'hotel_update_facilities'),
     path('Hotel/Update/Facilitity/<int:id>/', views.update_facilities, name = 'update_facilities'),
 
+    path('Hotel/Avilable/Rooms', views.room_availability, name = "room_availability"),
 
 
 ]

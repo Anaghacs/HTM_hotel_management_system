@@ -315,3 +315,5 @@ def update_facilities(request, id):
       return render(request, 'hotels/hotel-view-facilities.html')
 
 
+def room_availability(request):
+     return render(request, 'hotels/room_availability.html')

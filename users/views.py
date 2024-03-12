@@ -1,13 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
-from home.models import Hotel,User,Customer
+from home.models import Hotel, User, Customer, Room
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
-
-
 
 #create signup for users.
 def user_signup(request):
@@ -74,13 +73,14 @@ def user_signup(request):
             # return redirect('/')
       return render(request,'users/user_signup.html')
 
-# def user_signup(request):
-#       return render(request, 'users/user_signup.html')
+def user_home(request):
+      hotels = Hotel.objects.all()
 
+      return render(request,'commons/indexs.html', {'hotels' : hotels})
 
 # #login then move user-home page
-def user_home(request):
-      return render(request,'commons/indexs.html')
+# def user_home(request):
+#       return render(request,'users/indexs.html')
 
 # #create user logout
 # def user_logout(request):
@@ -116,3 +116,17 @@ def user_login(request):
 def user_logout(request):
       logout(request)
       return redirect('index')
+
+def room_list(request, id):
+      hotel = get_object_or_404(Hotel, id = id)
+
+      rooms = Room.objects.filter(is_deleted = False, hotel = hotel)
+      return render(request, 'commons/room-list.html', {'hotel' : hotel,'rooms' : rooms})
+
+def room_reservation(request, room_number):
+
+      room = get_object_or_404(Room, room_number = room_number)
+      
+
+      # rooms = Room.objects.filter(is_deleted = False, hotel = hotel)
+      return render(request, 'commons/room-reservation.html', {'room' : room})

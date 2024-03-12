@@ -70,10 +70,12 @@ def approve_view_hotels(request):
       hotels = Hotel.objects.filter(approved = True)
       return render(request,"admin/admin_view_approved_hotels.html",{'hotels':hotels})
 
+
 @login_required
 def admin_view_customers(request):
       customers = Customer.objects.all()
       return render(request,"admin/admin_view_customers.html", {'customers':customers})
+
 
 @login_required
 def admin_logout(request):
