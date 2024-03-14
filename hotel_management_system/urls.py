@@ -26,6 +26,9 @@ urlpatterns = [
     path("",include('home.urls')),
     path("",include('hotels.urls')),
     path("",include('users.urls')),
+
+    #Social Authentication inbuild url
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

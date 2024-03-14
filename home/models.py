@@ -115,6 +115,21 @@ class Facilities(models.Model):
     def __str__(self):
         return str(self.facility)
     
+class Booking(models.Model):
+    customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
+    room = models.ForeignKey(Room, on_delete = models.CASCADE)
+    chech_in = models.DateTimeField()
+    check_out = models.DateTimeField()
+    guest_number = models.IntegerField()
+
+    # def __str__(self):
+    #     return str(self.customer)
+
+    def __str__(self):
+        return f"Booking for {self.customer} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"
+
+
+    
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

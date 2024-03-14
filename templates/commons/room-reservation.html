@@ -73,35 +73,43 @@
               <div class="col-lg-4">
                   <div class="room-booking">
                       <h3>Your Reservation</h3>
-                      <form action="#">
+                      <form method="post" action="{% url 'check_room_availability' room.room_number %}">
+                        {% csrf_token %}
                           <div class="check-date">
                               <label for="date-in">Check In:</label>
-                              <input type="text" class="date-input" id="date-in">
-                              <i class="icon_calendar"></i>
+                              <input type="datetime-local" class="date-input" id="date-in" name="check_in">
+                              <!-- <input type="time" class="date-input" id="date-in"> -->
+
+                              <!-- <i class="icon_calendar"></i> -->
                           </div>
                           <div class="check-date">
                               <label for="date-out">Check Out:</label>
-                              <input type="text" class="date-input" id="date-out">
-                              <i class="icon_calendar"></i>
+                              <input type="datetime-local" class="date-input" id="date-out" name="check_out">
+                              <!-- <i class="icon_calendar"></i> -->
                           </div>
-                          <div class="select-option">
-                              <label for="guest">Guests:</label>
-                              <select id="guest">
-                                  <option value="">3 Adults</option>
-                              </select>
-                          </div>
-                          <div class="select-option">
-                              <label for="room">Room:</label>
+
+                          <!-- <div class="check-date">
+                              <label for="date-out">Guest:</label>
+                              <input type="text" class="date-input" id="date-out" name="guest_number">
+                          </div> -->
+                          
+                          <!-- <div class="select-option">
+                              <label for="room">Room Type:</label>
                               <select id="room">
-                                  <option value="">1 Room</option>
+                                  <option value="">King</option>
+                                  <option value="">Luxury</option>
+                                  <option value="">Normal</option>
+                                  <option value="">Economic</option>
                               </select>
-                          </div>
-                          <button type="submit">Check Availability</button>
+                          </div> -->
+                          <button type="submit" >Check Availability</button>
+
                       </form>
                   </div>
               </div>
           </div>
       </div>
+
   </section>
   <!-- Room Details Section End -->
 {% endblock content%}
