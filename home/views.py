@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages,auth
-from home.models import Hotel,User,Customer
+from home.models import Hotel, User, Customer, Facilities
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,8 +10,9 @@ from django.shortcuts import get_object_or_404
 
 def index(request):
       hotels = Hotel.objects.all()
+      # facilities = Facilities.objects.filter(hotels = hotels)
 
-      return render(request,'commons/indexs.html', {'hotels' : hotels})
+      return render(request,'commons/indexs.html', {'hotels' : hotels, })
 
 def login_admin(request):
       print("===============================")
@@ -36,9 +37,15 @@ def login_admin(request):
 
 @login_required
 def admin_home(request):
+      # Fetch the currently logged-in user
+      current_user = request.user
+
+    # Assuming the username is stored in a field called 'username'
+      admin_username = current_user.username
+
       hotels = Hotel.objects.all()
       # users = Customer.objects.all()
-      return render(request,'admin/admin-dashboard.html',{'hotels':hotels})
+      return render(request,'admin/admin-dashboard.html',{'hotels': hotels, 'admin_username': admin_username})
 
 
 @login_required

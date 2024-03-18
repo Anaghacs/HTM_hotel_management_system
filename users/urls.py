@@ -10,5 +10,6 @@ urlpatterns = [
     path('User/Room/View/<int:id>/', views.room_list, name = "room_list"),
     path('User/Room/Reservation/<int:room_number>/', views.room_reservation, name = "room_reservation"),
     path('User/Check/Availability/<int:room_number>/', views.check_room_availability, name = "check_room_availability"),
-
+    path('User/Room/Booking/<int:room_number>/', views.room_booking, name = "room_booking"),
+    path('User/Booking/Confirmation', views.booking_confirmation, name = "booking_confirmation"),
 ]

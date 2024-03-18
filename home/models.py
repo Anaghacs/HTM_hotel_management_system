@@ -118,7 +118,7 @@ class Facilities(models.Model):
 class Booking(models.Model):
     customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     room = models.ForeignKey(Room, on_delete = models.CASCADE)
-    chech_in = models.DateTimeField()
+    check_in = models.DateTimeField()
     check_out = models.DateTimeField()
     guest_number = models.IntegerField()
 

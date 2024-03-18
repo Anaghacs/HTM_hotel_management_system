@@ -1,1 +1,116 @@
-<h1>welcome</h1>
+
+{% load static %}
+{% include 'commons/base.html' %}
+{% include 'commons/navigation.html' %}
+{% block content%}
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="breadcrumb-text">
+                      <h2>{{room.room_type}} Room Booking</h2>
+                      <div class="bt-option">
+                          <a href="./home.html">Home</a>
+                          <span>Rooms</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Breadcrumb Section End -->
+
+  <!-- Room Details Section Begin -->
+  <section class="room-details-section spad">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8">
+                  
+                  <div class="room-details-item">
+
+                      <img src="{{ room.photo.url }}" alt="">
+                      <div class="rd-text">
+
+                          <div class="rd-title">
+                              <h3>Premium {{room.room_type}} Room</h3>
+                              <!-- <div class="rdt-right">
+                                  <div class="rating">
+                                      <i class="icon_star"></i>
+                                      <i class="icon_star"></i>
+                                      <i class="icon_star"></i>
+                                      <i class="icon_star"></i>
+                                      <i class="icon_star-half_alt"></i>
+                                  </div>
+                                  <a href="{% url 'room_booking' room.room_number%}">Booking Now</a>
+                              </div> -->
+                          </div>
+                          <h2>{{room.price}}$<span>/Pernight</span></h2>
+                          <table>
+                              <tbody>
+                                    <tr>
+                                          <td class="r-o">Hotel:</td>
+                                          <td>{{room.hotel}}</td>
+                                      </tr>
+                                  <tr>
+                                      <td class="r-o">Size:</td>
+                                      <td>30 ft</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="r-o">Capacity:</td>
+                                      <td>{{room.capacity}} persons</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="r-o">Bed:</td>
+                                      <td>{{room.number_of_beds}} King Beds</td>
+                                  </tr>
+                                  <tr>
+                                      <td class="r-o">Services:</td>
+                                      <td>Wifi, Television, Bathroom,...</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                  <!-- <div class="rd-reviews">     
+                  </div>       -->
+              </div>
+              <div class="col-lg-4">
+                  <div class="room-booking">
+                      <h3>Booking</h3>
+                      <form method="post" action="{% url 'room_booking' room.room_number %}">
+                        {% csrf_token %}
+                          <div class="check-date">
+                              <label for="date-in">Check In:</label>
+                              <input type="datetime-local" class="date-input" id="date-in" name="check_in" required>
+                          </div>
+                          <div class="check-date">
+                              <label for="date-out">Check Out:</label>
+                              <input type="datetime-local" class="date-input" id="date-out" name="check_out" required>
+                              <!-- <i class="icon_calendar"></i> -->
+                          </div>
+
+                          <div class="check-date">
+                              <label for="date-out">Guest:</label>
+                              <input type="text" class="date-input" id="date-out" name="guest_number">
+                          </div>
+                          {% for messages in messages %}
+                                    <div class="mb-3">
+                                        <p style="color: red;">{{messages}}</p>
+                                    </div>
+				                {% endfor %}
+                          
+                          <button type="submit" >Booking Now</button>  
+                       
+
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </section>
+  <!-- Room Details Section End -->
+{% endblock content%}
+
+{% include 'commons/footer.html' %}
