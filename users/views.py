@@ -57,6 +57,7 @@ def user_signup(request):
       return render(request,'users/user_signup.html')
 
 def user_home(request):
+
       hotels = Hotel.objects.all()
       # Fetch the currently logged-in user
       current_user = request.user
@@ -65,7 +66,7 @@ def user_home(request):
       customer_username = current_user.username
 
       # return render(request,'commons/indexs.html', {'hotels' : hotels})
-      return render(request, 'users/index.html', {'customer_username' : customer_username})
+      return render(request, 'users/index.html', {'customer_username' : customer_username, 'hotels' : hotels})
 
 
 def user_login(request):
