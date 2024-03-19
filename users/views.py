@@ -56,62 +56,26 @@ def user_signup(request):
             
       return render(request,'users/user_signup.html')
 
-# def user_home(request):
 
-#       hotels = Hotel.objects.all()
-#       # Fetch the currently logged-in user
-#       current_user = request.user
-
-#     # Assuming the username is stored in a field called 'username'
-#       customer_username = current_user.username
-
-#       # return render(request,'commons/indexs.html', {'hotels' : hotels})
-#       return render(request, 'users/index.html', {'customer_username' : customer_username, 'hotels' : hotels})
 
 def user_home(request):
-    if 'customer_id' in request.session:
-        customer_id = request.session['customer_id']
-        try:
-            customer_username = Customer.objects.get(id = customer_id)
-            hotels = Hotel.objects.all()
+      if 'customer_id' in request.session:
+            customer_id = request.session['customer_id']
+            try:
+                  customer_username = Customer.objects.get(id = customer_id)
+                  hotels = Hotel.objects.all()
 
-            # customers = Customer.objects.all()
-            return render(request, 'users/index.html', {'customer_username': customer_username, 'hotels' : hotels})
-        except customer_username.DoesNotExist:
-            # Handle case where hotel with given ID does not exist
-            del request.session['customer_id']
+                  # customers = Customer.objects.all()
+                  return render(request, 'users/index.html', {'customer_username': customer_username, 'hotels' : hotels})
+            
+            
+            except customer_username.DoesNotExist:
+                  # Handle case where hotel with given ID does not exist
+                  del request.session['customer_id']
     
-    # Redirect to login page if user is not authenticated
-    return redirect('user_login')
+      # Redirect to login page if user is not authenticated
+      return redirect('user_login')
 
-# def user_login(request):
-#     print("==================================")
-#     if request.method == "POST":
-#         username = request.POST['username']
-#         password = request.POST['password']
-
-#         # Authenticate the user
-#         customer = auth.authenticate(username=username, password=password)
-#         print("===============================", username, password)
-#         print("===============================", customer)
-
-
-
-#         if customer is not None:
-#             # Check if the user is a customer
-#             if customer.role == 'CUSTOMER':
-#                 # Log in the user
-#                 auth.login(request,customer)
-#                 # Redirect to user home page
-#                 return redirect('user_home')
-#             else:
-#                 # If the user is not a customer, show a message
-#                 messages.info(request, "Only customers are allowed to log in.")
-#         else:
-#             # If authentication fails, show a message
-#             messages.info(request, "Username and password do not match any registered user.")
-
-#     return render(request, 'users/user_login.html')
 
 def user_login(request):
       print("=================================")
@@ -155,68 +119,82 @@ def room_reservation(request, room_number):
 
 #customer check_availability
 def check_room_availability(request, room_number):
-    print("================================")
-    room = get_object_or_404(Room, room_number = room_number)
+      print("================================")
+      room = get_object_or_404(Room, room_number = room_number)
 
-    if request.method == 'POST':
-        # Form submitted; handle the data
-        check_in = request.POST.get('check_in')
-        check_out = request.POST.get('check_out')
+      if request.method == 'POST':
+            # Form submitted; handle the data
+            check_in = request.POST.get('check_in')
+            check_out = request.POST.get('check_out')
 
-        print("===================================", check_in, check_out, room)
-        overlapping_bookings = Booking.objects.filter(room = room, check_in = check_in, check_out = check_out)
+            print("===================================", check_in, check_out, room)
+            overlapping_bookings = Booking.objects.filter(room = room, check_in = check_in, check_out = check_out)
         
-        if overlapping_bookings.exists():
-            messages.warning(request, "Room is not available! Please change date.")
+            if overlapping_bookings.exists():
+                  messages.warning(request, "Room is not available! Please change date.")
 
-        else:
-            # After processing, render a response
-            messages.success(request, "Room is available")
+            else:
+                  # After processing, render a response
+                  messages.success(request, "Room is available")
 
-            return render(request, 'commons/room-reservation.html')
+                  return render(request, 'commons/room-reservation.html')
     
-    # If it's not a POST request or there's an overlapping booking, render the form
-    return render(request, 'commons/room-reservation.html', {'room': room})
+      # If it's not a POST request or there's an overlapping booking, render the form
+      return render(request, 'commons/room-reservation.html', {'room': room})
 
-#customer booking_confirmation  
+# #customer booking_confirmation  
+# def booking_confirmation(request):
+# #     booking = get_object_or_404(Booking, )
+#     return render(request, 'commons/booking_confirmation.html')
+
 def booking_confirmation(request):
-    return render(request, 'commons/booking_confirmation.html')
 
+      if 'customer_id' in request.session:
+            customer_id = request.session['customer_id']
+            # hotel = Hotel.objects.get(id = hotel_id)
+            customer = get_object_or_404(Customer, id = customer_id)
+
+
+            print("================================",customer.username)
+            booking = Booking.objects.filter( customer = customer)
+            print("==========================================",booking)
+      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' : customer})
 
 def room_booking(request, room_number):
-      print("===========================================hiiiiiiiiiii")
-      if 'customer_id' in request.session:
-        
+      try:
             customer_id = request.session['customer_id']
-            print("=============================================",customer_id)
-            # hotel = Hotel.objects.get(id=hotel_id)
-            customer = get_object_or_404(Customer, id = customer_id)
-            room = get_object_or_404(Room, room_number = room_number)
-
-
-            print("==============================",customer.username)
+            customer = Customer.objects.get(id=customer_id)
+            room = Room.objects.get(room_number=room_number)
 
             if request.method == "POST":
-            
                   check_in = request.POST['check_in']
                   check_out = request.POST['check_out']
                   guest_number = request.POST['guest_number']
                   
-
-                  print("========================================",customer.username,)
                   booking = Booking.objects.create(
-                        customer = customer,
-                        check_in = check_in,
-                        check_out = check_out,
-                        guest_number = guest_number,
-                        room= room,
-                        
+                  customer=customer,
+                  check_in=check_in,
+                  check_out=check_out,
+                  guest_number=guest_number,
+                  room=room,
                   )
                   booking.save()
                   messages.success(request, "Your booking record has been successfully added!")
-
                   return redirect('booking_confirmation')
-            
-      return render(request, 'commons/booking.html', {'room': room, } )
 
+            return render(request, 'commons/booking.html', {'room': room,})
 
+      except KeyError:
+        # If 'customer_id' is not found in session, user is not logged in
+        # Redirect to login page or handle the situation accordingly
+            return redirect('user_login')
+      except Customer.DoesNotExist:
+        # Handle the case where the customer does not exist
+        # This could happen if the session contains an invalid customer_id
+            return redirect('user_login')  # Redirect to login page or handle differently
+      except Room.DoesNotExist:
+        # Handle the case where the room does not exist
+        # This could happen if the room_number provided is invalid
+        messages.error(request, "The room you are trying to book does not exist.")
+        return redirect('room_booking')  # Redirect to booking page or handle differently
+      
