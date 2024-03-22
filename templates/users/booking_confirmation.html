@@ -16,45 +16,42 @@
   <section class="rooms-section spad">
       <div class="container">
           <div class="row">
-            {% for i in booking %}
               <div class="col-lg-4 col-md-6">
                   <div class="room-item">
-                      <img src="{{ i.room.photo.url }}" alt="">
+                      <img src="{{ booking.room.photo.url }}" alt="">
                       <div class="ri-text">
-                          <h3>{{i.room.hotel.hotel_name}} Hotel</h3>
+                          <h3>{{booking.room.hotel.hotel_name}} Hotel</h3>
 
                           <table>
                               <tbody>
                                   
                                   <tr>
                                       <td class="r-o">Room Type:</td>
-                                      <td>{{i.room.room_type}}</td>
+                                      <td>{{booking.room.room_type}}</td>
                                   </tr>
                                   <tr>
                                       <td class="r-o">Check In :</td>
-                                      <td>{{i.check_in}}</td>
+                                      <td>{{booking.check_in}}</td>
                                   </tr>
                                   <tr>
                                       <td class="r-o">Check Out :</td>
-                                      <td>{{i.check_out}}</td>
+                                      <td>{{booking.check_out}}</td>
                                   </tr>
                                   <tr>
                                     <td class="r-o">Guest Number:</td>
-                                    <td>{{i.guest_number}}</td>
-                                  </tr>
+                                    <td>{{booking.guest_number}}</td>
+                                   </tr>
                                   <tr>
                                     <td class="r-o">Price :</td>
-                                    <td style="color: rgb(197, 95, 95);" >{{i.room.price}} $/Perday</td>
+                                    <td style="color: rgb(197, 95, 95);" >{{booking.room.price}} $/Perday</td>
                                 </tr>
                                   
                               </tbody>
-                          </table>
-                          <a href="{% url 'confirmation' i.id %}"  class="btn btn-primary">Confirmation</a>
-                          <!-- <a  class="btn btn-primary" id="rzp-button1"  >Pay</a> -->
+                            </table>
+                          <a  class="btn btn-primary" id="rzp-button1"  >Pay {{ amount }}</a>
                       </div>
                   </div>
               </div> 
-              {% endfor %}
 
           </div>
       </div>
@@ -63,17 +60,19 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 var options = {
-    "key": "rzp_test_NcFQDSHN7XYIPQ", // Enter the Key ID generated from the Dashboard
+    "key": "rzp_test_NcFQDSHN7XYIPQ", // Enter the Key ID generated from the Dashboard rzp_test_8cTRaG2qyqmSGG
     "amount": "{{payment.amount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
-    "name": "Foxdale", //your business name
+    "name": "Sona", //your business name
     "description": "Test Transaction",
     "image": "{% static 'assets/img/footerlogo.png' %}",
     "order_id": "{{payment.id}}", //This is a sample Order ID. Pass the id obtained in the response of Step 1
     "handler": function (response){
 
         console.log('success')
-        window.location.href = /success/?Order_id=${response.razorpay_order_id}
+        window.location.href = `/success/?Order_id=${response.razorpay_order_id}`
+
+        
       
   },
     
@@ -84,16 +83,16 @@ var options = {
 var rzp1 = new Razorpay(options);
 rzp1.on('payment.failed', function (response){
     console.log('failed')
-    window.location.href = /failed/?Order_id=${response.error.metadata.order_id}&reason=${response.error.reason}&code=${response.error.code}&source=${response.error.source}&step=${response.error.step}&payment_id=${response.error.metadata.payment_id}
+    // window.location.href = `/failed/?Order_id=${response.error.metadata.order_id}&reason=${response.error.reason}&code=${response.error.code}&source=${response.error.source}&step=${response.error.step}&payment_id=${response.error.metadata.payment_id}`
 
 
-        //alert(response.error.code);
-        //alert(response.error.description);
-        //alert(response.error.source);
-       // alert(response.error.step);
-        //alert(response.error.reason);
-        //alert(response.error.metadata.order_id);
-        //alert(response.error.metadata.payment_id);
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
 });
 document.getElementById('rzp-button1').onclick = function(e){
     rzp1.open();

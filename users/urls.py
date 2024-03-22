@@ -12,4 +12,11 @@ urlpatterns = [
     path('User/Check/Availability/<int:room_number>/', views.check_room_availability, name = "check_room_availability"),
     path('User/Room/Booking/<int:room_number>/', views.room_booking, name = "room_booking"),
     path('User/Booking/Confirmation/', views.booking_confirmation, name = "booking_confirmation"),
+    path('confirmation/<int:id>/', views.confirmation, name = "confirmation"),
+    # path("payment/", views.order_payment, name = "payment"),
+#     path("callback/", views.callback, name = "callback"),
+
+    path('success/',views.paymentsuccess,name="success"),
+    # path('failed/',views.paymentfaild,name="failed"),
 ]
+ 

@@ -4,8 +4,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import uuid 
 uuid.uuid4()
-
-
+from django.utils.translation import gettext_lazy as _
+# from .constants import PaymentStatus
+from django.db.models.fields import CharField
 
 class User(AbstractUser):
     class Role(models.TextChoices):
@@ -95,7 +96,8 @@ class Room(models.Model):
     capacity = models.SmallIntegerField()
     number_of_beds = models.SmallIntegerField()
     room_type = models.CharField(max_length=20, choices=ROOM_TYPES)
-    price = models.FloatField()
+    price = models.CharField(max_length=7,null=True,blank=True)
+
     floor_number = models.IntegerField()
     photo = models.ImageField(upload_to = 'media', blank = True, null = True)
     is_deleted = models.BooleanField(default = False)
@@ -127,11 +129,78 @@ class Booking(models.Model):
     # def __str__(self):
     #     return str(self.customer)
 
+
+
     def __str__(self):
         return f"Booking for {self.customer} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"
 
 
+class Order(models.Model):
+    # name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
+    # amount = models.FloatField(_("Amount"), null=False, blank=False)
+    # status = CharField(
+    #     _("Payment Status"),
+    #     default=PaymentStatus.PENDING,
+    #     max_length=254,
+    #     blank=False,
+    #     null=False,
+    # )
+    # provider_order_id = models.CharField(
+    #     _("Order ID"), max_length=40, null=False, blank=False
+    # )
+    # payment_id = models.CharField(
+    #     _("Payment ID"), max_length=36, null=False, blank=False
+    # )
+    # signature_id = models.CharField(
+    #     _("Signature ID"), max_length=128, null=False, blank=False
+    # )
+
+    # def __str__(self):
+    #     return f"{self.id}-{self.name}-{self.status}"
+
+    customer = models.CharField(max_length=40,null=True,blank=True)
+    email_id =models.CharField(max_length=150,null=True,blank=True)
+    room_id = models.CharField(max_length=8)
+    finder = models.CharField(max_length=150,null=True,blank=True)
+    razorpay_order_id = models.CharField(max_length=60)
+    signature_id = models.CharField(max_length=128, null=False, blank=False)
+    # provider_order_id = models.CharField( max_length=40, null=False, blank=False)
+    amount = models.CharField(max_length=7,null=True,blank=True)
+    paid_amount = models.BooleanField(default=False)
+    status = models.CharField(max_length=20,blank=True)
+    hotel = models.CharField(max_length=50,null=True,blank=True)
+    boock_date = models.DateTimeField(auto_now_add=True)
+    reason=models.CharField(max_length=250,null=True,blank=True)
+    code=models.CharField(max_length=250,null=True,blank=True)
+    source=models.CharField(max_length=250,null=True,blank=True)
+    step=models.CharField(max_length=250,null=True,blank=True) 
+
+
+    def _str_(self):
+            return f"{self.customer}  {self.email_id}  {self.status}  {self.amount}  {self.room_id}  {self.order_id}  {self.signature_id}  {self.ordered_date} {self.razorpay_order_id} {self.reason} {self.code} {self.source} {self.step} {self.payment_id} "
     
+# bro nthina ee course and reason step code field ok html ill njan edaan paranja code coppy cheyy whatsapp nokk
+# class PaymentFailed(models.Model): 
+#       order_id=models.CharField(max_length=250)
+#       reason=models.CharField(max_length=250)
+
+#       code=models.CharField(max_length=250)
+
+#       source=models.CharField(max_length=250)
+
+#       step=models.CharField(max_length=250)
+
+#       payment_id=models.CharField(max_length=250)
+
+#       date_time=models.DateTimeField(auto_now_add=True)
+
+#       def _str_(self):
+#             return f"{self.order_id} {self.reason} {self.code} {self.source} {self.step} {self.payment_id} {self.date_time}"
+      
+     
+
+
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

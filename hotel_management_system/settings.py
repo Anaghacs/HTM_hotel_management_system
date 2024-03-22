@@ -194,3 +194,16 @@ SOCIALACCOUNT_PROVIDERS = {
         'FETCH_USERINFO' : True
     }
 }
+
+#Razorpay downloaded api keys setup in setting.py
+
+# anagha api 
+# KEY = "rzp_test_8cTRaG2qyqmSGG"
+# SECRET = "lPhtD4Guxq3dUurYJLs9OwXi"
+
+
+
+# akash api 
+KEY = "rzp_test_NcFQDSHN7XYIPQ"
+
+SECRET = "5HJdpdQXAv7DHYov2PdC2MTh"

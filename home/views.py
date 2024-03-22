@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages,auth
-from home.models import Hotel, User, Customer, Facilities
+from home.models import Hotel, Customer 
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -33,7 +33,8 @@ def login_admin(request):
                         return redirect(admin_home)        
             else:
                   messages.info(request,"Username and password is not registered! Please signup first.")  
-      return render(request,'admin/page-account-login.html')
+      return render(request,'admin/admin_login.html')
+
 
 @login_required
 def admin_home(request):
@@ -45,22 +46,26 @@ def admin_home(request):
 
       hotels = Hotel.objects.all()
       # users = Customer.objects.all()
-      return render(request,'admin/admin-dashboard.html',{'hotels': hotels, 'admin_username': admin_username})
+      return render(request,'admin/admin-dashboard.html',{'hotels' : hotels, 'admin_username' : admin_username})
 
 
 @login_required
 def admin_view_hotel(request):
+      current_user = request.user
+
+      admin_username = current_user.username
       hotels = Hotel.objects.all()
-      return render(request,'admin/admin-view-hotel.html',{'hotels':hotels})
+      return render(request,'admin/admin-view-hotel.html',{'hotels' : hotels, 'admin_username' : admin_username})
 
 
 @login_required
 def approve(request,id):
-
+      
       hotels = get_object_or_404(Hotel , id = id)
       hotels.approved = True
       hotels.save()
       return redirect('admin_view_hotel')
+
 
 @login_required
 def block(request,id):
@@ -70,18 +75,23 @@ def block(request,id):
       return redirect('admin_view_hotel')
 
 
-
 @login_required
 def approve_view_hotels(request):
+      current_user = request.user
+
+      admin_username = current_user.username
 
       hotels = Hotel.objects.filter(approved = True)
-      return render(request,"admin/admin_view_approved_hotels.html",{'hotels':hotels})
+      return render(request,"admin/admin_view_approved_hotels.html",{'hotels' : hotels, 'admin_username' : admin_username})
 
 
 @login_required
 def admin_view_customers(request):
+      current_user = request.user
+
+      admin_username = current_user.username
       customers = Customer.objects.all()
-      return render(request,"admin/admin_view_customers.html", {'customers':customers})
+      return render(request,"admin/admin_view_customers.html", {'customers' : customers, 'admin_username' : admin_username})
 
 
 @login_required
