@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.gitlab',
     # 'allauth.socialaccount.providers.facebook',
+
+    #pdf downloader
+    # 'wkhtmltopdf'
 ]
 
 MIDDLEWARE = [
@@ -200,7 +203,6 @@ SOCIALACCOUNT_PROVIDERS = {
 # anagha api 
 # KEY = "rzp_test_8cTRaG2qyqmSGG"
 # SECRET = "lPhtD4Guxq3dUurYJLs9OwXi"
-
 
 
 # akash api 

@@ -1,5 +1,6 @@
 from time import timezone
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages,auth
@@ -11,7 +12,18 @@ from datetime import datetime
 from django.utils import timezone
 
 import razorpay
+
+import os
+
+GTK_FOLDER=r"C:\Program Files\GTK3-Runtime Win64\bin"
+os.environ['PATH'] = GTK_FOLDER
+
+
+from django.template.loader import render_to_string
+from weasyprint import HTML
+
 # Create your views here.
+
 
 
 #create signup for users.
@@ -219,6 +231,13 @@ def confirmation(request, id):
             }
     return render(request, 'users/booking_confirmation.html', context )
 
+# rand functions anthaa ? orenam comment arnu bro change cheythath ale
+# athu kandu atha chothiche first cheythile meddium site ok nokit aacode ok comments il anu vechiryune comment cheyth vachall work avillaa ela avathillanna njanum paranjath njn bro inle cheytha bhagth onum cheythit ela.njn pdf and view cheyonath mathre nokiyulu thazhathe def anthinulleyaa aaaa ok 
+
+# 
+
+
+# 
 def booking_confirmation(request):
 
       if 'customer_id' in request.session:
@@ -230,9 +249,8 @@ def booking_confirmation(request):
             print("================================",customer.username)
             booking = Booking.objects.filter( customer = customer)
             print("==========================================",booking)
-            # email=customer.emails
+            email=customer.emails
             # room= booking.room.room_number
-            # print("===========================",email,room)
             # try: 
                   
             #       counter = 1
@@ -255,7 +273,6 @@ def booking_confirmation(request):
             # coupens_percentege=request.session.get('coupen_percentage',None)
             
             
-            # ith anu function ok no raksha
                   
             # finder= request.session.get('finder',None)
             # orders=Order(customer=customer,room_id=booking.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=customer.emails,finder=finder,hotel=booking.room.hotel)
@@ -279,7 +296,6 @@ def booking_confirmation(request):
             #       'booking' : booking, 
             #       'customer' : customer
 
-            # }
       
       return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer} )
 
@@ -304,6 +320,7 @@ def room_booking(request, room_number):
                   booking.save()
                   messages.success(request, "Your booking record has been successfully added!")
                   return redirect('booking_confirmation')
+            # confirmation ale function booki_cofirmation alalo
 
             return render(request, 'commons/booking.html', {'room': room,})
 
@@ -383,7 +400,7 @@ def room_booking(request, room_number):
 #         del request.session['percentage']
 #         del request.session['final_price']
 #         request.session.save()
-#         print("deleted")
+#         print("deleted") ee function comment cheyth nk
 
 #     return render(request,"checkout.html",context)
 # booking id vende ss aaa a booking id get cheyth eduthal room id customer id kitile booking i undo in build ayit create cheyomo oru id get cheytha edutha mathi but model il booking id store cheyan ou filed vende wait
@@ -456,18 +473,27 @@ def room_booking(request, room_number):
 #     return render(request,"paymentfaild.html",{'order_id': order_id})
 
 def paymentsuccess(request):
+    
 #     if not request.user.is_authenticated:
 #         messages.warning(request,"Login & Try Again")
 #         return redirect('register:login')
     
+#     ithalle lathe but noki nok ok pdf evidannalle vendath aaaa
+    
     order_id=request.GET.get('Order_id')
+    print(type(order_id))
     customer_id = request.session['customer_id']
     customer = Customer.objects.get(id=customer_id)
     orders=Order.objects.get(razorpay_order_id=order_id)
+    
+#     alogikkanam... but filter cheyth athinn edukkam .but evidelum section create cheythittillee customer il .oru customer onnilkooduthall tavana oree room book cheythall ath errorr adikkumo arijuda check cheyanm ith enganeya eduthath athupole eduthall mathiii ok oru mint bro onu check cheyth nokte payment avunudon ok ok set bro.onukudi login cheyth noknuo ini..? nokkunnell nokkikkoo no issue enikk pine undlo pdf download akumbo nthe content ok mari varune bro ku ariyo pdf akkumpoll aligin sredhikkanam njan 185 downloads cheythann aligin sheri akkiyath :) apo ithil ntha cheya???
     print(orders)
     orders.paid_amount= True
     orders.status = "paid"
     orders.save()
+   
+
+
 #     try:
         # time=timezone.now()
         
@@ -551,4 +577,39 @@ def paymentsuccess(request):
 #             print("something went wrong")
 #             print(f"Error sending email: {e}")
 #             return redirect('tedsilapp:somethingwentwrong')
-    return render(request,"users/paymentsuccess.html") 
+    return render(request,"users/paymentsuccess.html", {'orders':orders}) 
+#bro room ntype and hotel details get cheyan function il argument ay pass cheyande??? already customerintell avar book cheyyunna rooms save avumalloo....then  bookings ena table il anu svae avune
+
+
+
+
+def booking_details_pdf(request):
+
+      try:
+            order_id=request.GET.get('Order_id')
+
+
+
+            if Order.objects.filter(razorpay_order_id=order_id).exists():
+                  order =Order.objects.get(razorpay_order_id=order_id)
+
+
+                  # Render HTML template with data
+                  html_string = render_to_string('users/booking_pdf.html', {'order': order})
+
+                  # Create PDF from HTML string
+                  # pdf_file = HTML(string=html_string).write_pdf()
+                  html = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+
+                   # Set response type as PDF
+            response = HttpResponse(html, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="booking_confirmation.pdf"'
+
+            return response
+      except Order.DoesNotExist:
+            print("Order not found in table")
+      return render(request,"users/booking_pdf.html")
+
+
+            
+
