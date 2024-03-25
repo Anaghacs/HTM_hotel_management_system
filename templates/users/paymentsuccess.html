@@ -1,4 +1,5 @@
-<h1>Booking details</h1>
+
+
 
 <p>{{ orders.razorpay_order_id}}</p>
 
@@ -117,14 +118,25 @@ margin-top:20px;
       </style>
 </head>
 <body>
-
+      
 
       
-            <!-- <div>
-                  <div class="text-center mt-5 mb-5" style="">
+      
+            <div>
+                  <div class="text-center mt-5 mb-5" >
                         <h2>Booking Confirmed</h2>
                   </div>
-            </div> -->
+                  <div >
+                        <a href=""><button>Go To Home</button></a>
+                        <!-- <button></button> -->
+                        <form action="{% url 'booking_details_pdf' %}" method="get">
+                              <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
+                              <button type="submit">Download PDF</button>
+                          </form>
+
+                  </div>
+                  
+            </div>
             
                   <div class="col-md-12">   
                         <div class="row">
@@ -139,10 +151,7 @@ margin-top:20px;
                                                      </div>
                                                      <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                                                            <div class="receipt-right">
-                                                                 <h5>Company Name.</h5>
-                                                                 <p>+1 3649-6589 <i class="fa fa-phone"></i></p>
-                                                                 <p>company@gmail.com <i class="fa fa-envelope-o"></i></p>
-                                                                 <p>USA <i class="fa fa-location-arrow"></i></p>
+                                                                 <h5>Hotel Name : {{orders.hotel}}</h5>
                                                            </div>
                                                      </div>
                                                </div>
@@ -152,15 +161,15 @@ margin-top:20px;
                                                <div class="receipt-header receipt-header-mid">
                                                      <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                                                            <div class="receipt-right">
-                                                                 <h5>Customer Name </h5>
-                                                                 <p><b>Mobile :</b> +1 12345-4569</p>
-                                                                 <p><b>Email :</b> customer@gmail.com</p>
-                                                                 <p><b>Address :</b> New York, USA</p>
+                                                                 <h5>Customer Name : {{customer}} </h5>
+                                                                 <p><b>Mobile :</b> {{customer.phone}}</p>
+                                                                 <p><b>Email :</b> {{customer.emails}}</p>
+                                                                 <p><b>Address :</b> {{customer.address}}</p>
                                                            </div>
                                                      </div>
                                                      <div class="col-xs-4 col-sm-4 col-md-4">
                                                            <div class="receipt-left">
-                                                                 <h3>INVOICE # 102</h3>
+                                                                 <h3>Booking Details</h3>
                                                            </div>
                                                      </div>
                                                </div>
@@ -171,72 +180,33 @@ margin-top:20px;
                                            <thead>
                                                <tr>
                                                    <th>Description</th>
-                                                   <th></th>
+                                                   <th>Details</th>
                                                </tr>
+                                               
                                            </thead>
                                            <tbody>
+                                                <tr>
+                                                      <td class="col-md-9">Hotel Name :</td>
+                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{orders.hotel}}</td>
+                                                </tr>
+                                                <tr>
+                                                      <td class="col-md-9">Room No :</td>
+                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{orders.room_id}}</td>
+                                                </tr>
                                                <tr>
-                                                   <td class="col-md-9">check in</td>
+                                                   <td class="col-md-9">check in :</td>
                                                    <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
                                                </tr>
                                                <tr>
-                                                   <td class="col-md-9">check out </td>
+                                                   <td class="col-md-9">check out :</td>
                                                    <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
                                                </tr>
                                                <tr>
-                                                   <td class="col-md-9">Person</td>
+                                                   <td class="col-md-9">Booking Date :</td>
                                                    <td class="col-md-3"><i class="fa fa-inr"></i> {{ orders.boock_date}}</td>
                                                </tr>
 
-                                               <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> {{ orders.hotel}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-                                               <!-- <tr>
-                                                   <td class="text-right">
-                                                   <p>
-                                                       <strong>Total Amount: </strong>
-                                                   </p>
-                                                   <p>
-                                                       <strong>Late Fees: </strong>
-                                                   </p>
-                                                                 <p>
-                                                       <strong>Payable Amount: </strong>
-                                                   </p>
-                                                                 <p>
-                                                       <strong>Balance Due: </strong>
-                                                   </p>
-                                                                 </td>
-                                                   <td>
-                                                   <p>
-                                                       <strong><i class="fa fa-inr"></i> 65,500/-</strong>
-                                                   </p>
-                                                   <p>
-                                                       <strong><i class="fa fa-inr"></i> 500/-</strong>
-                                                   </p>
-                                                                 <p>
-                                                       <strong><i class="fa fa-inr"></i> 1300/-</strong>
-                                                   </p>
-                                                                 <p>
-                                                       <strong><i class="fa fa-inr"></i> 9500/-</strong>
-                                                   </p>
-                                                                 </td>
-                                               </tr> -->
+                                               
                                                <tr>
                                                   
                                                    <td class="text-right"><h2><strong>Total Amount: </strong></h2></td>
@@ -250,25 +220,19 @@ margin-top:20px;
                                                <div class="receipt-header receipt-header-mid receipt-footer">
                                                      <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                                                            <div class="receipt-right">
-                                                                 <p><b>Date :</b> 15 Aug 2016</p>
+                                                                 <p><b>Date :</b> {{ orders.boock_date}}</p>
+                                                                 <p style="color: #9f181c;"><b>Booking cancellations are only permitted up to three days prior to the scheduled date.</b></p>
                                                                  <h5 style="color: rgb(140, 140, 140);">Thanks for shopping.!</h5>
                                                            </div>
                                                      </div>
-                                                     <div class="col-xs-4 col-sm-4 col-md-4">
-                                                           <div class="receipt-left">
-                                                                 <h1>Stamp</h1>
-                                                           </div>
-                                                     </div>
+                                                     
                                                </div>
                                    </div>
                                          
                                </div>    
                              </div>
                        </div>
-
-           
-      
-      
+  
       
 </body>
 </html>

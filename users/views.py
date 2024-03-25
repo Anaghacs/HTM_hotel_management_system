@@ -318,9 +318,8 @@ def room_booking(request, room_number):
                   room=room,
                   )
                   booking.save()
-                  messages.success(request, "Your booking record has been successfully added!")
+                  # messages.success(request, "Your booking record has been successfully added!")
                   return redirect('booking_confirmation')
-            # confirmation ale function booki_cofirmation alalo
 
             return render(request, 'commons/booking.html', {'room': room,})
 
@@ -403,7 +402,7 @@ def room_booking(request, room_number):
 #         print("deleted") ee function comment cheyth nk
 
 #     return render(request,"checkout.html",context)
-# booking id vende ss aaa a booking id get cheyth eduthal room id customer id kitile booking i undo in build ayit create cheyomo oru id get cheytha edutha mathi but model il booking id store cheyan ou filed vende wait
+
 # def paymentfaild(request):
 #     if not request.user.is_authenticated:
 #         messages.warning(request,"Login & Try Again")
@@ -478,7 +477,6 @@ def paymentsuccess(request):
 #         messages.warning(request,"Login & Try Again")
 #         return redirect('register:login')
     
-#     ithalle lathe but noki nok ok pdf evidannalle vendath aaaa
     
     order_id=request.GET.get('Order_id')
     print(type(order_id))
@@ -486,7 +484,6 @@ def paymentsuccess(request):
     customer = Customer.objects.get(id=customer_id)
     orders=Order.objects.get(razorpay_order_id=order_id)
     
-#     alogikkanam... but filter cheyth athinn edukkam .but evidelum section create cheythittillee customer il .oru customer onnilkooduthall tavana oree room book cheythall ath errorr adikkumo arijuda check cheyanm ith enganeya eduthath athupole eduthall mathiii ok oru mint bro onu check cheyth nokte payment avunudon ok ok set bro.onukudi login cheyth noknuo ini..? nokkunnell nokkikkoo no issue enikk pine undlo pdf download akumbo nthe content ok mari varune bro ku ariyo pdf akkumpoll aligin sredhikkanam njan 185 downloads cheythann aligin sheri akkiyath :) apo ithil ntha cheya???
     print(orders)
     orders.paid_amount= True
     orders.status = "paid"
@@ -577,7 +574,7 @@ def paymentsuccess(request):
 #             print("something went wrong")
 #             print(f"Error sending email: {e}")
 #             return redirect('tedsilapp:somethingwentwrong')
-    return render(request,"users/paymentsuccess.html", {'orders':orders}) 
+    return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer}) 
 #bro room ntype and hotel details get cheyan function il argument ay pass cheyande??? already customerintell avar book cheyyunna rooms save avumalloo....then  bookings ena table il anu svae avune
 
 
