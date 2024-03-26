@@ -207,9 +207,6 @@ def confirmation(request, id):
 
             print(amount) 
             print(type(amount))
-            # all done payment avunudo acc active avanam ath egane activate akum ???jus wait
-      # user loin cheyy ok ennitt pay cheyyunna avide poo bakki njan okkaa ok
-            # admin dashboard lek pokunu y ni user id and pass taa username : admin pswd : admin
 
             client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
             payment=client.order.create({'amount':amount * 100,'currency': 'INR','payment_capture':1})
@@ -231,10 +228,7 @@ def confirmation(request, id):
             }
     return render(request, 'users/booking_confirmation.html', context )
 
-# rand functions anthaa ? orenam comment arnu bro change cheythath ale
-# athu kandu atha chothiche first cheythile meddium site ok nokit aacode ok comments il anu vechiryune comment cheyth vachall work avillaa ela avathillanna njanum paranjath njn bro inle cheytha bhagth onum cheythit ela.njn pdf and view cheyonath mathre nokiyulu thazhathe def anthinulleyaa aaaa ok 
 
-# 
 
 
 # 
@@ -575,7 +569,6 @@ def paymentsuccess(request):
 #             print(f"Error sending email: {e}")
 #             return redirect('tedsilapp:somethingwentwrong')
     return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer}) 
-#bro room ntype and hotel details get cheyan function il argument ay pass cheyande??? already customerintell avar book cheyyunna rooms save avumalloo....then  bookings ena table il anu svae avune
 
 
 

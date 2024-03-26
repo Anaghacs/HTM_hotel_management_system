@@ -124,17 +124,20 @@ margin-top:20px;
       
             <div>
                   <div class="text-center mt-5 mb-5" >
-                        <h2>Booking Confirmed</h2>
-                  </div>
-                  <div >
-                        <a href=""><button>Go To Home</button></a>
-                        <!-- <button></button> -->
-                        <form action="{% url 'booking_details_pdf' %}" method="get">
-                              <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
-                              <button type="submit">Download PDF</button>
-                          </form>
+                        <div style="display: flex;" >
+                              <a href=""><button>Go To Home</button></a>
 
+                              <form action="{% url 'booking_details_pdf' %}" method="get">
+                                    <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
+                                    <button type="submit">Download PDF</button>
+                                </form>
+ 
+                        </div>
+                        
+                        <h2>Booking Confirmed</h2>
+                        
                   </div>
+                  
                   
             </div>
             
