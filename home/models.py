@@ -43,6 +43,7 @@ class Customer(User):
 
     # student = CustomerManager()
 
+
     class Meta:
         verbose_name = "Customer user"
 
@@ -103,7 +104,6 @@ class Room(models.Model):
     is_deleted = models.BooleanField(default = False)
 
 
-
     def __str__(self):
         return str(self.room_number)
     
@@ -126,45 +126,19 @@ class Booking(models.Model):
     check_out = models.DateTimeField()
     guest_number = models.IntegerField()
 
-    # def __str__(self):
-    #     return str(self.customer)
-
-
 
     def __str__(self):
         return f"Booking for {self.customer} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"
 
 
 class Order(models.Model):
-    # name = CharField(_("Customer Name"), max_length=254, blank=False, null=False)
-    # amount = models.FloatField(_("Amount"), null=False, blank=False)
-    # status = CharField(
-    #     _("Payment Status"),
-    #     default=PaymentStatus.PENDING,
-    #     max_length=254,
-    #     blank=False,
-    #     null=False,
-    # )
-    # provider_order_id = models.CharField(
-    #     _("Order ID"), max_length=40, null=False, blank=False
-    # )
-    # payment_id = models.CharField(
-    #     _("Payment ID"), max_length=36, null=False, blank=False
-    # )
-    # signature_id = models.CharField(
-    #     _("Signature ID"), max_length=128, null=False, blank=False
-    # )
-
-    # def __str__(self):
-    #     return f"{self.id}-{self.name}-{self.status}"
-
+    
     customer = models.CharField(max_length=40,null=True,blank=True)
     email_id =models.CharField(max_length=150,null=True,blank=True)
     room_id = models.CharField(max_length=8)
     finder = models.CharField(max_length=150,null=True,blank=True)
     razorpay_order_id = models.CharField(max_length=60)
     signature_id = models.CharField(max_length=128, null=False, blank=False)
-    # provider_order_id = models.CharField( max_length=40, null=False, blank=False)
     amount = models.CharField(max_length=7,null=True,blank=True)
     paid_amount = models.BooleanField(default=False)
     status = models.CharField(max_length=20,blank=True)
@@ -179,7 +153,6 @@ class Order(models.Model):
     def _str_(self):
             return f"{self.customer}  {self.email_id}  {self.status}  {self.amount}  {self.room_id}  {self.order_id}  {self.signature_id}  {self.ordered_date} {self.razorpay_order_id} {self.reason} {self.code} {self.source} {self.step} {self.payment_id} "
     
-# bro nthina ee course and reason step code field ok html ill njan edaan paranja code coppy cheyy whatsapp nokk
 # class PaymentFailed(models.Model): 
 #       order_id=models.CharField(max_length=250)
 #       reason=models.CharField(max_length=250)
@@ -194,13 +167,10 @@ class Order(models.Model):
 
 #       date_time=models.DateTimeField(auto_now_add=True)
 
-#       def _str_(self):
+#   
+#     def _str_(self):
 #             return f"{self.order_id} {self.reason} {self.code} {self.source} {self.step} {self.payment_id} {self.date_time}"
       
-     
-
-
-
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
