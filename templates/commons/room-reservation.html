@@ -8,11 +8,11 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="breadcrumb-text">
-                      <h2>Our Rooms</h2>
-                      <div class="bt-option">
+                      <h2><span style="color: rgb(231, 137, 137);">'{{room.hotel}}'</span> Our Rooms</h2>
+                      <!-- <div class="bt-option">
                           <a href="./home.html">Home</a>
                           <span>Rooms</span>
-                      </div>
+                      </div> -->
                   </div>
               </div>
           </div>
@@ -44,7 +44,7 @@
                                   <a href="{% url 'room_booking' room.room_number%}">Booking Now</a>
                               </div>
                           </div>
-                          <h2>{{room.price}}$<span>/Pernight</span></h2>
+                          <h2>{{room.price}} ₹<span>/Pernight</span></h2>
                           <table>
                               <tbody>
                                   <tr>

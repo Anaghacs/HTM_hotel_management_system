@@ -128,7 +128,7 @@ class Booking(models.Model):
 
 
     def __str__(self):
-        return f"Booking for {self.customer} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"
+        return f"Booking for {self.customer} Hotel :{self.room.hotel} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"
 
 
 class Order(models.Model):

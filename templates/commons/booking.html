@@ -2,7 +2,7 @@
 {% load static %}
 {% include 'commons/base.html' %}
 
-{% if current_user %}
+{% if customer %}
     {% include 'users/navigation.html' %}
 {% else %}
     {% include 'commons/navigation.html' %}
@@ -16,12 +16,9 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="breadcrumb-text">
-                        <h2>{{current_user}}</h2>
-                      <h2>{{room.room_type}} Room Booking</h2>
-                      <div class="bt-option">
-                          <a href="./home.html">Home</a>
-                          <span>Rooms</span>
-                      </div>
+                        <h2><span style="color: rgb(231, 45, 169);">'{{customer}}'</span> User Page</h2>
+                        <h2><span style="color: rgb(226, 128, 128);">'{{room.room_type}}'</span> Room Booking</h2>
+                      
                   </div>
               </div>
           </div>
@@ -41,7 +38,7 @@
                       <div class="rd-text">
 
                           <div class="rd-title">
-                              <h3>Premium {{room.room_type}} Room</h3>
+                              <h3>Premium <span style="color: rgb(226, 128, 128);">'{{room.room_type}}'</span> Room</h3>
                               <!-- <div class="rdt-right">
                                   <div class="rating">
                                       <i class="icon_star"></i>
@@ -53,7 +50,7 @@
                                   <a href="{% url 'room_booking' room.room_number%}">Booking Now</a>
                               </div> -->
                           </div>
-                          <h2>{{room.price}}$<span>/Pernight</span></h2>
+                          <h2>{{room.price}} ₹<span>/Pernight</span></h2>
                           <table>
                               <tbody>
                                     <tr>
@@ -86,6 +83,12 @@
               <div class="col-lg-4">
                   <div class="room-booking">
                       <h3>Booking</h3>
+                        {% for messages in messages %}
+                            <div class="mb-3">
+                                <p style="color: red;">{{messages}}</p>
+                            </div>
+				        {% endfor %}
+
                       <form method="post" action="{% url 'room_booking' room.room_number %}">
                         {% csrf_token %}
                           <div class="check-date">
@@ -100,13 +103,9 @@
 
                           <div class="check-date">
                               <label for="date-out">Guest:</label>
-                              <input type="text" class="date-input" id="date-out" name="guest_number">
+                              <input type="text" class="date-input" id="date-out" name="guest_number" required>
                           </div>
-                          {% for messages in messages %}
-                                    <div class="mb-3">
-                                        <p style="color: red;">{{messages}}</p>
-                                    </div>
-				                {% endfor %}
+                          
                           
                           <button type="submit" >Booking Now</button>  
                        

@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 from django.utils import timezone
+from django.views.decorators.cache import never_cache
 
 import razorpay
 
@@ -93,7 +94,7 @@ def user_home(request):
       # Redirect to login page if user is not authenticated
       return redirect('user_login')
 
-
+@never_cache
 def user_login(request):
       print("=================================")
       if request.method == "POST":
@@ -117,6 +118,7 @@ def user_login(request):
       return render(request, 'users/user_login.html')
 
 #customer logout
+@never_cache
 def user_logout(request):
     # Clear the session data
     request.session.flush()
@@ -159,7 +161,132 @@ def check_room_availability(request, room_number):
       # If it's not a POST request or there's an overlapping booking, render the form
       return render(request, 'commons/room-reservation.html', {'room': room})
 
-# #customer booking_confirmation  
+@never_cache
+def booking_confirmation(request):
+
+      if 'customer_id' in request.session:
+            customer_id = request.session['customer_id']
+            # hotel = Hotel.objects.get(id = hotel_id)
+            customer = get_object_or_404(Customer, id = customer_id)
+
+
+            print("================================",customer.username)
+            booking = Booking.objects.filter( customer = customer)
+            print("==========================================",booking)
+            email=customer.emails
+            # room= booking.room.room_number
+            # try: 
+                  
+            #       counter = 1
+            #       while Order.objects.filter(finder=f"{email}_{counter}").exists():
+            #             counter += 1  
+                  
+            #       finder= f"{email}_{counter}"
+            #       request.session['finder'] = finder
+            #       request.session.save()
+            # except Order.DoesNotExist:
+            #       print("no data")
+                  
+
+            # temp=TemplateCard.objects.get(pk=temp_id)
+            # currentuser=request.user.username
+            # email=request.user.email
+            # print(email)
+            # user=User.objects.get(username=currentuser)
+            
+            # coupens_percentege=request.session.get('coupen_percentage',None)
+            
+            
+                  
+            # finder= request.session.get('finder',None)
+            # orders=Order(customer=customer,room_id=booking.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=customer.emails,finder=finder,hotel=booking.room.hotel)
+            # orders.save()
+            
+            # amount = booking.room.price
+
+            # client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
+            # payment=client.order.create({'amount':amount * 100,'currency': 'INR','payment_capture':1})
+            
+            # finder= request.session.get('finder',None)
+            # orders_obj=Order.objects.get(finder=finder)
+            # orders_obj.razorpay_order_id=payment['id']
+            # orders_obj.save()
+            
+            # print("*******")
+            # print(payment)
+            # print("*******")
+            # context={
+            #       "payment":payment,
+            #       'booking' : booking, 
+            #       'customer' : customer
+
+      
+      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer} )
+
+@never_cache
+def room_booking(request, room_number):
+    try:
+        customer_id = request.session.get('customer_id')
+        if not customer_id:
+            return redirect('user_login')  # Redirect to login page if user is not logged in
+
+        customer = Customer.objects.get(id=customer_id)
+        room = Room.objects.get(room_number=room_number)
+
+        if request.method == "POST":
+            check_in = request.POST.get('check_in')
+            check_out = request.POST.get('check_out')
+            guest_number = request.POST.get('guest_number')
+
+            # Validate check_in and check_out dates
+            if not check_in or not check_out:
+                messages.error(request, "Please provide both check-in and check-out dates.")
+                return redirect('room_booking', room_number=room_number)
+
+            # check_in_date = datetime.strptime(check_in, '%Y-%m-%d').date()
+            # check_out_date = datetime.strptime(check_out, '%Y-%m-%d').date()
+
+            # if check_in_date < timezone.now().date():
+            #     messages.error(request, "Check-in date cannot be in the past.")
+            #     return redirect('room_booking', room_number=room_number)
+
+            # if check_in_date >= check_out_date:
+            #     messages.error(request, "Check-out date must be after check-in date.")
+            #     return redirect('room_booking', room_number=room_number)
+
+            overlapping_bookings = Booking.objects.filter(room=room, check_in=check_in, check_out=check_out)
+            if overlapping_bookings.exists():
+                messages.warning(request, "Room is not available for the selected dates.")
+            
+            # if guest_number >= room.capacity:
+            #       messages.warning(request, "capacity is greater than guest numbers!.")
+ 
+            else:
+                booking = Booking.objects.create(
+                    customer=customer,
+                    check_in=check_in,
+                    check_out=check_out,
+                    guest_number=guest_number,
+                    room=room,
+                )
+                booking.save()
+                messages.success(request, "Room is available and booking is successful.")
+                return redirect('booking_confirmation')
+
+        return render(request, 'commons/booking.html', {'room' : room, 'customer' : customer})
+
+    except Customer.DoesNotExist:
+        # Handle the case where the customer does not exist
+        return redirect('user_login')  # Redirect to login page or handle differently
+
+    except Room.DoesNotExist:
+        # Handle the case where the room does not exist
+        messages.error(request, "The room you are trying to book does not exist.")
+        return redirect('room_booking')  # Redirect to booking page or handle differently
+
+
+# #customer booking_confirmation 
+@never_cache 
 def confirmation(request, id):
     booking = get_object_or_404(Booking, id = id)
     if 'customer_id' in request.session:
@@ -228,243 +355,7 @@ def confirmation(request, id):
             }
     return render(request, 'users/booking_confirmation.html', context )
 
-
-
-
-# 
-def booking_confirmation(request):
-
-      if 'customer_id' in request.session:
-            customer_id = request.session['customer_id']
-            # hotel = Hotel.objects.get(id = hotel_id)
-            customer = get_object_or_404(Customer, id = customer_id)
-
-
-            print("================================",customer.username)
-            booking = Booking.objects.filter( customer = customer)
-            print("==========================================",booking)
-            email=customer.emails
-            # room= booking.room.room_number
-            # try: 
-                  
-            #       counter = 1
-            #       while Order.objects.filter(finder=f"{email}_{counter}").exists():
-            #             counter += 1  
-                  
-            #       finder= f"{email}_{counter}"
-            #       request.session['finder'] = finder
-            #       request.session.save()
-            # except Order.DoesNotExist:
-            #       print("no data")
-                  
-
-            # temp=TemplateCard.objects.get(pk=temp_id)
-            # currentuser=request.user.username
-            # email=request.user.email
-            # print(email)
-            # user=User.objects.get(username=currentuser)
-            
-            # coupens_percentege=request.session.get('coupen_percentage',None)
-            
-            
-                  
-            # finder= request.session.get('finder',None)
-            # orders=Order(customer=customer,room_id=booking.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=customer.emails,finder=finder,hotel=booking.room.hotel)
-            # orders.save()
-            
-            # amount = booking.room.price
-
-            # client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
-            # payment=client.order.create({'amount':amount * 100,'currency': 'INR','payment_capture':1})
-            
-            # finder= request.session.get('finder',None)
-            # orders_obj=Order.objects.get(finder=finder)
-            # orders_obj.razorpay_order_id=payment['id']
-            # orders_obj.save()
-            
-            # print("*******")
-            # print(payment)
-            # print("*******")
-            # context={
-            #       "payment":payment,
-            #       'booking' : booking, 
-            #       'customer' : customer
-
-      
-      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer} )
-
-def room_booking(request, room_number):
-      try:
-            customer_id = request.session['customer_id']
-            customer = Customer.objects.get(id=customer_id)
-            room = Room.objects.get(room_number=room_number)
-
-            if request.method == "POST":
-                  check_in = request.POST['check_in']
-                  check_out = request.POST['check_out']
-                  guest_number = request.POST['guest_number']
-                  
-                  booking = Booking.objects.create(
-                  customer=customer,
-                  check_in=check_in,
-                  check_out=check_out,
-                  guest_number=guest_number,
-                  room=room,
-                  )
-                  booking.save()
-                  # messages.success(request, "Your booking record has been successfully added!")
-                  return redirect('booking_confirmation')
-
-            return render(request, 'commons/booking.html', {'room': room,})
-
-      except KeyError:
-        # If 'customer_id' is not found in session, user is not logged in
-        # Redirect to login page or handle the situation accordingly
-            return redirect('user_login')
-      except Customer.DoesNotExist:
-        # Handle the case where the customer does not exist
-        # This could happen if the session contains an invalid customer_id
-            return redirect('user_login')  # Redirect to login page or handle differently
-      except Room.DoesNotExist:
-        # Handle the case where the room does not exist
-        # This could happen if the room_number provided is invalid
-        messages.error(request, "The room you are trying to book does not exist.")
-        return redirect('room_booking')  # Redirect to booking page or handle differently
-      
-
-
-# def checkout(request,temp_id):
-#     if not request.user.is_authenticated:
-#         messages.warning(request,"Login & Try Again")
-#         return redirect('register:login')
-#     if request.method=="POST":
-#         email=request.user.email
-#         try: 
-            
-#             counter = 1
-#             while Orders.objects.filter(finder=f"{email}_{counter}").exists():
-#                 counter += 1  
-            
-#             finder= f"{email}_{counter}"
-#             request.session['finder'] = finder
-#             request.session.save()
-#         except Orders.DoesNotExist:
-#             print("no data")
-              
-
-#         temp=TemplateCard.objects.get(pk=temp_id)
-#         currentuser=request.user.username
-#         email=request.user.email
-#         print(email)
-#         user=User.objects.get(username=currentuser)
-        
-#         # coupens_percentege=request.session.get('coupen_percentage',None)
-        
-#         if request.session.get('final_price',None):
-#             final_amount=request.session.get('final_price',None)
-#             print(final_amount)
-#             print(temp.price)
-#         else:
-#             final_amount=int(temp.price)
-#             print(type(final_amount))
-
-             
-#         finder= request.session.get('finder',None)
-#         code = request.session.get('coupen_code',None)
-#         number=request.POST.get('number','')
-#         orders=Orders(name=user.first_name,temp_name=temp.model_name,temp_amount=temp.price,ordered_date=timezone.now(),email_id=email,finder=finder,phone=number,final_amount=final_amount,coupen_code=code)
-#         orders.save()
-
-#     client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
-#     payment=client.order.create({'amount':final_amount * 100,'currency': 'INR','payment_capture':1})
-#     finder= request.session.get('finder',None)
-#     orders_obj=Orders.objects.get(finder=finder)
-#     orders_obj.razorpay_order_id=payment['id']
-#     orders_obj.save()
-#     print("*******")
-#     print(payment)
-#     print("*******")
-#     context={
-#         "payment":payment
-
-#     }
-#     if 'code' in request.session:
-#         del request.session['code']
-#         del request.session['percentage']
-#         del request.session['final_price']
-#         request.session.save()
-#         print("deleted") ee function comment cheyth nk
-
-#     return render(request,"checkout.html",context)
-
-# def paymentfaild(request):
-#     if not request.user.is_authenticated:
-#         messages.warning(request,"Login & Try Again")
-#         return redirect('register:login')
-#     order_id=request.GET.get('Order_id')
-#     orders=Orders.objects.get(razorpay_order_id=order_id)
-#     orders.amountpaid= False
-#     orders.paymentstatus = "failed"
-#     print("faild")
-#     orders.save()
-
-#     orders_id=request.GET.get('Order_id')
-#     print(orders_id)
-#     reason=request.GET.get('reason')
-#     code=request.GET.get('code')
-#     source=request.GET.get('source')
-#     step=request.GET.get('step')
-#     payment_id=request.GET.get('payment_id')
-#     if PaymentFailed.objects.filter(order_id=orders_id).exists():
-        
-#         print("failed alredy exists")
-#         return redirect('tedsilapp:somethingwentwrong')
-#     else:
-#         try:
-#             failed=PaymentFailed(order_id=orders_id,reason=reason,code=code,source=source,step=step,payment_id=payment_id,date_time=timezone.now())
-#             failed.save()
-#             time=timezone.now()
-#             uid=request.user.id
-#             uemail=request.user.email
-#             uname=request.user.first_name
-#             email_subject="payment failed"
-#             message=render_to_string('payment_failure_mail.html',{
-#                 'orders_id':orders_id,
-#                 'reason':reason,
-#                 'code':code,
-#                 'source':source,
-#                 'step':step,
-#                 'payment_id':payment_id,
-#                 'uid':uid,
-#                 'uname':uname,
-#                 'uemail':uemail,
-#                 'date':time
-
-#             })
-#             print("mail attemptting")
-#             email_from = settings.EMAIL_HOST_USER
-#             recipient_list = ['attackerhacker507@gmail.com']
-
-#             email_message = EmailMessage(email_subject,message,email_from,recipient_list)
-#             print(email_message)
-#             email_message.content_subtype = "html"
-#             email_message.send()
-#             if 'code' in request.session:
-#                 del request.session['code']
-#                 del request.session['percentage']
-#                 del request.session['final_price']
-#                 request.session.save()
-#                 print("deleted")
-            
-
-            
-#         except  Exception as e:
-            
-#             print("something went wrong")
-#             print(f"Error sending email: {e}")
-#             return redirect('tedsilapp:somethingwentwrong')
-#     return render(request,"paymentfaild.html",{'order_id': order_id})
-
+@never_cache
 def paymentsuccess(request):
     
 #     if not request.user.is_authenticated:
@@ -482,107 +373,16 @@ def paymentsuccess(request):
     orders.paid_amount= True
     orders.status = "paid"
     orders.save()
-   
-
-
-#     try:
-        # time=timezone.now()
-        
-      #   order_success=Order.objects.get(razorpay_order_id=order_id)
-        
-      #   uid=request.user.id
-      #   uemail=request.user.email
-      #   uname=request.user.first_name
-      #   coupen_code=order_success.coupen_code
-      #   razorpay_payment_id=order_success.razorpay_payment_id
-      #   temp_name=order_success.temp_name
-      #   temp_amount=order_success.temp_amount
-      #   plan=order_success.plan
-      #   final_amount=order_success.final_amount
-      #   ordered_date=order_success.ordered_date
-
-        # renewal
-        # uusernam=request.user.username
-        # date=order_success.ordered_date
-
-
-        # renewals= Renewal.objects
-
-      #   email_subject="Order Placed"
-      #   message=render_to_string('payment_sucess_mail.html',{
-      #       'orders_id':order_id,
-      #       'uname':uname,
-      #       'uemail':uemail,
-      #       'coupen_code':coupen_code,
-      #       'razorpay_payment_id':razorpay_payment_id,
-      #       'temp_name':temp_name,
-      #       'temp_amount':temp_amount,
-      #       'plan':plan,
-      #       'final_amount':final_amount,
-      #       'uid':uid,
-      #       'date':ordered_date
-
-      #   })
-      #   print("mail attemptting")
-      #   email_from = settings.EMAIL_HOST_USER
-      #   recipient_list = ['attackerhacker507@gmail.com']
-
-      #   email_message = EmailMessage(email_subject,message,email_from,recipient_list)
-      #   print(email_message)
-      #   email_message.content_subtype = "html"
-      #   email_message.send()
-
-
-        # mail for users
-        
-      #   email_subject="your order has placed"
-      #   message=render_to_string('payment_sucess_user_mail.html',{
-      #       'orders_id':str(order_id),
-      #       'uname':uname,
-      #       'uemail':uemail,
-      #       'coupen_code':coupen_code,
-      #       'razorpay_payment_id':razorpay_payment_id,
-      #       'temp_name':temp_name,
-      #       'temp_amount':temp_amount,
-      #       'plan':plan,
-      #       'final_amount':final_amount,
-      #       'uid':uid,
-      #       'date':ordered_date
-
-      #   })
-      #   print("mail attemptting")
-      #   email_from = settings.EMAIL_HOST_USER
-      #   recipient_list = [uemail]
-
-      #   email_message = EmailMessage(email_subject,message,email_from,recipient_list)
-      #   print(email_message)
-      #   email_message.content_subtype = "html"
-      #   email_message.send()
-
-        
-            
-
-            
-#     except  Exception as e:
-            
-#             print("something went wrong")
-#             print(f"Error sending email: {e}")
-#             return redirect('tedsilapp:somethingwentwrong')
     return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer}) 
 
-
-
-
+@never_cache
 def booking_details_pdf(request):
 
       try:
             order_id=request.GET.get('Order_id')
 
-
-
             if Order.objects.filter(razorpay_order_id=order_id).exists():
                   order =Order.objects.get(razorpay_order_id=order_id)
-
 
                   # Render HTML template with data
                   html_string = render_to_string('users/booking_pdf.html', {'order': order})
@@ -601,5 +401,11 @@ def booking_details_pdf(request):
       return render(request,"users/booking_pdf.html")
 
 
-            
+
+
+
+
+
+      
+
 

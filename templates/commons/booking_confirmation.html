@@ -1,6 +1,12 @@
 {% load static %}
 {% include 'commons/base.html' %}
-{% include 'users/navigation.html' %}
+
+{% if customer %}
+    {% include 'users/navigation.html' %}
+{% else %}
+    {% include 'commons/navigation.html' %}
+{% endif %}
+
 {% block content%}
 <div class="breadcrumb-section">
       <div class="container">
@@ -44,7 +50,7 @@
                                   </tr>
                                   <tr>
                                     <td class="r-o">Price :</td>
-                                    <td style="color: rgb(197, 95, 95);" >{{i.room.price}} $/Perday</td>
+                                    <td style="color: rgb(197, 95, 95);" >{{i.room.price}} ₹ /Perday</td>
                                 </tr>
                                   
                               </tbody>
