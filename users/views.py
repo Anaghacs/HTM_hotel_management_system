@@ -8,9 +8,10 @@ from home.models import Hotel, Order, User, Customer, Room, Booking
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
+from users.models import Storedotps
 
 import razorpay
 
@@ -108,10 +109,9 @@ def user_login(request):
                   print("===============================", customer)
 
 
-                  # Set session variable for authenticated hotel user
+                  # Set session variable for authenticated hotel user userine login enganeyaa cheyykkunne customer num hotel nem same thaneya athupole thazhe cheyy nth login
                   request.session['customer_id'] = customer.id
                   return redirect('user_home')
-      
             except Hotel.DoesNotExist:
                   messages.error(request, "Invalid credentials or account not approved.")
     
@@ -403,9 +403,140 @@ def booking_details_pdf(request):
 
 
 
+from django.http import JsonResponse
+from django.core.mail import send_mail
+import random
 
+def generate_and_send_otp(request):
+    
+      if request.method == 'POST':
+            email = request.POST.get('email')
+            request.session['user_email'] = email
+            request.session.save()
+            user_email=request.session.get('user_email',None)
+            if email:
+                  if Customer.objects.filter(email=email).exists():
+                        OTP = random.randint(100000, 999999)
+                        # timestamp=datetime.now()
+                        # otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])  # Generate a 6-digit OTP
+                        
+                        print("otp",OTP)
 
+                        user = Customer.objects.get(email=email)
+                        subject = 'OTP Verification'
+                        message = f'Hi {user.username},Your Forgott Password OTP is  {OTP}  Valid For 5 Minit. Do Not Share. if you not requested for otp then ignore it'
+                        email_from = settings.EMAIL_HOST_USER
+                        recipient_list = {email}
 
+                        # poyooo???? no ok vanu
+                        send_mail( subject, 
+                              message, 
+                              email_from, 
+                              recipient_list )
+                        messages.info(request, f"We will send an OTP to the email '{email}'")
+                        # send_mail(
+                        #     ,
+                        #     f'Your OTP is: {otp}',
+                        #     email_from = settings.EMAIL_HOST_USER
+                        #       recipient_list = email,
+                        #     fail_silently=False,
+                        # )
+                        if Storedotps.objects.filter(email_id=request.session.get('user_email', None)).exists():
+                              Storedotps.objects.filter(email_id=request.session.get('user_email', None)).update(otp=OTP,valid_from=timezone.now(),is_active=True)
+                
+                        else:
+                              otp_data=Storedotps.objects.create(email_id=user.email,otp=OTP,valid_from=timezone.now())
+                              otp_data.save()
+                        # request.session['otp'] = OTP  # Store OTP in session for verification
+                        return JsonResponse({'success': True})                  
+                  else:
+                        messages.error(request,"Email is not registered on our site.")
+                        return redirect('user_login')
+            else:
+                  return JsonResponse({'success': False, 'error': 'Email not provided'})
+            
+
+      else:
+        
+            return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'})
       
+# eganeya type cheya otp gen and send kazhinju eni validation ann ok
+      
+
+# otp experation
+def is_otp_expired(otp_data):
+    expiration_duration = timedelta(minutes=5)  
+    now = timezone.now()
+    print("expire checking...")
+    return now - otp_data.valid_from > expiration_duration
+
+
+# 
+def validate_otp (request):
+    if request.method == 'POST':
+        otp_valid=request.POST['otp']
+        user_email = request.session.get('user_email', None)
+        print(user_email)
+        
+        
+        try:
+            otp_data = Storedotps.objects.get(email_id=user_email, is_active=True)
+        except Storedotps.DoesNotExist:
+            messages.error(request, "Invalid OTP or OTP has expired.")
+            return redirect('user_login')
+        
+        if otp_valid == str(otp_data.otp):
+            if not is_otp_expired(otp_data):
+                otp_data.is_active = False 
+                print("otp valid") 
+                otp_data.save()
+                user=Customer.objects.get(email=user_email)
+                print(user)
+            #     login(request,user)
+                if 'customer_id' in request.session:
+                        customer_id = request.session['customer_id']
+                        
+                        customer = get_object_or_404(Customer, id = customer_id)
+                        request.session['customer_id'] = customer.id
+                        return redirect('user_home')
+            
+
+                return redirect('/')  # Redirect to a success page
+            else:
+                messages.error(request, "otp is expired")
+                otp_data.is_active = False
+                print("otp is expired")
+                return redirect('user_login')  
+        else:
+            messages.error(request, "Invalid OTP or OTP has expired.")
+            
+            return redirect('user_login')
+    return render(request, "users/forgott_password.html")
+
+
+
+
+# def validate_otp(request):
+#     if request.method == 'POST':
+#         entered_otp = request.POST.get('otp')
+#         if 'otp' in request.session:
+#             stored_otp = request.session['otp']
+#             if entered_otp == stored_otp:
+#                 # Clear OTP from session after successful validation
+#                 del request.session['otp']
+#                 return redirect({'success': True})
+#             else:
+#                 return JsonResponse({'success': False, 'error': 'Invalid OTP'})
+#         else:
+#             return JsonResponse({'success': False, 'error': 'OTP not found in session'})
+#     else:
+#         return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'})
+
+
+
+
+def forgot_password(request):
+      return render(request,"users/forgott_password.html")
+
 
 

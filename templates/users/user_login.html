@@ -18,8 +18,12 @@
           <link rel="shortcut icon" type="image/x-icon" href="evara/assets/imgs/theme/favicon.svg">
           <!-- Template CSS -->
           <link href="{%  static 'evara/assets/css/main.css' %}" rel="stylesheet" type="text/css" />
-      </head>
       
+          <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+          <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        </head>
+      <!-- sry br aniyan van oru doubt chothichatha ok aligin chilappoll mariyennirikkum but vishamikkand  pinned aligin cheyyam ok-->
       <body>
           <main>             
               <section class="content-main mt-80 mb-80">
@@ -65,13 +69,80 @@
                                       <path d="M3 1a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2V3a2 2 0 00-2-2H3zm6.55 16v-6.2H7.46V8.4h2.09V6.61c0-2.07 1.26-3.2 3.1-3.2.88 0 1.64.07 1.87.1v2.16h-1.29c-1 0-1.19.48-1.19 1.18V8.4h2.39l-.31 2.42h-2.08V17h-2.5z" fill="#4167B2"></path>
                                   </svg> Sign in using Facebook
                               </a>
+                              <a href="#" class="btn w-100 btn-light font-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <!-- <svg aria-hidden="true" class="icon-svg" width="20" height="20" viewBox="0 0 20 20">
+                                    <path d="M3 1a2 2 0 00-2 2v12c0 1.1.9 2 2 2h12a2 2 0 002-2V3a2 2 0 00-2-2H3zm6.55 16v-6.2H7.46V8.4h2.09V6.61c0-2.07 1.26-3.2 3.1-3.2.88 0 1.64.07 1.87.1v2.16h-1.29c-1 0-1.19.48-1.19 1.18V8.4h2.39l-.31 2.42h-2.08V17h-2.5z" fill="#4167B2"></path>
+                                </svg>  -->
+                                <!-- otp login ayit ela njn elam kalaju just button vechit und -->
+                                Sign in using OTP 
+                            </a>
+                            
+
                           </div>
                           <p class="text-center mb-4">Don't have account? <a href="#">Sign up</a></p>
                       </div>
                   </div>
               </section>
-              
+              <!-- Modal -->
+              <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="otpForm">
+                            {% csrf_token %}
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email">
+                            <button type="button" id="generateOTP">Generate OTP</button>
+                        </form>
+                    </div>
+                    <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+                </div>
+            </div>
+
+              {% for msg in messages %}
+                <div id="message" style="position: fixed;bottom: 50px;right: 0;width: auto;">
+                    <div class="alert alert-dark alert-dismissible " style="margin: 0 auto;background-color: #ffffff;border-color: #00000087;border-width: 2px;box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);height: 10vh">
+                    <span style="color: #000000;padding-bottom: 10px;"><i class="fa-solid fa-circle-check" style="color: #05eb09;"></i><p style="color: red;font-size: 19px;">{{ msg }}</p></span> 
+                    </div>
+                </div>
+                {% endfor %}
           </main>
+
+          <script>
+            $(document).ready(function() {
+                $('#generateOTP').click(function() {
+                    var email = $('#email').val();
+                    $.ajax({
+                        url: '/generate_and_send_otp/',
+                        method: 'POST',
+                        data: {
+                            'email': email,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // alert('OTP sent successfully!');
+                                window.location.href = '/forgot_password/';
+                            } else {
+                                alert('Failed to send OTP: ' + response.error);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error: ' + error);
+                        }
+                    });
+                });
+            });
+        </script>
+
           <script src="{% static 'evara/assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
           <script src="{% static 'evara/assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
           <script src="{% static 'evara/assets/js/vendors/jquery.fullscreen.min.js' %}"></script>
