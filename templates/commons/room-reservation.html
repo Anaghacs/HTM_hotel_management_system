@@ -1,6 +1,12 @@
 {% load static %}
 {% include 'commons/base.html' %}
-{% include 'commons/navigation.html' %}
+
+{% if customer %}
+    {% include 'users/navigation.html' %}
+{% else %}
+    {% include 'commons/navigation.html' %}
+{% endif %}
+
 {% block content%}
 <!-- Breadcrumb Section Begin -->
 <div class="breadcrumb-section">
@@ -8,6 +14,7 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="breadcrumb-text">
+                    <h2>{{customer}}</h2>
                       <h2><span style="color: rgb(231, 137, 137);">'{{room.hotel}}'</span> Our Rooms</h2>
                       <!-- <div class="bt-option">
                           <a href="./home.html">Home</a>

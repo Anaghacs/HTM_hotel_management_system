@@ -13,6 +13,10 @@ from django.utils import timezone
 from django.views.decorators.cache import never_cache
 from users.models import Storedotps
 
+from django.http import JsonResponse
+from django.core.mail import send_mail
+import random
+
 import razorpay
 
 import os
@@ -133,6 +137,7 @@ def room_list(request, id):
 
 #customer room reservation
 def room_reservation(request, room_number):
+      
       room = get_object_or_404(Room, room_number = room_number)
       return render(request, 'commons/room-reservation.html', {'room' : room})
 
@@ -140,6 +145,12 @@ def room_reservation(request, room_number):
 def check_room_availability(request, room_number):
       print("================================")
       room = get_object_or_404(Room, room_number = room_number)
+      # customer = None  # Initialize customer to None
+    
+      # if 'customer_id' in request.session:
+      #       customer_id = request.session['customer_id']
+      #       customer = get_object_or_404(Customer, id=customer_id)
+      #       print("==========================", customer)
 
       if request.method == 'POST':
             # Form submitted; handle the data
@@ -159,7 +170,7 @@ def check_room_availability(request, room_number):
                   return render(request, 'commons/room-reservation.html')
     
       # If it's not a POST request or there's an overlapping booking, render the form
-      return render(request, 'commons/room-reservation.html', {'room': room})
+      return render(request, 'commons/room-reservation.html', {'room': room, 'customer' : customer})
 
 @never_cache
 def booking_confirmation(request):
@@ -313,15 +324,6 @@ def confirmation(request, id):
             except Order.DoesNotExist:
                   print("no data")
                   
-
-            # temp=TemplateCard.objects.get(pk=temp_id)
-            # currentuser=request.user.username
-            # email=request.user.email
-            # print(email)
-            # user=User.objects.get(username=currentuser)
-            
-            # coupens_percentege=request.session.get('coupen_percentage',None)
-            
                  
             finder= request.session.get('finder',None)
             orders=Order(customer=customer,room_id=booking.room.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=booking.customer.emails,finder=finder,hotel=booking.room.hotel)
@@ -355,6 +357,8 @@ def confirmation(request, id):
             }
     return render(request, 'users/booking_confirmation.html', context )
 
+
+@login_required
 @never_cache
 def paymentsuccess(request):
     
@@ -401,12 +405,6 @@ def booking_details_pdf(request):
       return render(request,"users/booking_pdf.html")
 
 
-
-
-from django.http import JsonResponse
-from django.core.mail import send_mail
-import random
-
 def generate_and_send_otp(request):
     
       if request.method == 'POST':
@@ -417,30 +415,20 @@ def generate_and_send_otp(request):
             if email:
                   if Customer.objects.filter(email=email).exists():
                         OTP = random.randint(100000, 999999)
-                        # timestamp=datetime.now()
-                        # otp = ''.join([str(random.randint(0, 9)) for _ in range(6)])  # Generate a 6-digit OTP
-                        
+                            
                         print("otp",OTP)
-
                         user = Customer.objects.get(email=email)
                         subject = 'OTP Verification'
                         message = f'Hi {user.username},Your Forgott Password OTP is  {OTP}  Valid For 5 Minit. Do Not Share. if you not requested for otp then ignore it'
                         email_from = settings.EMAIL_HOST_USER
                         recipient_list = {email}
 
-                        # poyooo???? no ok vanu
                         send_mail( subject, 
                               message, 
                               email_from, 
                               recipient_list )
                         messages.info(request, f"We will send an OTP to the email '{email}'")
-                        # send_mail(
-                        #     ,
-                        #     f'Your OTP is: {otp}',
-                        #     email_from = settings.EMAIL_HOST_USER
-                        #       recipient_list = email,
-                        #     fail_silently=False,
-                        # )
+                        
                         if Storedotps.objects.filter(email_id=request.session.get('user_email', None)).exists():
                               Storedotps.objects.filter(email_id=request.session.get('user_email', None)).update(otp=OTP,valid_from=timezone.now(),is_active=True)
                 
@@ -454,13 +442,9 @@ def generate_and_send_otp(request):
                         return redirect('user_login')
             else:
                   return JsonResponse({'success': False, 'error': 'Email not provided'})
-            
-
-      else:
-        
+      else:       
             return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'})
       
-# eganeya type cheya otp gen and send kazhinju eni validation ann ok
       
 
 # otp experation
@@ -492,16 +476,9 @@ def validate_otp (request):
                 otp_data.save()
                 user=Customer.objects.get(email=user_email)
                 print(user)
-            #     login(request,user)
-                if 'customer_id' in request.session:
-                        customer_id = request.session['customer_id']
-                        
-                        customer = get_object_or_404(Customer, id = customer_id)
-                        request.session['customer_id'] = customer.id
-                        return redirect('user_home')
+                request.session['customer_id'] = user.id
+                return redirect('user_home')
             
-
-                return redirect('/')  # Redirect to a success page
             else:
                 messages.error(request, "otp is expired")
                 otp_data.is_active = False
@@ -514,29 +491,12 @@ def validate_otp (request):
     return render(request, "users/forgott_password.html")
 
 
-
-
-# def validate_otp(request):
-#     if request.method == 'POST':
-#         entered_otp = request.POST.get('otp')
-#         if 'otp' in request.session:
-#             stored_otp = request.session['otp']
-#             if entered_otp == stored_otp:
-#                 # Clear OTP from session after successful validation
-#                 del request.session['otp']
-#                 return redirect({'success': True})
-#             else:
-#                 return JsonResponse({'success': False, 'error': 'Invalid OTP'})
-#         else:
-#             return JsonResponse({'success': False, 'error': 'OTP not found in session'})
-#     else:
-#         return JsonResponse({'success': False, 'error': 'Only POST requests are allowed'})
-
-
-
-
 def forgot_password(request):
       return render(request,"users/forgott_password.html")
 
 
+def room_reservation_details(request):
+      order=request.GET.get('Order_id')
 
+
+      return render(request, 'users/page-account-register.html',{'order' : order})
