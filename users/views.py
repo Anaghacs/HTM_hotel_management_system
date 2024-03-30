@@ -131,6 +131,7 @@ def user_logout(request):
 
 #customer room list
 def room_list(request, id):
+      
       hotel = get_object_or_404(Hotel, id = id)
       rooms = Room.objects.filter(is_deleted = False, hotel = hotel)
       return render(request, 'commons/room-list.html', {'hotel' : hotel,'rooms' : rooms})
@@ -139,13 +140,12 @@ def room_list(request, id):
 def room_reservation(request, room_number):
       
       room = get_object_or_404(Room, room_number = room_number)
-      return render(request, 'commons/room-reservation.html', {'room' : room})
+      return render(request, 'commons/room-reservation.html', {'room' : room, })
 
 #customer check_availability
 def check_room_availability(request, room_number):
       print("================================")
       room = get_object_or_404(Room, room_number = room_number)
-      # customer = None  # Initialize customer to None
     
       # if 'customer_id' in request.session:
       #       customer_id = request.session['customer_id']
@@ -153,7 +153,6 @@ def check_room_availability(request, room_number):
       #       print("==========================", customer)
 
       if request.method == 'POST':
-            # Form submitted; handle the data
             check_in = request.POST.get('check_in')
             check_out = request.POST.get('check_out')
 
@@ -170,7 +169,7 @@ def check_room_availability(request, room_number):
                   return render(request, 'commons/room-reservation.html')
     
       # If it's not a POST request or there's an overlapping booking, render the form
-      return render(request, 'commons/room-reservation.html', {'room': room, 'customer' : customer})
+      return render(request, 'commons/room-reservation.html', {'room': room, })
 
 @never_cache
 def booking_confirmation(request):
@@ -185,53 +184,7 @@ def booking_confirmation(request):
             booking = Booking.objects.filter( customer = customer)
             print("==========================================",booking)
             email=customer.emails
-            # room= booking.room.room_number
-            # try: 
-                  
-            #       counter = 1
-            #       while Order.objects.filter(finder=f"{email}_{counter}").exists():
-            #             counter += 1  
-                  
-            #       finder= f"{email}_{counter}"
-            #       request.session['finder'] = finder
-            #       request.session.save()
-            # except Order.DoesNotExist:
-            #       print("no data")
-                  
 
-            # temp=TemplateCard.objects.get(pk=temp_id)
-            # currentuser=request.user.username
-            # email=request.user.email
-            # print(email)
-            # user=User.objects.get(username=currentuser)
-            
-            # coupens_percentege=request.session.get('coupen_percentage',None)
-            
-            
-                  
-            # finder= request.session.get('finder',None)
-            # orders=Order(customer=customer,room_id=booking.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=customer.emails,finder=finder,hotel=booking.room.hotel)
-            # orders.save()
-            
-            # amount = booking.room.price
-
-            # client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
-            # payment=client.order.create({'amount':amount * 100,'currency': 'INR','payment_capture':1})
-            
-            # finder= request.session.get('finder',None)
-            # orders_obj=Order.objects.get(finder=finder)
-            # orders_obj.razorpay_order_id=payment['id']
-            # orders_obj.save()
-            
-            # print("*******")
-            # print(payment)
-            # print("*******")
-            # context={
-            #       "payment":payment,
-            #       'booking' : booking, 
-            #       'customer' : customer
-
-      
       return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer} )
 
 @never_cache

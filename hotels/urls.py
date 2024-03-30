@@ -21,6 +21,6 @@ urlpatterns = [
     path('Hotel/Update/Facilitity/<int:id>/', views.update_facilities, name = 'update_facilities'),
 
     path('Hotel/Avilable/Rooms', views.room_availability, name = "room_availability"),
-
+    path('Hotel/Room/Booking/Details/', views.room_booking_details, name = 'room_booking_details')
 
 ]

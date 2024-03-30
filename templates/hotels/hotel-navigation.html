@@ -3,7 +3,7 @@
     <aside class="navbar-aside" id="offcanvas_aside">
         <div class="aside-top">
             <a href="index.html" class="brand-wrap">
-                <img src="{% static 'assets/imgs/theme/logo.svg' %}" class="logo" alt="Evara Dashboard">
+                <h3 style="color: rgb(209, 138, 138);">Welcome,<span style="color: rgb(226, 66, 66);">'{{hotel.hotel_name}}'</span></h1>
             </a>
             <div>
                 <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
@@ -16,7 +16,13 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-item has-submenu">
+
+                <li class="menu-item active">
+                    <a class="menu-link" href="{% url 'room_booking_details' %}"> <i class="icon material-icons md-home"></i>
+                        <span class="text">Room Booking Details</span>
+                    </a>
+                </li>
+                <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
                         <span class="text">Avilability</span>
                     </a>
@@ -26,10 +32,19 @@
                         <a href="#">Facilities</a>
 
                     </div>
-                </li>
+                </li> -->
+                <!-- <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">action</a>
+                        <a class="dropdown-item" href="#">action</a>
+                        <a class="dropdown-item" href="#">action</a>
+
+                    </div>
+                </div> -->
 
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" > <i class="icon material-icons md-add_box"></i>
+                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-add_box"></i>
                         <span class="text">Add Details</span>
                     </a>
                     <div class="submenu">

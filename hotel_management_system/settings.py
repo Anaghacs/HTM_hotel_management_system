@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q-z&dlj-%-72s4komosegdzl=3w28oiq59r4eq$#hi+n!@hr(j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,13 +45,13 @@ INSTALLED_APPS = [
     'hotels',
 
     #Social Authentication
-    'django.contrib.sites',
+    # 'django.contrib.sites',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
-    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.gitlab',
     # 'allauth.socialaccount.providers.facebook',
@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     #Social authentication middleware
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hotel_management_system.urls'
@@ -87,10 +87,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                 # Already defined Django-related contexts here
-
-                # `allauth` needs this from django
-                'django.template.context_processors.request',
+               
             ],
         },
     },
@@ -165,38 +162,38 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Abstract Model 'User in home'
 AUTH_USER_MODEL = "home.User"
 
-AUTHENTICATION_BACKENDS = [
+# AUTHENTICATION_BACKENDS = [
     
     # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
+    # 'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-    
-]
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+    # 
+# ]
 
-SITE_ID = 1
+# SITE_ID = 1
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-    }
-}
-
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'OAUTH_PKCE_ENABLED': True,
+#     }
+# }
+# #
 # SOCIALACCOUNT_QUERY_EMAIL = True
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'FETCH_USERINFO' : True
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'FETCH_USERINFO' : True
+#     }
+# }
 
 #Razorpay downloaded api keys setup in setting.py
 

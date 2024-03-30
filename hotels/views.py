@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
-from home.models import Hotel, User, Customer, Room, Facilities
+from home.models import Hotel, User, Customer, Room, Facilities, Booking, Order
 from django.contrib import auth
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -151,6 +151,7 @@ def hotels_view_room_details(request):
 
 @login_required
 def delete_room(request, room_number):
+      print("right plase")
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']
             try:
@@ -317,3 +318,15 @@ def update_facilities(request, id):
 
 def room_availability(request):
      return render(request, 'hotels/room_availability.html')
+
+def room_booking_details(request):
+     if 'hotel_id' in request.session:
+            hotel_id = request.session['hotel_id']
+            hotel = Hotel.objects.get(id = hotel_id)
+            print("===============================",hotel.hotel_name)
+            booking = Booking.objects.filter(room__hotel=hotel)
+            order = Order.objects.filter(hotel = hotel)
+            room = Room.objects.filter(hotel= hotel)
+            # brooo oru help cheyo addhym edit and delete button onu set ako ath wrk ayirunatha epo wrk avunila ok evide kanikk ok ithanoo isyes ok ithu auth login ann googlint aa buttons edukk auth login ala session use cheythit anu but delete anunud en thonunu but vere page lek pokunu nk modal varanam anit yes button il click cheyombo delete avanam html page edukk
+
+     return render(request, 'hotels/room_booking_details.html', {'hotel' : hotel, 'order' : order, 'booking' : booking, 'room' : room})
