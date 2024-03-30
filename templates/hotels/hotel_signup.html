@@ -162,7 +162,8 @@
                                           <option value="HOTEL">Hotel</option>
                                     </select><br><br>
                                     <input type="submit" value="SignUp" class="btn btn-primary"> -->
-                          <form method="post">
+                          <form method="post" enctype="multipart/form-data">
+                            <!-- ithillangill files share avillaa orma ind vitt poy ninakkippoll ulla errorum athavanaann sadhyatha ennu vicharikkunnu media root okkey set cheythittundo ?yes upload to koduthittundo  -->
                               {% csrf_token %}
                                     
                                       {% for messages in messages %}
@@ -173,47 +174,53 @@
       
                               <div class="mb-3">
                                   <label class="form-label">Hotel name</label>
-                                  <input class="form-control" placeholder="Hotel Name" type="text" name="hotel_name">
+                                  <input class="form-control" placeholder="Hotel Name" type="text" name="hotel_name" required>
                               </div>
 
                               <div class="mb-3">
                                   <label class="form-label">Address</label>
-                                  <input class="form-control" placeholder="Hotel Address" type="text" name="address">
+                                  <input class="form-control" placeholder="Hotel Address" type="text" name="address" required>
                               </div>
 
                               <div class="mb-3">
                                   <label class="form-label">Place</label>
-                                  <input class="form-control" placeholder="Hotel Place" type="text" name="place">
+                                  <input class="form-control" placeholder="Hotel Place" type="text" name="place" required>
                               </div>
 
                               <div class="mb-3">
                                   <label class="form-label">Phone</label>
-                                  <input class="form-control" placeholder="Phone" type="text" name="phone">
+                                  <input class="form-control" placeholder="Phone" type="text" name="phone" required>
                               </div>
 
       
                               <div class="mb-3">
                                   <label class="form-label">Email</label>
-                                  <input class="form-control" placeholder="Email" type="email" name="emails">
+                                  <input class="form-control" placeholder="Email" type="email" name="emails" required>
                               </div> <!-- form-group// -->
       
                               
       
                               <div class="mb-3">
                                   <label class="form-label">Username</label>
-                                  <input class="form-control" placeholder="Password" type="text" name="username">
+                                  <input class="form-control" placeholder="Password" type="text" name="username" required>
                               </div> <!-- form-group// -->
       
                               <div class="mb-3">
                                   <label class="form-label">password</label>
-                                  <input class="form-control" placeholder="Password" type="password" name="password">
+                                  <input class="form-control" placeholder="Password" type="password" name="password" required>
                               </div>
 
+                              <div class="mb-3">
+                                <label class="form-label">Upload Hotel Photo</label>
+                                <input class="form-control" type="file" name="photo" required>
+                              </div>
+                              <!-- <label style="color: white;">Upload Photo</label>
+                                    <input type="file" name="photo" required><br><br> -->
                               
                               
                               <div class="mb-3">
                                     <label class="form-label">User type</label>
-                                    <select class="form-control" id="role" name="role">
+                                    <select class="form-control" id="role" name="role" required>
                                           <!-- <option value="CUSTOMER">Customer</option> -->
                                           <option value="HOTEL">Hotel</option>
                                     </select>

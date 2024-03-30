@@ -1,44 +1,55 @@
-{% load static %}
+
+
 {% include 'commons/base.html' %}
-{% include 'commons/navigation.html' %}
+{% include 'users/navigation.html' %}
 {% block content%}
 
-    
-    <div class="breadcrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-text">
-                        <h2><span style="color: rgb(228, 104, 104);"></span>Rooms Booking Ticket Details</h2>
-                        <div class="bt-option">
-                            <a href="./home.html">Home</a>
-                            <span>{{customer}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div>
-        <table class="table thead-dark">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">First</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for i in order %}              
-              <tr>
-                <th scope="row">{{i.hotel}}</th>
-                <td>Mark</td>
-              </tr>
-              
-              {% endfor %}
-            </tbody>
-          </table>
-    </div>
-    
-{% endblock content%}
+<section class="content-main">
+      <div class="content-header">
+          <div>
+              <h2 class="content-title card-title" style="text-align: center;"><span style="color: rgb(231, 85, 85);">'{{customer}}' </span>Rooms Booking Details</h2>
+          </div>
+      </div>
 
-{% include 'commons/footer.html' %}
+      <div class="card mb-4">
+          
+          <div class="card-body ">
+              <div class="row  gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                  {% for i in booking %}
+                  {% for j in orders %}
+                  <div class="col">
+                      <div class="card card-product-grid ">
+                          
+                          <div class="info-wrap">
+                              <p class="title text-truncate">Customer : {{customer}}</p>
+                              <p class="title text-truncate">Hotel : {{i.room.hotel}}</p>
+                              <p class="title text-truncate">Room : {{i.room.room_type}}</p>
+
+                              <p class="title text-truncate">Room Number : {{i.room_id}}</p>
+                              <p class="title text-truncate">Check In Date  : {{i.check_in}}</p>
+                              <p class="title text-truncate">Check Out Dtae : {{i.check_out}}</p>
+
+                              <p class="title text-truncate">Status : paid</p>
+                              <p class="title text-truncate">Booking Date : {{j.boock_date}}</p>
+
+                              
+                              <div class="price mb-2">Price : {{i.room.price}}</div> <!-- price.// -->
+                              
+
+                              <!-- <a href="{% url 'booking_cancel' i.id %}"><button>Booking Cancel</button></a> -->
+                              
+                              
+                          </div><br>
+
+                      </div> <!-- card-product  end// --> 
+                      <br>
+                  </div> <!-- col.// -->
+                  {% endfor %}
+                  {% endfor %}
+              </div> <!-- row.// --> <br>
+          </div> <!-- card-body end// --> <br>
+      </div> <!-- card end// --> <br>
+
+  </section> <!-- content-main end// --> <br>
+{% endblock content%}
+{% include 'commons/footer.html' %} 

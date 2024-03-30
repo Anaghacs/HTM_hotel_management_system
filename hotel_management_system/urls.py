@@ -22,12 +22,17 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+      
+      #Social Authentication inbuild url
+    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.socialaccount.urls')),
+    
     path('admin/', admin.site.urls),
     path("",include('home.urls')),
     path("",include('hotels.urls')),
     path("",include('users.urls')),
 
-    #Social Authentication inbuild url
+    
    
 ]
 

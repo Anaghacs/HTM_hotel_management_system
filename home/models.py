@@ -66,9 +66,7 @@ class Hotel(User):
     approved = models.BooleanField(default = False)
     is_deleted = models.BooleanField(default = False)
 
-    hotel_number = models.IntegerField()
-
-
+    hotel_number = models.IntegerField(null=True,blank=True)
     class Meta:
         verbose_name = "Hotel User"
 

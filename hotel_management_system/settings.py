@@ -39,26 +39,39 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #customized apps
+    
+    #Social Authentication
+    'django.contrib.sites',
+
+     #customized apps
     'home',
     'users',
     'hotels',
 
-    #Social Authentication
-    # 'django.contrib.sites',
+    'crispy_forms',
+    'crispy_bootstrap5',
 
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
-    # 'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.gitlab',
-    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.facebook',
+
+    
+
+   
+
 
     #pdf downloader
     # 'wkhtmltopdf'
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,9 +81,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 
-    #Social authentication middleware
-    # 'allauth.account.middleware.AccountMiddleware',
+    # Social authentication middleware
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hotel_management_system.urls'
@@ -87,7 +101,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-               
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -154,6 +169,8 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
+
+# test uer email athaa ?/?? ellam kazhinju  anaghasasidharan38@gmail.com
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -162,31 +179,92 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Abstract Model 'User in home'
 AUTH_USER_MODEL = "home.User"
 
-# AUTHENTICATION_BACKENDS = [
+AUTHENTICATION_BACKENDS = [
     
     # Needed to login by username in Django admin, regardless of `allauth`
-    # 'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by email
-    # 'allauth.account.auth_backends.AuthenticationBackend',
-    # 
-# ]
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
 
 # SITE_ID = 1
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         'SCOPE': [
-#             'profile',
-#             'email',
-#         ],
-#         'AUTH_PARAMS': {
-#             'access_type': 'online',
-#         },
-#         'OAUTH_PKCE_ENABLED': True,
-#     }
-# }
-# #
+
+# SOCIALACCOUNT_LOGIN_ON_GET = True
+# ACCOUNT_EMAIL_VERIFICATION = 'none'
+# LOGIN_REDIRECT_URL = '/'
+
+
+# LOGOUT_REDIRECT_URL = '/'
+
+# ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+# SOCIALACCOUNT_QUERY_EMAIL = True
+
+# ACCOUNT_SESSION_REMEMBER = True
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    
+    
+    
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'first_name',
+            'last_name',
+            'middle_name',
+            'name',
+            'name_format',
+            'picture',
+            'short_name',
+            'phone_number'
+        ],
+        'EXCHANGE_TOKEN': True,
+        'VERSION': 'v13.0',
+        'GRAPH_API_URL': 'https://graph.facebook.com/v13.0',
+    },
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+    
+    
+}
+
+
+
+
+SITE_ID=1
+
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+LOGIN_REDIRECT_URL = '/'
+
+
+LOGOUT_REDIRECT_URL = '/'
+
+# delete cheyyatte nth??? userne ath nthe??? engile test cheyyan pattullu ok pass enthuva anagha anagha@2000 kazhinju  but njn logn cheyth kazhijal username and navbar maranam ithil mariyilalo ith all auth allee kandoo ellam vann eni login logic codukkanam html ill and ella viewsilum puthukkipaniyanam becouse chilappoll erross varum eni chilappoll varillaa kandariyaam.... nokte njn anit nale paraya njn poyoooo
+
+# ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+ACCOUNT_SESSION_REMEMBER = True
+
 # SOCIALACCOUNT_QUERY_EMAIL = True
 
 # SOCIALACCOUNT_PROVIDERS = {

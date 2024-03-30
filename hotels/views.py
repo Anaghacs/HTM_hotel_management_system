@@ -7,52 +7,103 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
-
 def hotel_signup(request):
-      error = ""
-      if request.method == "POST":
-            
-            hotel_name = request.POST['hotel_name']
-            username = request.POST['username']
-            password = request.POST['password']
-            address = request.POST['address']
-            place = request.POST['place']
-            emails = request.POST['emails']
-            phone = request.POST['phone']
+    if request.method == "POST":
+        hotel_name = request.POST['hotel_name']
+        username = request.POST['username']
+        password = request.POST['password']
+        address = request.POST['address']
+        place = request.POST['place']
+        emails = request.POST['emails']
+        phone = request.POST['phone']
+        role = request.POST['role']
 
-            #photo file get
-            photo = request.FILES.get('photo')
-            role = request.POST['role']
-            print("==================================",hotel_name, emails, username, password)
+            # delete set ay epo epo signup anu isue ok
+        # photo file get
+        photo = request.FILES.get('photo')
+        print("==================================",hotel_name, emails, username, password,phone,role,place,photo)
+
+
+        # Checking for empty or whitespace inputs
+        if not hotel_name.strip():
+            messages.error(request, "Hotel name cannot be empty or whitespace.")
+            return redirect('hotel_signup')
+        elif not address.strip():
+            messages.error(request, "Address cannot be empty or whitespace.")
+            return redirect('hotel_signup')
+        elif not place.strip():
+            messages.error(request, "Place cannot be empty or whitespace.")
+            return redirect('hotel_signup')
+
+        try:
+            # Create hotel model and insert the data
+            if role == "HOTEL":
+                # It's better to use create() directly instead of creating an object and then saving it
+                customer = Hotel.objects.create(
+                    hotel_name = hotel_name,
+                    username = username,
+                    password = password,
+                    address = address,
+                    place = place,
+                    emails = emails,
+                    phone = phone,
+                    photo = photo,
+                    role = role
+                )
+                messages.success(request, "Signup successful. You can now login.")
+                return redirect('hotel_login')
+        except Exception as e:
+            messages.error(request, f"Signup failed: {str(e)}")
+            return redirect('hotel_signup')
+
+    return render(request, 'hotels/hotel_signup.html')
+
+
+# def hotel_signup(request):
+#       error = ""
+#       if request.method == "POST":
+            
+#             hotel_name = request.POST['hotel_name']
+#             username = request.POST['username']
+#             password = request.POST['password']
+#             address = request.POST['address']
+#             place = request.POST['place']
+#             emails = request.POST['emails']
+#             phone = request.POST['phone']
+
+#             #photo file get
+#             photo = request.FILES.get('photo')
+#             role = request.POST['role']
+#             print("==================================",hotel_name, emails, username, password)
 
             
-            if hotel_name == "" or hotel_name == " ":
-                  messages.info(request,"hotelname is not allowed space and blank space and not allowed special characters")
-                  return redirect(hotel_signup)
+#             if hotel_name == "" or hotel_name == " ":
+#                   messages.info(request,"hotelname is not allowed space and blank space and not allowed special characters")
+#                   return redirect(hotel_signup)
             
-            elif address == "" or address == "":
-                  messages.info(request,"address is not allowed space and blank space and not allowed special characte")
-                  return redirect(hotel_signup)
+#             elif address == "" or address == "":
+#                   messages.info(request,"address is not allowed space and blank space and not allowed special characte")
+#                   return redirect(hotel_signup)
             
             
-            elif place == "" or place == "":
-                  messages.info(request,"place is not allowed space and blank space and special character")
-                  return redirect(hotel_signup)
+#             elif place == "" or place == "":
+#                   messages.info(request,"place is not allowed space and blank space and special character")
+#                   return redirect(hotel_signup)
             
-            else:
-                  try:
-                  #create hotel model and insert the data
-                        if role == "HOTEL":
+#             else:
+#                   try:
+#                   #create hotel model and insert the data
+#                         if role == "HOTEL":
                               
-                              customer = Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
-                              customer.save()
-                              error = 'no'
-                        else:
-                              error = 'yes'
-                  except:
-                        error = 'yes'
-      content = {'error':error}
-      return render(request,'hotels/hotel_signup.html',content)
+#                               customer = Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
+#                               customer.save()
+#                               error = 'no'
+#                         else:
+#                               error = 'yes'
+#                   except:
+#                         error = 'yes'
+#       content = {'error':error}
+#       return render(request,'hotels/hotel_signup.html',content)
 
 
 def hotel_login(request):

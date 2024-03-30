@@ -451,5 +451,13 @@ def forgot_password(request):
 def room_reservation_details(request):
       order=request.GET.get('Order_id')
 
+      if 'customer_id' in request.session:
+            customer_id = request.session['customer_id']
+            # hotel = Hotel.objects.get(id = hotel_id)
+            customer = get_object_or_404(Customer, id = customer_id)
+            booking = Booking.objects.filter(customer = customer)
+            orders = Order.objects.filter(customer = customer)
 
-      return render(request, 'users/page-account-register.html',{'order' : order})
+
+            print("================================",customer.username)
+      return render(request, 'users/page-account-register.html',{'orders' : orders,'customer' : customer, 'booking' : booking})
