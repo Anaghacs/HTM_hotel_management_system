@@ -252,12 +252,11 @@ SITE_ID=1
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/User/Home/'
 
 
 LOGOUT_REDIRECT_URL = '/'
 
-# delete cheyyatte nth??? userne ath nthe??? engile test cheyyan pattullu ok pass enthuva anagha anagha@2000 kazhinju  but njn logn cheyth kazhijal username and navbar maranam ithil mariyilalo ith all auth allee kandoo ellam vann eni login logic codukkanam html ill and ella viewsilum puthukkipaniyanam becouse chilappoll erross varum eni chilappoll varillaa kandariyaam.... nokte njn anit nale paraya njn poyoooo
 
 # ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 

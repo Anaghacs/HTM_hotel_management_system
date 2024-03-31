@@ -9,7 +9,9 @@ from django.shortcuts import get_object_or_404
 # # Create your views here.
 
 def index(request):
+      # hotels = Hotel.objects.filter(approved = True)
       hotels = Hotel.objects.all()
+
       # facilities = Facilities.objects.filter(hotels = hotels)
 
       return render(request,'commons/indexs.html', {'hotels' : hotels, })
