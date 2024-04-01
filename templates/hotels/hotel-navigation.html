@@ -10,100 +10,58 @@
             </div>
         </div>
         <nav>
-            <ul class="menu-aside">
-                <li class="menu-item active">
-                    <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+             <ul class="menu-aside">
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{% url 'logout' %}"> <i class="icon material-icons md-dashboard"></i></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-
-                <li class="menu-item active">
-                    <a class="menu-link" href="{% url 'room_booking_details' %}"> <i class="icon material-icons md-home"></i>
-                        <span class="text">Room Booking Details</span>
-                    </a>
-                </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Avilability</span>
-                    </a>
-                    <div class="submenu">
-
-                        <a href="{% url 'room_availability' %}">Room</a>
-                        <a href="#">Facilities</a>
-
-                    </div>
-                </li> -->
-                <!-- <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">action</a>
-                        <a class="dropdown-item" href="#">action</a>
-                        <a class="dropdown-item" href="#">action</a>
-
-                    </div>
-                </div> -->
-
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-add_box"></i>
-                        <span class="text">Add Details</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="{% url 'add_hotel_room'  %}">Add Rooms</a>
-                        <a href="{% url 'add_hotel_facilities' %}">Add Facilities</a>
-                    </div>
+               
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'add_hotel_room'  %}"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Rooms</span>
+                    </a>           
                 </li>
 
-                <li class="menu-item has-submenu active">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Views</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="{% url 'hotels_view_room_details' %}">Rooms</a>
-                        <a href="{% url 'hotel_view_facilities' %}" class="active">Facilities</a>
-                        <!-- <a href="page-orders-detail.html">Order detail</a> -->
-                    </div>
-                </li>
-
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href=""> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Customers</span>
-                    </a>
-                    
-                </li> -->
-                
-
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-transactions-1.html">Transaction 1</a>
-                    </div>
-                </li>
-                
                 <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
+                    <a class="menu-link" href="{% url 'add_hotel_facilities'  %}"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Facilities</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'hotels_view_room_details'  %}"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">View Rooms</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'hotel_view_facilities'  %}"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">View Facilities</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{% url 'room_booking_details' %}"> <i class="icon material-icons md-local_shipping"></i>
+                        <span class="text">Booking Details</span>
                     </a>
                 </li>
                 
-                <li class="menu-item">
-                    <a class="menu-link" href="{% url 'logout' %}"> <i class="material-icons md-perm_identity"></i></i>
+                <!-- <li class="menu-item">
+                    <a class="menu-link" href="{% url 'logout' %}"> <i class="material-icons md-logout"></i></i>
                         <span class="text">LogOut</span>
                     </a>
-                </li>
-                
-                
+                </li> -->
+
             </ul> 
+            
         </nav>
     </aside>
     <main class="main-wrap">
 
         <header class="main-header navbar">
-            <div class="col-search">
-                <h3>welcome <span style="color: brown;">"{{hotel.hotel_name}}"</span> hotel</h3>
-
-                
+            <div class="col-search">                
             </div>
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
@@ -122,12 +80,16 @@
                     </li>
                     
                     </li>
-                    <li class="dropdown nav-item">
+                    <!-- <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="{% static 'assets/imgs/people/avatar2.jpg' %}" alt="User"></a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
                             <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
                             <a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
+                    </li> -->
+
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link btn-icon">{{hotel.hotel_name}} logout <i class="material-icons md-exit_to_app"></i></a>
                     </li>
                     
 

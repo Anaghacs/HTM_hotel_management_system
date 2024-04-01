@@ -32,101 +32,49 @@
         </div>
         <nav>
             <ul class="menu-aside">
-                <li class="menu-item active">
-                    <a class="menu-link" href="index.html"> <i class="icon material-icons md-home"></i>
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{% url 'logout' %}"> <i class="icon material-icons md-dashboard"></i></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-products-list.html"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Avilability</span>
-                    </a>
-                    <div class="submenu">
-
-                        <a href="#">Room</a>
-                        <a href="#">Facilities</a>
-
-                    </div>
-                </li>
-
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-form-product-1.html"> <i class="icon material-icons md-add_box"></i>
-                        <span class="text">Add Details</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="{% url 'add_hotel_room'  %}">Add Rooms</a>
-                        <a href="{% url 'add_hotel_facilities' %}">Add Facilities</a>
-                    </div>
-                </li>
-
-                <li class="menu-item has-submenu active">
-                    <a class="menu-link" href="page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Views</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="{% url 'hotels_view_room_details' %}">Rooms</a>
-                        <a href="{% url 'hotel_view_facilities' %}">Facilities</a>
-                        <!-- <a href="page-orders-detail.html">Order detail</a> -->
-                    </div>
-                </li>
-
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href=""> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Customers</span>
-                    </a>
-                    
-                </li> -->
-                
-
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="page-transactions-1.html">Transaction 1</a>
-                    </div>
-                </li>
-                
-                <li class="menu-item">
-                    <a class="menu-link" href="page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
+               
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'add_hotel_room'  %}"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Rooms</span>
+                    </a>           
                 </li>
 
                 <li class="menu-item">
-                    <a class="menu-link" href="{% url 'room_booking_details' %}"> <i class="icon material-icons md-shopping_cart"></i>
+                    <a class="menu-link" href="{% url 'add_hotel_facilities'  %}"> <i class="icon material-icons md-add_box"></i>
+                        <span class="text">Add Facilities</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'hotels_view_room_details'  %}"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">View Rooms</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item h">
+                    <a class="menu-link" href="{% url 'hotel_view_facilities'  %}"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">View Facilities</span>
+                    </a>           
+                </li>
+
+                <li class="menu-item">
+                    <a class="menu-link" href="{% url 'room_booking_details' %}"> <i class="icon material-icons md-local_shipping"></i>
                         <span class="text">Booking Details</span>
                     </a>
                 </li>
                 
-                <li class="menu-item">
-                    <a class="menu-link" href="{% url 'logout' %}"> <i class="material-icons md-perm_identity"></i></i>
+                <!-- <li class="menu-item">
+                    <a class="menu-link" href="{% url 'logout' %}"> <i class="material-icons md-logout"></i></i>
                         <span class="text">LogOut</span>
                     </a>
-                </li>
-
-                <!-- <li class="dropdown nav-item">
-
-                    <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#" id="dropdownAccount" aria-expanded="false"><i class="icon material-icons md-comment"></i> {{hotel.hotel_name}}</a>
-
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-
-                        <a class="dropdown-item" href="#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-
-                        <a class="dropdown-item" href="#"><i class="material-icons md-settings"></i>Account Settings</a>
-
-                        <div class="dropdown-divider"></div>
-
-                        <a class="dropdown-item text-danger" href="#"><i class="material-icons md-exit_to_app"></i>Logout</a>
-
-                    </div>
-
                 </li> -->
 
-                
-                  
-
-                
                 
             </ul> 
         </nav>

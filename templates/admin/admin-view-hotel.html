@@ -55,14 +55,14 @@
                                         <td>{{i.emails}}</td>
                                         <td>{{i.phone}}</td>
                                         <td>
-                                            <img src="{{'i.photo.url'}}" alt="hotel_photo" style="height:49px; width:49px;">
+                                            <img src="{{i.photo.url}}" alt="hotel_photo" style="height:49px; width:49px;">
                                         </td>
                                         
                                         <td>
                                             {% if not i.approved %}
-                                                <a class="btn btn-xs" href="{% url 'approve' i.id %}">Approve </a>
+                                                <a class="btn btn-xs" style="background-color: rgb(23, 136, 23);" href="{% url 'approve' i.id %}">Approve </a>
                                             {% else %}
-                                                <a class="btn btn-xs" href="{% url 'block' i.id %}">Block</a>
+                                                <a class="btn btn-xs " style="background-color: rgb(206, 36, 36);" href="{% url 'block' i.id %}"> Block </a>
                                             {% endif %}
                                         </td>
                                                                                     
