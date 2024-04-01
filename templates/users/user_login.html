@@ -40,8 +40,8 @@
                           <form method="post">
                             {% csrf_token %}
                                 {% for messages in messages %}
-					                          <p style="color: red;">{{messages}}</p>
-				                        {% endfor %}<br>
+					                <p style="color: red;">{{messages}}</p>
+				                {% endfor %}<br>
 
                               <div class="mb-3">
                                   <input class="form-control" placeholder="Username or email" type="text" name="username">
@@ -50,7 +50,7 @@
                                   <input class="form-control" placeholder="Password" type="password" name="password">
                               </div> <br><!-- form-group// -->
                               <div class="mb-3">
-                                  <a href="#" class="float-end font-sm text-muted">Forgot password?</a>
+                                  <a href="#" class="float-end font-sm text-muted">Reset password?</a>
                                   <a href="#" class="float-start font-sm text-muted">Forgot password?</a>
 
                                   <!-- <label class="form-check">
@@ -91,11 +91,6 @@
                                 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
                                 {% endif %}
                               </div>
-
-
-
-
-
 
 
                               <!-- <a href="#" class="btn w-100 btn-light font-sm">
@@ -153,8 +148,11 @@
 
           <script>
             $(document).ready(function() {
+                console.log("=============================")
                 $('#generateOTP').click(function() {
                     var email = $('#email').val();
+                    console.log("+====================", email)
+
                     $.ajax({
                         url: '/generate_and_send_otp/',
                         method: 'POST',
@@ -162,6 +160,7 @@
                             'email': email,
                             'csrfmiddlewaretoken': '{{ csrf_token }}',
                         },
+
                         success: function(response) {
                             if (response.success) {
                                 // alert('OTP sent successfully!');

@@ -359,18 +359,21 @@ def booking_details_pdf(request):
 
 
 def generate_and_send_otp(request):
-    
+      print("==============================hiiiiiiiii")
       if request.method == 'POST':
             email = request.POST.get('email')
             request.session['user_email'] = email
+            print("============================", email)
             request.session.save()
             user_email=request.session.get('user_email',None)
+            print("==============================", user_email)
             if email:
                   if Customer.objects.filter(email=email).exists():
                         OTP = random.randint(100000, 999999)
-                            
+                        print(OTP)    
                         print("otp",OTP)
                         user = Customer.objects.get(email=email)
+                        print("===================")
                         subject = 'OTP Verification'
                         message = f'Hi {user.username},Your Forgott Password OTP is  {OTP}  Valid For 5 Minit. Do Not Share. if you not requested for otp then ignore it'
                         email_from = settings.EMAIL_HOST_USER
@@ -437,6 +440,7 @@ def validate_otp (request):
                 otp_data.is_active = False
                 print("otp is expired")
                 return redirect('user_login')  
+            
         else:
             messages.error(request, "Invalid OTP or OTP has expired.")
             
