@@ -8,7 +8,7 @@ urlpatterns = [
     path('logout/', views.logout, name = 'logout'),
 
     path('Hotel/Dashboard', views.hotel_dashboard, name = 'hotel_dashboard'),
-    path('Hotel/Rooms/', views.add_hotel_room, name = 'add_hotel_room'),
+    path('Hotel/Add/Rooms/', views.add_hotel_room, name = 'add_hotel_room'),
     path('Hotel/View/Rooms/', views.hotels_view_room_details, name= 'hotels_view_room_details'),
     path('Hotel/Delete/Room/<int:room_number>/', views.delete_room, name = 'delete_room'),
     path('Hotel/Room/update/<int:room_number>/', views.update_room_details, name = 'update_room_details'),

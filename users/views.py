@@ -142,34 +142,79 @@ def room_reservation(request, room_number):
       room = get_object_or_404(Room, room_number = room_number)
       return render(request, 'commons/room-reservation.html', {'room' : room, })
 
+
+
+from django.db.models import Q
+from datetime import datetime
 #customer check_availability
-def check_room_availability(request, room_number):
-      print("================================")
-      room = get_object_or_404(Room, room_number = room_number)
+# def check_room_availability(request, room_number):
+#       print("================================")
+#       room = get_object_or_404(Room, room_number = room_number)
     
-      # if 'customer_id' in request.session:
-      #       customer_id = request.session['customer_id']
-      #       customer = get_object_or_404(Customer, id=customer_id)
-      #       print("==========================", customer)
+#       # if 'customer_id' in request.session:
+#       #       customer_id = request.session['customer_id']
+#       #       customer = get_object_or_404(Customer, id=customer_id)
+#       #       print("==========================", customer)
 
-      if request.method == 'POST':
-            check_in = request.POST.get('check_in')
-            check_out = request.POST.get('check_out')
+#       if request.method == 'POST':
+#             check_in = request.POST.get('check_in')
+#             check_out = request.POST.get('check_out')
 
-            print("===================================", check_in, check_out, room)
-            overlapping_bookings = Booking.objects.filter(room = room, check_in = check_in, check_out = check_out)
+#             print("===================================", check_in, check_out, room)
+            
+
+# # Assuming room, check_in, and check_out are provided
+#             overlapping_bookings = Booking.objects.filter(
+#             Q(room=room) &
+#             (
+#                   Q(check_in__lte=check_in, check_out__gte=check_in) |  # Booking starts before new check-in
+#                   Q(check_in__lte=check_out, check_out__gte=check_out) |  # Booking ends after new check-out
+#                   Q(check_in__gte=check_in, check_out__lte=check_out)  # Booking starts and ends within new booking dates
+#             )
+#             )
+
+# # This will give you all bookings that overlap with the provided check-in and check-out dates for the specified room.
+
+#             # overlapping_bookings = Booking.objects.filter(room = room, check_in = check_in, check_out = check_out)
         
-            if overlapping_bookings.exists():
-                  messages.warning(request, "Room is not available! Please change date.")
+#             if overlapping_bookings.exists():
+#                   messages.warning(request, "Room is not available! Please change date.")
 
-            else:
-                  # After processing, render a response
-                  messages.success(request, "Room is available")
+#             else:
+#                   # After processing, render a response one minit waitok
+#                   messages.success(request, "Room is available")
 
-                  return render(request, 'commons/room-reservation.html')
+#                   return render(request, 'commons/room-reservation.html')
     
-      # If it's not a POST request or there's an overlapping booking, render the form
-      return render(request, 'commons/room-reservation.html', {'room': room, })
+#       # If it's not a POST request or there's an overlapping booking, render the form
+#       return render(request, 'commons/room-reservation.html', {'room': room, })
+
+
+
+def check_room_availability(request, room_number):
+    room = get_object_or_404(Room, room_number=room_number)
+
+    if request.method == 'POST':
+        check_in = request.POST.get('check_in')
+        check_out = request.POST.get('check_out')
+
+        overlapping_bookings = Booking.objects.filter(
+            Q(room=room) &
+            (
+                Q(check_in__lte=check_in, check_out__gte=check_in) |  # Booking starts before new check-in
+                Q(check_in__lte=check_out, check_out__gte=check_out) |  # Booking ends after new check-out
+                Q(check_in__gte=check_in, check_out__lte=check_out)  # Booking starts and ends within new booking dates
+            )
+        )
+# booking cheyona baghath kudi nerathe cheytha pole check cheyanam and person number kudi check cheyth true anukile booking cheyan padulu views 
+        if overlapping_bookings.exists():
+            messages.warning(request, "Room is not available! Please change date.")
+        else:
+            messages.success(request, "Room is available")
+            return render(request, 'commons/room-reservation.html')
+
+    # If it's not a POST request or there's an overlapping booking, render the form
+    return render(request, 'commons/room-reservation.html', {'room': room})
 
 @never_cache
 def booking_confirmation(request):
@@ -184,8 +229,88 @@ def booking_confirmation(request):
             booking = Booking.objects.filter( customer = customer)
             print("==========================================",booking)
             email=customer.emails
+            order = Order.objects.filter(customer=customer)
+            # print(order.id)
+            for i in order:
+                 print(i.paid_amount,"order")
 
-      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer} )
+            
+                 
+
+      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer, 'order' : order} )
+
+# @never_cache
+# def room_booking(request, room_number):
+# #     evide kudi check cheythit venam booking cheyan capacity and form le guest number check cheythit less or equal anukil mathrem book cheyabam
+#     try:
+#         customer_id = request.session.get('customer_id')
+#         if not customer_id:
+#             return redirect('user_login')  # Redirect to login page if user is not logged in
+
+#         customer = Customer.objects.get(id=customer_id)
+#         room = Room.objects.get(room_number=room_number)
+
+#         if request.method == "POST":
+#             check_in = request.POST.get('check_in')
+#             check_out = request.POST.get('check_out')
+#             guest_number = request.POST.get('guest_number')
+
+#             # Validate check_in and check_out dates
+#             if not check_in or not check_out:
+#                 messages.error(request, "Please provide both check-in and check-out dates.")
+#                 return redirect('room_booking', room_number=room_number)
+
+#             # check_in_date = datetime.strptime(check_in, '%Y-%m-%d').date()
+#             # check_out_date = datetime.strptime(check_out, '%Y-%m-%d').date()
+
+#             # if check_in_date < timezone.now().date():
+#             #     messages.error(request, "Check-in date cannot be in the past.")
+#             #     return redirect('room_booking', room_number=room_number)
+
+#             # if check_in_date >= check_out_date:
+#             #     messages.error(request, "Check-out date must be after check-in date.")
+#             #     return redirect('room_booking', room_number=room_number)
+
+#             overlapping_bookings = Booking.objects.filter(room=room, check_in=check_in, check_out=check_out)
+#             if overlapping_bookings.exists():
+#                 messages.warning(request, "Room is not available for the selected dates.")
+            
+#             # if guest_number >= room.capacity:
+#             #       messages.warning(request, "capacity is greater than guest numbers!.")
+ 
+#             else:
+#                 booking = Booking.objects.create(
+#                     customer=customer,
+#                     check_in=check_in,
+#                     check_out=check_out,
+#                     guest_number=guest_number,
+#                     room=room,
+#                 )
+#                 booking.save()
+#                 messages.success(request, "Room is available and booking is successful.")
+#                 return redirect('booking_confirmation')
+
+#         return render(request, 'commons/booking.html', {'room' : room, 'customer' : customer})
+
+#     except Customer.DoesNotExist:
+#         # Handle the case where the customer does not exist
+#         return redirect('user_login')  # Redirect to login page or handle differently
+
+#     except Room.DoesNotExist:
+#         # Handle the case where the room does not exist
+#         messages.error(request, "The room you are trying to book does not exist.")
+#         return redirect('room_booking')  # Redirect to booking page or handle differently
+
+
+
+
+
+
+
+
+
+
+
 
 @never_cache
 def room_booking(request, room_number):
@@ -200,31 +325,52 @@ def room_booking(request, room_number):
         if request.method == "POST":
             check_in = request.POST.get('check_in')
             check_out = request.POST.get('check_out')
-            guest_number = request.POST.get('guest_number')
+            guest_number = int(request.POST.get('guest_number'))
 
             # Validate check_in and check_out dates
             if not check_in or not check_out:
                 messages.error(request, "Please provide both check-in and check-out dates.")
                 return redirect('room_booking', room_number=room_number)
 
-            # check_in_date = datetime.strptime(check_in, '%Y-%m-%d').date()
-            # check_out_date = datetime.strptime(check_out, '%Y-%m-%d').date()
+            check_in_date = datetime.strptime(check_in, '%Y-%m-%dT%H:%M').date()
+            check_out_date = datetime.strptime(check_out, '%Y-%m-%dT%H:%M').date()
 
-            # if check_in_date < timezone.now().date():
-            #     messages.error(request, "Check-in date cannot be in the past.")
-            #     return redirect('room_booking', room_number=room_number)
+            if check_in_date < datetime.now().date():
+                messages.error(request, "Check-in date cannot be in the past.")
+                return redirect('room_booking', room_number=room_number)
 
-            # if check_in_date >= check_out_date:
-            #     messages.error(request, "Check-out date must be after check-in date.")
-            #     return redirect('room_booking', room_number=room_number)
+            if check_in_date >= check_out_date:
+                messages.error(request, "Check-out date must be after check-in date.")
+                return redirect('room_booking', room_number=room_number)
+# but room booking anu en kanikunilalo wait onu nokte error und bcz ee date already booking cheythit und ee room manasilayilla
+            # Check if there are any bookings for the specified room and dates
+            existing_checkin = Booking.objects.filter(
+                  room=room,
+                  check_in__lte=check_out_date,  # Check if the existing booking's check-in date is before or on the new check-out date
+                  check_out__gt=check_in_date  # Check if the existing booking's check-out date is strictly after the new check-in date
+            )
 
-            overlapping_bookings = Booking.objects.filter(room=room, check_in=check_in, check_out=check_out)
-            if overlapping_bookings.exists():
-                messages.warning(request, "Room is not available for the selected dates.")
+            existing_checkout = Booking.objects.filter(
+                  room=room,
+                  check_in__lt=check_out_date,  # Check if the existing booking's check-in date is strictly before the new check-out date
+                  check_out__gte=check_in_date  # Check if the existing booking's check-out date is after or on the new check-in date
+            )
+
+            existing_overlap = existing_checkin.exists() or existing_checkout.exists()
+
+            if existing_overlap:
+                  messages.warning(request, "Room is not available for the selected dates.")
+                  return redirect('room_booking', room_number=room_number)
             
-            # if guest_number >= room.capacity:
-            #       messages.warning(request, "capacity is greater than guest numbers!.")
- 
+            
+            # Check if the number of guests exceeds the room capacity
+            if guest_number > room.capacity:
+                messages.error(request, f"Guest number exceeds the room capacity ({room.capacity}).")
+                return redirect('room_booking', room_number=room_number)
+
+            # overlapping_bookings = Booking.objects.filter(room=room, check_in=check_in, check_out=check_out)
+            # if overlapping_bookings.exists():
+            #     messages.warning(request, "Room is not available for the selected dates.")
             else:
                 booking = Booking.objects.create(
                     customer=customer,
@@ -237,16 +383,41 @@ def room_booking(request, room_number):
                 messages.success(request, "Room is available and booking is successful.")
                 return redirect('booking_confirmation')
 
-        return render(request, 'commons/booking.html', {'room' : room, 'customer' : customer})
+        return render(request, 'commons/booking.html', {'room': room, 'customer': customer})
 
     except Customer.DoesNotExist:
         # Handle the case where the customer does not exist
         return redirect('user_login')  # Redirect to login page or handle differently
+#     check cheyy ok set ini und already paid cheythit ula room te confirmation mathit oru p tag il already paid en kanikanam pine amount calculation views
 
     except Room.DoesNotExist:
         # Handle the case where the room does not exist
         messages.error(request, "The room you are trying to book does not exist.")
         return redirect('room_booking')  # Redirect to booking page or handle differently
+
+
+#  check cheyy error poyaaaa????
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # #customer booking_confirmation 
@@ -261,6 +432,9 @@ def confirmation(request, id):
 
             print("================================",customer.username)
             print("==========================================",booking)
+
+            # ippoll antha cheyyende ee page kandile athil confirmation il butto ale kanikune?? but oru vattam payment cheythit ula rooms ind ithil athil payment nadathit undakil p tag il payment completed en kanikanam payment nadathathathil cinfirmation button nu pakaram payment button il dy calculate cheytha amount kanikanam ee page venda pakaram ee page il payment te button varanam
+            # models edukk aa html eduk
 
             email=customer.emails
             # room= booking.room.room_number

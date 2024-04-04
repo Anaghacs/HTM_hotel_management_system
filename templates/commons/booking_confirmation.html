@@ -22,6 +22,7 @@
   <section class="rooms-section spad">
       <div class="container">
           <div class="row">
+            
             {% for i in booking %}
               <div class="col-lg-4 col-md-6">
                   <div class="room-item">
@@ -31,7 +32,7 @@
 
                           <table>
                               <tbody>
-                                  
+                                  <!-- different user de ya true aki koduthe nama epo login cheythirikuna user sheela anu ini try cheyth nok -->
                                   <tr>
                                       <td class="r-o">Room Type:</td>
                                       <td>{{i.room.room_type}}</td>
@@ -55,11 +56,32 @@
                                   
                               </tbody>
                           </table>
-                          <a href="{% url 'confirmation' i.id %}"  class="btn btn-primary">Confirmation</a>
-                          <!-- <a  class="btn btn-primary" id="rzp-button1"  >Pay</a> -->
+                          <!-- brooo ee paid_amout order model le ale athe ok -->
+                          <!-- {% for ord in order %}
+                          {% if i.room_number == ord.room_id%}
+                          {% if ord.paid_amount == True %}
+                          <p>Payment completed</p>
+                          {% else %}
+                          <a href="{% url 'confirmation' i.id %}"  class="btn btn-primary">Confirmations</a>
+                          {% endif %}
+                          {% endif %}
+                          {% endfor %} -->
+                          <p>{{i.room.room_number}}</p>
+                          {% for ord in order %}
+                            {% if i.room.room_number == ord.room_id %}
+                       
+                            {% if ord.paid_amount == 'True' %}
+                                    <p>Payment completed</p>
+                                {% else %}
+                                <p>{{ord.room_id }}</p>
+                                    <a href="{% url 'confirmation' i.id %}" class="btn btn-primary">Confirmations</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}     
                       </div>
                   </div>
               </div> 
+
               {% endfor %}
 
           </div>
@@ -100,7 +122,7 @@ rzp1.on('payment.failed', function (response){
         //alert(response.error.reason);
         //alert(response.error.metadata.order_id);
         //alert(response.error.metadata.payment_id);
-});
+}); 
 document.getElementById('rzp-button1').onclick = function(e){
     rzp1.open();
     e.preventDefault();
