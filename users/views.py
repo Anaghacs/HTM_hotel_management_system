@@ -229,19 +229,16 @@ def booking_confirmation(request):
             booking = Booking.objects.filter( customer = customer)
             print("==========================================",booking)
             email=customer.emails
-            order = Order.objects.filter(customer=customer)
+            orders = Order.objects.filter(customer=customer)
             # print(order.id)
-            for i in order:
-                 print(i.paid_amount,"order")
-
-            
+            for j in booking:
+                 print(type(j.room.room_number),"booking")
                  
-
-      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer, 'order' : order} )
+            
+      return render(request,'commons/booking_confirmation.html', {'booking' : booking, 'customer' :customer, 'order' : orders, } )
 
 # @never_cache
 # def room_booking(request, room_number):
-# #     evide kudi check cheythit venam booking cheyan capacity and form le guest number check cheythit less or equal anukil mathrem book cheyabam
 #     try:
 #         customer_id = request.session.get('customer_id')
 #         if not customer_id:
@@ -300,17 +297,6 @@ def booking_confirmation(request):
 #         # Handle the case where the room does not exist
 #         messages.error(request, "The room you are trying to book does not exist.")
 #         return redirect('room_booking')  # Redirect to booking page or handle differently
-
-
-
-
-
-
-
-
-
-
-
 
 @never_cache
 def room_booking(request, room_number):
@@ -388,36 +374,11 @@ def room_booking(request, room_number):
     except Customer.DoesNotExist:
         # Handle the case where the customer does not exist
         return redirect('user_login')  # Redirect to login page or handle differently
-#     check cheyy ok set ini und already paid cheythit ula room te confirmation mathit oru p tag il already paid en kanikanam pine amount calculation views
 
     except Room.DoesNotExist:
         # Handle the case where the room does not exist
         messages.error(request, "The room you are trying to book does not exist.")
         return redirect('room_booking')  # Redirect to booking page or handle differently
-
-
-#  check cheyy error poyaaaa????
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # #customer booking_confirmation 

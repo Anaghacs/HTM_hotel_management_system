@@ -43,7 +43,7 @@
                                    </tr>
                                   <tr>
                                     <td class="r-o">Price :</td>
-                                    <td style="color: rgb(197, 95, 95);" >{{booking.room.price}} $/Perday</td>
+                                    <td style="color: rgb(197, 95, 95);" >{{booking.room.price}} /Perday</td>
                                 </tr>
                                   
                               </tbody>
@@ -70,9 +70,7 @@ var options = {
 
         console.log('success')
         window.location.href = `/success/?Order_id=${response.razorpay_order_id}`
-
-        
-      
+   
   },
     
     "theme": {
@@ -80,10 +78,9 @@ var options = {
     }
 };
 var rzp1 = new Razorpay(options);
-rzp1.on('payment.failed', function (response){
-    console.log('failed')
+    rzp1.on('payment.failed', function (response){
+        console.log('failed')
     // window.location.href = `/failed/?Order_id=${response.error.metadata.order_id}&reason=${response.error.reason}&code=${response.error.code}&source=${response.error.source}&step=${response.error.step}&payment_id=${response.error.metadata.payment_id}`
-
 
         alert(response.error.code);
         alert(response.error.description);
@@ -98,7 +95,6 @@ document.getElementById('rzp-button1').onclick = function(e){
     e.preventDefault();
 }
 </script> 
-<!-- chythooo nth onnullaa   pdf allee  pdf and mate booking te details and order te ok html il print avanam ok-->
 {% endblock content%}
 
 {% include 'commons/footer.html' %}

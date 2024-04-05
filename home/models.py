@@ -123,6 +123,7 @@ class Booking(models.Model):
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()
     guest_number = models.IntegerField()
+    paid_amount = models.BooleanField(default=False)
 
 
     def __str__(self):
@@ -134,7 +135,7 @@ class Order(models.Model):
     
     customer = models.CharField(max_length=40,null=True,blank=True)
     email_id =models.CharField(max_length=150,null=True,blank=True)
-    room_id = models.CharField(max_length=8)
+    room_id = models.IntegerField(max_length=8)
     finder = models.CharField(max_length=150,null=True,blank=True)
     razorpay_order_id = models.CharField(max_length=60)
     signature_id = models.CharField(max_length=128, null=False, blank=False)

@@ -20,73 +20,59 @@
       </div>
   </div>
   <section class="rooms-section spad">
-      <div class="container">
-          <div class="row">
-            
+    <div class="container">
+        <div class="row">
             {% for i in booking %}
-              <div class="col-lg-4 col-md-6">
-                  <div class="room-item">
-                      <img src="{{ i.room.photo.url }}" alt="">
-                      <div class="ri-text">
-                          <h3>{{i.room.hotel.hotel_name}} Hotel</h3>
-
-                          <table>
-                              <tbody>
-                                  <!-- different user de ya true aki koduthe nama epo login cheythirikuna user sheela anu ini try cheyth nok -->
-                                  <tr>
-                                      <td class="r-o">Room Type:</td>
-                                      <td>{{i.room.room_type}}</td>
-                                  </tr>
-                                  <tr>
-                                      <td class="r-o">Check In :</td>
-                                      <td>{{i.check_in}}</td>
-                                  </tr>
-                                  <tr>
-                                      <td class="r-o">Check Out :</td>
-                                      <td>{{i.check_out}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td class="r-o">Guest Number:</td>
-                                    <td>{{i.guest_number}}</td>
-                                  </tr>
-                                  <tr>
-                                    <td class="r-o">Price :</td>
-                                    <td style="color: rgb(197, 95, 95);" >{{i.room.price}} ₹ /Perday</td>
+            <div class="col-lg-4 col-md-6">
+                <div class="room-item">
+                    <img src="{{ i.room.photo.url }}" alt="">
+                    <div class="ri-text">
+                        <h3>{{ i.room.hotel.hotel_name }} Hotel</h3>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="r-o">Room Type:</td>
+                                    <td>{{ i.room.room_type }}</td>
                                 </tr>
-                                  
-                              </tbody>
-                          </table>
-                          <!-- brooo ee paid_amout order model le ale athe ok -->
-                          <!-- {% for ord in order %}
-                          {% if i.room_number == ord.room_id%}
-                          {% if ord.paid_amount == True %}
-                          <p>Payment completed</p>
-                          {% else %}
-                          <a href="{% url 'confirmation' i.id %}"  class="btn btn-primary">Confirmations</a>
-                          {% endif %}
-                          {% endif %}
-                          {% endfor %} -->
-                          <p>{{i.room.room_number}}</p>
-                          {% for ord in order %}
-                            {% if i.room.room_number == ord.room_id %}
-                       
-                            {% if ord.paid_amount == 'True' %}
-                                    <p>Payment completed</p>
-                                {% else %}
-                                <p>{{ord.room_id }}</p>
-                                    <a href="{% url 'confirmation' i.id %}" class="btn btn-primary">Confirmations</a>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}     
-                      </div>
-                  </div>
-              </div> 
+                                <tr>
+                                    <td class="r-o">Check In:</td>
+                                    <td>{{ i.check_in }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Check Out:</td>
+                                    <td>{{ i.check_out }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Guest Number:</td>
+                                    <td>{{ i.guest_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Price:</td>
+                                    <td style="color: rgb(197, 95, 95);">{{ i.room.price }} ₹ /Perday</td>
+                                </tr>
+                                <tr>
+                                    <td class="r-o">Payment Status:</td>
+                                    <td>
+                                                                                
+                                        {% if i.paid_amount %}
 
-              {% endfor %}
+                                            <span style="color: blue;">Payment completed</span>
+                                        {% else %}
+                                            <a class="btn btn-primary" href="{% url 'confirmation' i.id%}">Confirmation</a>    
+                                        {% endif %}
+         
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-          </div>
-      </div>
-  </section> 
 <!-- ee pagilott varunna view e -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
