@@ -389,13 +389,23 @@ def confirmation(request, id):
             customer_id = request.session['customer_id']
             # hotel = Hotel.objects.get(id = hotel_id)
             customer = get_object_or_404(Customer, id = customer_id)
+      
 
+            check_in_date =booking.check_in.date()
+            check_out_date =booking.check_out.date()
+            print(check_in_date)
+            print(check_out_date)
+            # check_in = datetime.strptime(check_in_date, "%Y-%m-%d")
+            # check_out = datetime.strptime(check_out_date, "%Y-%m-%d")
+            
+            # Calculate the difference
+            # duration = check_out_date - check_in_date 
+            duration = (check_out_date - check_in_date).days + 1
+            print(duration)
 
             print("================================",customer.username)
             print("==========================================",booking)
 
-            # ippoll antha cheyyende ee page kandile athil confirmation il butto ale kanikune?? but oru vattam payment cheythit ula rooms ind ithil athil payment nadathit undakil p tag il payment completed en kanikanam payment nadathathathil cinfirmation button nu pakaram payment button il dy calculate cheytha amount kanikanam ee page venda pakaram ee page il payment te button varanam
-            # models edukk aa html eduk
 
             email=customer.emails
             # room= booking.room.room_number
@@ -411,20 +421,23 @@ def confirmation(request, id):
                   request.session.save()
             except Order.DoesNotExist:
                   print("no data")
+
+            amounts = booking.room.price
+            
+            print(type(amounts))
+            print(amounts)
+            amt=int(amounts) 
+            amount=amt * duration
+
+            print(amount ) 
+            print(type(amount))
                   
                  
             finder= request.session.get('finder',None)
-            orders=Order(customer=customer,room_id=booking.room.room_number,amount=booking.room.price,boock_date=timezone.now(),email_id=booking.customer.emails,finder=finder,hotel=booking.room.hotel)
+            orders=Order(customer=customer,room_id=booking.room.room_number,amount=amount,boock_date=timezone.now(),email_id=booking.customer.emails,finder=finder,hotel=booking.room.hotel)
             orders.save()
             
-            amounts = booking.room.price
-            print(type(amounts))
-            print(amounts)
-            amount=int(amounts)
-
-            print(amount) 
-            print(type(amount))
-
+            
             client=razorpay.Client(auth=(settings.KEY,settings.SECRET))
             payment=client.order.create({'amount':amount * 100,'currency': 'INR','payment_capture':1})
             
@@ -444,7 +457,7 @@ def confirmation(request, id):
 
             }
     return render(request, 'users/booking_confirmation.html', context )
-
+# ee amunt value egane mattam
 
 @login_required
 @never_cache
@@ -456,15 +469,29 @@ def paymentsuccess(request):
     
     
     order_id=request.GET.get('Order_id')
+    booking_id=request.GET.get('booking_id')
     print(type(order_id))
     customer_id = request.session['customer_id']
-    customer = Customer.objects.get(id=customer_id)
+    customer = Customer.objects.filter(id=customer_id)
     orders=Order.objects.get(razorpay_order_id=order_id)
-    
+    print(booking_id)
     print(orders)
+    amt = orders.amount
     orders.paid_amount= True
     orders.status = "paid"
     orders.save()
+
+
+
+# ith hide mattanam mati butt error get cheythall error varum filter or section create cheyyanam  allangill order id bookingill add akkanam ennitt aa rder id vach get cheyyanam appoll ok, avum
+    book = Booking.objects.get(id = booking_id)
+    book.paid_amount = True
+    book.cost = int(amt)
+    print(type(book.cost))
+    book.save()
+
+
+# evide booking edukkanam ennitt ee comment cheythirikkkunnath hide mattanam appoll payment kazhiyumpoll booking succes akumpoll payd ay varum ok bro room add and faciliti add il google authentication leka pokune ath nokkam ok ni ith poi cheyy ok cheythit paraa ok cheyyendath manassilayoo booking ne get cheythit athinte value true ki set aki save akale vendath athe ok try cheyth nokte nokkitt para ellangill nyt cheyyam ok nokkitt athayalum paraa ok mm ok  pinne anthaaa google authntication te ath mattedath alle ath nyt nokka ok mm cheytho
     return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer}) 
 
 @never_cache

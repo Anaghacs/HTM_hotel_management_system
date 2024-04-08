@@ -23,10 +23,9 @@
                           <h3>{{booking.room.hotel.hotel_name}} Hotel</h3>
 
                           <table>
-                              <tbody>
-                                  
+                              <tbody>     
                                   <tr>
-                                      <td class="r-o">Room Type:</td>
+                                      <td class="r-o">Room Type :</td>
                                       <td>{{booking.room.room_type}}</td>
                                   </tr>
                                   <tr>
@@ -38,13 +37,13 @@
                                       <td>{{booking.check_out}}</td>
                                   </tr>
                                   <tr>
-                                    <td class="r-o">Guest Number:</td>
+                                    <td class="r-o">Guest Number :</td>
                                     <td>{{booking.guest_number}}</td>
                                    </tr>
                                   <tr>
                                     <td class="r-o">Price :</td>
                                     <td style="color: rgb(197, 95, 95);" >{{booking.room.price}} /Perday</td>
-                                </tr>
+                                  </tr>
                                   
                               </tbody>
                             </table>
@@ -69,7 +68,7 @@ var options = {
     "handler": function (response){
 
         console.log('success')
-        window.location.href = `/success/?Order_id=${response.razorpay_order_id}`
+        window.location.href = `/success/?Order_id=${response.razorpay_order_id}&booking_id={{booking.id}}`
    
   },
     

@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.db.models import Sum
 
 def hotel_signup(request):
     if request.method == "POST":
@@ -59,53 +61,6 @@ def hotel_signup(request):
     return render(request, 'hotels/hotel_signup.html')
 
 
-# def hotel_signup(request):
-#       error = ""
-#       if request.method == "POST":
-            
-#             hotel_name = request.POST['hotel_name']
-#             username = request.POST['username']
-#             password = request.POST['password']
-#             address = request.POST['address']
-#             place = request.POST['place']
-#             emails = request.POST['emails']
-#             phone = request.POST['phone']
-
-#             #photo file get
-#             photo = request.FILES.get('photo')
-#             role = request.POST['role']
-#             print("==================================",hotel_name, emails, username, password)
-
-            
-#             if hotel_name == "" or hotel_name == " ":
-#                   messages.info(request,"hotelname is not allowed space and blank space and not allowed special characters")
-#                   return redirect(hotel_signup)
-            
-#             elif address == "" or address == "":
-#                   messages.info(request,"address is not allowed space and blank space and not allowed special characte")
-#                   return redirect(hotel_signup)
-            
-            
-#             elif place == "" or place == "":
-#                   messages.info(request,"place is not allowed space and blank space and special character")
-#                   return redirect(hotel_signup)
-            
-#             else:
-#                   try:
-#                   #create hotel model and insert the data
-#                         if role == "HOTEL":
-                              
-#                               customer = Hotel.objects.create(hotel_name = hotel_name, username = username, password = password, address = address, place = place,emails = emails, phone = phone, photo = photo, role = role)
-#                               customer.save()
-#                               error = 'no'
-#                         else:
-#                               error = 'yes'
-#                   except:
-#                         error = 'yes'
-#       content = {'error':error}
-#       return render(request,'hotels/hotel_signup.html',content)
-
-
 def hotel_login(request):
       if request.method == "POST":
             username = request.POST['username']
@@ -136,14 +91,26 @@ def hotel_dashboard(request):
         hotel_id = request.session['hotel_id']
         try:
             hotel = Hotel.objects.get(id = hotel_id)
+            booking_customers_count = Booking.objects.values('customer').annotate(customer_count=Count('customer')).count()
+
+            total_paid_amount = Order.objects.filter(paid_amount = True, hotel = hotel).aggregate(total=Sum('amount'))['total']
+
+            # hotel_bookings = Booking.objects.filter(room__hotel=hotel)
+
+            # # Calculate total paid amount for the hotel
+            # total_paid_amount = hotel_bookings.filter(paid_amount=True).aggregate(total_paid=sum('cost'))
             customers = Customer.objects.all()
-            return render(request, 'hotels/hotel_home.html', {'customers': customers, 'hotel': hotel})
+            # print(total_paid_amount)
+
+            return render(request, 'hotels/hotel_home.html', {'customers': customers, 'hotel': hotel, 'booking_customers_count' : booking_customers_count, 'total_paid_amount' : total_paid_amount})
         except Hotel.DoesNotExist:
             # Handle case where hotel with given ID does not exist
             del request.session['hotel_id']
     
     # Redirect to login page if user is not authenticated
     return redirect('hotel_login')
+
+
 
 @login_required
 def add_hotel_room(request):
@@ -249,7 +216,7 @@ def update_rooms(request, room_number):
 
             # Get the room object to update
             room = get_object_or_404(Room, room_number=room_number)
-
+            
             # Update room details
             room.capacity = capacity
             room.number_of_beds = number_of_beds
@@ -282,6 +249,7 @@ def add_hotel_facilities(request):
             hotel_id = request.session['hotel_id']
             hotel = get_object_or_404(Hotel, id = hotel_id)
 
+     
             if request.method == "POST":
             
                   facility = request.POST['facility']
@@ -378,6 +346,5 @@ def room_booking_details(request):
             booking = Booking.objects.filter(room__hotel=hotel)
             order = Order.objects.filter(hotel = hotel)
             room = Room.objects.filter(hotel= hotel)
-            # brooo oru help cheyo addhym edit and delete button onu set ako ath wrk ayirunatha epo wrk avunila ok evide kanikk ok ithanoo isyes ok ithu auth login ann googlint aa buttons edukk auth login ala session use cheythit anu but delete anunud en thonunu but vere page lek pokunu nk modal varanam anit yes button il click cheyombo delete avanam html page edukk
 
      return render(request, 'hotels/room_booking_details.html', {'hotel' : hotel, 'order' : order, 'booking' : booking, 'room' : room})
