@@ -1,3 +1,10 @@
+{% load static %}
+{% include 'commons/base.html' %}
+{% include 'commons/navigation.html' %}
+
+
+{% block content%}
+
 <!-- Blog Section Begin -->
 <section class="blog-section spad">
       <div class="container">
@@ -10,7 +17,7 @@
               </div>
           </div>
           <div class="row">
-              <div class="col-lg-4">
+              <div class="col-lg-4"> 
                   <div class="blog-item set-bg" data-setbg="{% static 'hms/img/blog/blog-1.jpg' %}">
                       <div class="bi-text">
                           <span class="b-tag">Travel Trip</span>
@@ -59,3 +66,6 @@
       </div>
   </section>
   <!-- Blog Section End -->
+  {% endblock content%}
+
+  {% include 'commons/footer.html' %}

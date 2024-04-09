@@ -41,19 +41,12 @@ class Customer(User):
     is_deleted = models.BooleanField(default = False)
 
 
-    # student = CustomerManager()
-
-
     class Meta:
         verbose_name = "Customer user"
 
     def welcome(self):
         return "Only for users"
 
-# class HotelManager(BaseUserManager):
-#     def get_queryset(self, *args, **kwargs):
-#         results = super().get_queryset(*args, **kwargs)
-#         return results.filter(role=User.Role.HOTEL)
 
 class Hotel(User):
     base_role = User.Role.HOTEL
@@ -70,12 +63,6 @@ class Hotel(User):
     class Meta:
         verbose_name = "Hotel User"
 
-    # model methods
-    # def approve(self):
-    #     self.approved = True
-    #     return self.save()
-    
-    # student = HotelManager()
 
     def welcome(self):
         return "Only for Hotels"
@@ -124,7 +111,7 @@ class Booking(models.Model):
     check_out = models.DateTimeField()
     guest_number = models.IntegerField()
     paid_amount = models.BooleanField(default=False)
-    cost = models.IntegerField()
+    cost = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
         return f"Booking for {self.customer} Hotel : {self.room.hotel} - Room Type : {self.room.room_type} and Room Number : {self.room.room_number}"

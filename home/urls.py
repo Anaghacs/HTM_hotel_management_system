@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     # Add more URL patterns as needed
     path('', views.index, name='index'),
+    path('Blogs/', views.blog, name = 'blog'),
+    path('Contact/', views.contact, name = 'contact'),
     path('Admins/', views.login_admin, name ='login_admin'),
     path('Admin/Home/', views.admin_home, name ='admin_home'),
     path('Admin/View/Hotels/', views.admin_view_hotel, name = 'admin_view_hotel'),
