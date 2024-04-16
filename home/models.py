@@ -19,18 +19,6 @@ class User(AbstractUser):
     role = models.CharField(max_length = 50, choices = Role.choices)
 
 
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         self.role = self.base_role
-    #     return super().save(*args, **kwargs)
-
-
-# class CustomerManager(BaseUserManager):
-
-#     def get_queryset(self, *args, **kwargs):
-#         results = super().get_queryset(*args, **kwargs)
-#         return results.filter(role=User.Role.CUSTOMER)
-
 class Customer(User):
     base_role = User.Role.CUSTOMER
     address = models.CharField(blank = True, max_length = 100)

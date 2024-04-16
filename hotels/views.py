@@ -112,7 +112,7 @@ def hotel_dashboard(request):
 
 
 
-@login_required
+# @login_required
 def add_hotel_room(request):
       print("===========================================hiiiiiiiiiii")
       if 'hotel_id' in request.session:
@@ -243,7 +243,7 @@ def update_rooms(request, room_number):
     return render(request, 'hotels/hotels_view_room_details.html', {'hotel': hotel})
 
 #add hotel facilities
-@login_required
+# @login_required
 def add_hotel_facilities(request):
       if 'hotel_id' in request.session:
             hotel_id = request.session['hotel_id']

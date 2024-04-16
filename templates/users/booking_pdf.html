@@ -124,10 +124,7 @@
                                                      </div>
                                                      <div class="col-xs-6 col-sm-6 col-md-6 text-right">
                                                            <div class="receipt-right" style="font-family: Georgia, 'Times New Roman'">
-                                                                 <h5>Company Name.</h5>
-                                                                 <p>+1 3649-6589 <i class="fa fa-phone"></i></p>
-                                                                 <p>company@gmail.com <i class="fa fa-envelope-o"></i></p>
-                                                                 <p>USA <i class="fa fa-location-arrow"></i></p>
+                                                                 <h5>Hotel Name : {{order.hotel}}</h5>
                                                            </div>
                                                      </div>
                                                </div>
@@ -137,15 +134,12 @@
                                                <div class="receipt-header receipt-header-mid " >
                                                      <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                                                            <div class="receipt-right" style="margin-top: 20px;margin-bottom: 20px;font-family: Georgia, 'Times New Roman';">
-                                                                 <h5>Customer Name </h5>
-                                                                 <p><b>Mobile :</b> +1 12345-4569</p>
-                                                                 <p><b>Email :</b> customer@gmail.com</p>
-                                                                 <p><b>Address :</b> New York, USA</p>
+                                                                 <h5>Customer Name : {{order.customer}}</h5>
                                                            </div>
                                                      </div>
                                                      <div class="col-xs-4 col-sm-4 col-md-4">
                                                            <div class="receipt-left" style="font-family: Georgia, 'Times New Roman'">
-                                                                 <h3>INVOICE # 102</h3>
+                                                                 <h3>Room Booking</h3>
                                                            </div>
                                                      </div>
                                                </div>
@@ -160,39 +154,20 @@
                                                </tr>
                                            </thead>
                                            <tbody>
-                                               <tr style="font-family: Georgia, 'Times New Roman'">
-                                                   <td class="col-md-9">check in</td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
-                                               </tr>
-                                               <tr style="font-family: Georgia, 'Times New Roman'">
-                                                   <td class="col-md-9">check out </td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
-                                               </tr>
+                                                <tr>
+                                                      <td class="col-md-9">Hotel</td>
+                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{ order.hotel}}</td>
+                                                </tr>
+                                                <tr>
+                                                      <td class="col-md-9">Room Number</td>
+                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{ order.room_id}}</td>
+                                                </tr>
+                                               
                                                <tr>
-                                                   <td class="col-md-9">Person</td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> {{ order.boock_date}}</td>
+                                                   <td class="col-md-9">Booking Date</td>
+                                                   <td class="col-md-3">{{ order.boock_date}}</td>
                                                </tr>
-
-                                               <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> {{ order.hotel}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="col-md-9">Person</td>
-                                                <td class="col-md-3"><i class="fa fa-inr"></i> 2</td>
-                                            </tr>
-                                            
+                                               
                                                <tr style="font-family: Georgia, 'Times New Roman'">
                                                   
                                                    <td class="text-right"><h2><strong>Total Amount: </strong></h2></td>

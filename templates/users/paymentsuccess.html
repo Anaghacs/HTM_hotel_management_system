@@ -1,13 +1,12 @@
 
-
-
-<p>{{ orders.razorpay_order_id}}</p>
-
-<form action="{% url 'booking_details_pdf' %}" method="get">
+<!-- <form action="{% url 'booking_details_pdf' %}" method="get">
       <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
       <button type="submit">Download PDF</button>
-  </form>
+  </form> -->
 
+  {% load static %}
+  {% include 'users/base.html' %}
+  {% include 'users/navigation.html' %}
 
   <!DOCTYPE html>
 <html lang="en">
@@ -25,21 +24,18 @@
 
       <style>
             body{
-background:#eee;
 margin-top:20px;
 }
 .text-danger strong {
         	color: #9f181c;
 		}
 		.receipt-main {
-			background: #ffffff none repeat scroll 0 0;
 			border-bottom: 12px solid #333333;
 			border-top: 12px solid #9f181c;
 			margin-top: 50px;
 			margin-bottom: 50px;
 			padding: 40px 30px !important;
 			position: relative;
-			box-shadow: 0 1px 21px #acacac;
 			color: #333333;
 			font-family: open sans;
 		}
@@ -119,61 +115,34 @@ margin-top:20px;
 </head>
 <body>
             <div>
-                  <div class="text-center mt-5 mb-5" >
-                        <div style="display: flex;" >
-                              <a href=""><button>Go To Home</button></a>
-
-                              <form action="{% url 'booking_details_pdf' %}" method="get">
-                                    <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
-                                    <button type="submit">Download PDF</button>
-                                </form>
- 
-                        </div>
-                        
-                        <h2>Booking Confirmed</h2>
-                        
-                  </div>
-                  
-                  
+                  <div class="text-center mt-5 mb-5" > 
+                        <h2>Booking Confirmed</h2><br>
+                        <form action="{% url 'booking_details_pdf' %}" method="get">
+                              <input type="hidden" name="Order_id" value="{{ orders.razorpay_order_id }}">
+                              <button type="submit">Download PDF</button>
+                          </form>  
+                  </div>     
             </div>
             
                   <div class="col-md-12">   
                         <div class="row">
                                    
                                <div class="receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
-                                   <div class="row">
-                                             <div class="receipt-header">
-                                                     <div class="col-xs-6 col-sm-6 col-md-6">
-                                                           <div class="receipt-left">
-                                                                 <img class="img-responsive" alt="iamgurdeeposahan" src="https://bootdey.com/img/Content/avatar/avatar6.png" style="width: 71px; border-radius: 43px;">
-                                                           </div>
-                                                     </div>
-                                                     <div class="col-xs-6 col-sm-6 col-md-6 text-right">
-                                                           <div class="receipt-right">
-                                                                 <h5>Hotel Name : {{orders.hotel}}</h5>
-                                                           </div>
-                                                     </div>
-                                               </div>
-                                   </div>
-                                         
+                                   
                                          <div class="row">
                                                <div class="receipt-header receipt-header-mid">
+                                                <div class="col-xs-4 col-sm-4 col-md-8">
+                                                      <div class="receipt-left">
+                                                            <h3>Hotel Booking Details</h3>
+                                                      </div>
+                                                </div>
                                                      <div class="col-xs-8 col-sm-8 col-md-8 text-left">
                                                            <div class="receipt-right">
-                                                                 <h5>Customer Name : {{customer}} </h5>
-                                                                 <p><b>Mobile :</b> {{customer.phone}}</p>
-                                                                 <p><b>Email :</b> {{customer.emails}}</p>
-                                                                 <p><b>Address :</b> {{customer.address}}</p>
-                                                           </div>
-                                                     </div>
-                                                     <div class="col-xs-4 col-sm-4 col-md-4">
-                                                           <div class="receipt-left">
-                                                                 <h3>Booking Details</h3>
+                                                                 <h5>Customer Name : <b>{{orders.customer}}</b> </h5>
                                                            </div>
                                                      </div>
                                                </div>
-                                   </div>
-                                         
+                                          </div>     
                                    <div>
                                        <table class="table table-bordered">
                                            <thead>
@@ -186,23 +155,23 @@ margin-top:20px;
                                            <tbody>
                                                 <tr>
                                                       <td class="col-md-9">Hotel Name :</td>
-                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{orders.hotel}}</td>
+                                                      <td class="col-md-3"> {{orders.hotel}}</td>
                                                 </tr>
                                                 <tr>
                                                       <td class="col-md-9">Room No :</td>
-                                                      <td class="col-md-3"><i class="fa fa-inr"></i> {{orders.room_id}}</td>
+                                                      <td class="col-md-3">{{orders.room_id}}</td>
                                                 </tr>
                                                <tr>
                                                    <td class="col-md-9">check in :</td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
+                                                   <td class="col-md-3">{{book.check_in}}</td>
                                                </tr>
                                                <tr>
                                                    <td class="col-md-9">check out :</td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> date</td>
+                                                   <td class="col-md-3">{{book.check_out}}</td>
                                                </tr>
                                                <tr>
                                                    <td class="col-md-9">Booking Date :</td>
-                                                   <td class="col-md-3"><i class="fa fa-inr"></i> {{ orders.boock_date}}</td>
+                                                   <td class="col-md-3">{{orders.boock_date}}</td>
                                                </tr>
 
                                                <tr>

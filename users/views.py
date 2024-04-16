@@ -251,7 +251,6 @@ def room_booking(request, room_number):
                 messages.success(request, "Room is available and booking is successful.")
                 return redirect('booking_confirmation')
 
-# antha  ipool cheyka issue anthayrunnu  html poo pay ulla
 
         return render(request, 'commons/booking.html', {'room' : room, 'customer' : customer})
 
@@ -267,7 +266,6 @@ def room_booking(request, room_number):
 
 # #customer booking_confirmation 
 
-# never cashe user detais remove akkulee logout ??
 def confirmation(request, id):
     booking = get_object_or_404(Booking, id = id)
     if 'customer_id' in request.session:
@@ -368,19 +366,25 @@ def paymentsuccess(request):
     print(type(book.cost))
     book.save()
 
-    return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer}) 
+    return render(request,"users/paymentsuccess.html", {'orders' : orders, 'customer' : customer, 'book' : book}) 
 
 @never_cache
 def booking_details_pdf(request):
 
       try:
             order_id=request.GET.get('Order_id')
+            customer_id = request.session['customer_id']
+
+            customer = Customer.objects.filter(id=customer_id)
+
 
             if Order.objects.filter(razorpay_order_id=order_id).exists():
+                  
                   order =Order.objects.get(razorpay_order_id=order_id)
+                  # booking = get_object_or_404(Booking, id=order.room_id)
 
                   # Render HTML template with data
-                  html_string = render_to_string('users/booking_pdf.html', {'order': order})
+                  html_string = render_to_string('users/booking_pdf.html', {'order' :  order, 'customer' : customer, })
 
                   # Create PDF from HTML string
                   # pdf_file = HTML(string=html_string).write_pdf()
@@ -499,7 +503,5 @@ def room_reservation_details(request):
             customer = get_object_or_404(Customer, id = customer_id)
             booking = Booking.objects.filter(customer = customer)
             orders = Order.objects.filter(customer = customer)
-
-
             print("================================",customer.username)
       return render(request, 'users/page-account-register.html',{'orders' : orders,'customer' : customer, 'booking' : booking})
