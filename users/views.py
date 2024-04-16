@@ -81,9 +81,7 @@ def user_home(request):
             customer_id = request.session['customer_id']
             try:
                   customer_username = Customer.objects.get(id = customer_id)
-                  hotels = Hotel.objects.all()
-
-                  # customers = Customer.objects.all()
+                  hotels = Hotel.objects.filter(approved = True)
                   return render(request, 'users/index.html', {'customer_username': customer_username, 'hotels' : hotels})
             
             
@@ -138,6 +136,13 @@ def room_reservation(request, room_number):
       return render(request, 'commons/room-reservation.html', {'room' : room, })
 
 def check_room_availability(request, room_number):
+    if 'customer_id' in request.session:
+            customer_id = request.session['customer_id']
+            # hotel = Hotel.objects.get(id = hotel_id)
+            customer = get_object_or_404(Customer, id = customer_id)
+
+
+            print("================================",customer.username)
     room = get_object_or_404(Room, room_number=room_number)
 
     if request.method == 'POST':
@@ -159,7 +164,7 @@ def check_room_availability(request, room_number):
             return render(request, 'commons/room-reservation.html')
 
     # If it's not a POST request or there's an overlapping booking, render the form
-    return render(request, 'commons/room-reservation.html', {'room': room})
+    return render(request, 'commons/room-reservation.html', {'room' : room, 'customer' : customer})
 
 
 def booking_confirmation(request):
@@ -173,9 +178,9 @@ def booking_confirmation(request):
             print("================================",customer.username)
             booking = Booking.objects.filter( customer = customer)
             print("==========================================",booking)
+        
             email=customer.emails
             orders = Order.objects.filter(customer=customer)
-            # print(order.id)
             for j in booking:
                  print(type(j.room.room_number),"booking")
                  
@@ -341,12 +346,7 @@ def confirmation(request, id):
 
 
 def paymentsuccess(request):
-    
-#     if not request.user.is_authenticated:
-#         messages.warning(request,"Login & Try Again")
-#         return redirect('register:login')
-    
-    
+        
     order_id=request.GET.get('Order_id')
     booking_id=request.GET.get('booking_id')
     print(type(order_id))
