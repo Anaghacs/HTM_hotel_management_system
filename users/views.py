@@ -240,23 +240,26 @@ def room_booking(request, room_number):
             
             
             # Check if the number of guests exceeds the room capacity
+
             if guest_number > room.capacity:
                 messages.error(request, f"Guest number exceeds the room capacity ({room.capacity}).")
                 return redirect('room_booking', room_number=room_number)
 
             else:
-                booking = Booking.objects.create(
-                    customer=customer,
-                    check_in=check_in,
-                    check_out=check_out,
-                    guest_number=guest_number,
-                    room=room,
-                )
-                booking.save()
+            #     booking = Booking.objects.create(
+            #         customer=customer,
+            #         check_in=check_in,
+            #         check_out=check_out,
+            #         guest_number=guest_number,
+            #         room=room,
+            #     )
+            #     booking.save()
+                v=request.session['check_in'] = check_in
+                v1=request.session['check_out'] = check_out
+
+                print("=============================",v,v1)
                 messages.success(request, "Room is available and booking is successful.")
                 return redirect('booking_confirmation')
-
-
         return render(request, 'commons/booking.html', {'room' : room, 'customer' : customer})
 
     except Customer.DoesNotExist:
@@ -268,17 +271,13 @@ def room_booking(request, room_number):
         messages.error(request, "The room you are trying to book does not exist.")
         return redirect('room_booking')  # Redirect to booking page or handle differently
 
-
-# #customer booking_confirmation 
-
+#customer booking_confirmation 
 def confirmation(request, id):
     booking = get_object_or_404(Booking, id = id)
     if 'customer_id' in request.session:
             customer_id = request.session['customer_id']
             # hotel = Hotel.objects.get(id = hotel_id)
             customer = get_object_or_404(Customer, id = customer_id)
-      
-
             check_in_date =booking.check_in.date()
             check_out_date =booking.check_out.date()
             print(check_in_date)
@@ -343,7 +342,6 @@ def confirmation(request, id):
 
             }
     return render(request, 'users/booking_confirmation.html', context )
-
 
 def paymentsuccess(request):
         
