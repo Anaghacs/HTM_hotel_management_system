@@ -280,6 +280,8 @@ def confirmation(request, id):
             customer = get_object_or_404(Customer, id = customer_id)
             check_in_date =booking.check_in.date()
             check_out_date =booking.check_out.date()
+            # check_in_date = request.session['check_in']
+            # check_out_date = request.session['check_out']
             print(check_in_date)
             print(check_out_date)
             
@@ -503,3 +505,8 @@ def room_reservation_details(request):
             orders = Order.objects.filter(customer = customer)
             print("================================",customer.username)
       return render(request, 'users/page-account-register.html',{'orders' : orders,'customer' : customer, 'booking' : booking})
+
+def google_login(request):
+      # customer_username = Customer.objects.get(id = customer_id)
+      hotels = Hotel.objects.filter(approved = True)
+      return render(request, 'users/google_login.html', {'hotels' : hotels})

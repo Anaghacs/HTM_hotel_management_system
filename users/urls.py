@@ -18,10 +18,11 @@ urlpatterns = [
     path('confirmation/<int:id>/', views.confirmation, name = "confirmation"),
 
 
-    path('success/',views.paymentsuccess,name="success"),
-    path('generate_and_send_otp/', views.generate_and_send_otp, name='generate_and_send_otp'),
-    path('forgot_password/',views.forgot_password,name='forgot_password'),
-    path('handle_otp/',views.validate_otp,name='validate_otp'),
+    path('success/',views.paymentsuccess,name = "success"),
+    path('generate_and_send_otp/', views.generate_and_send_otp, name = 'generate_and_send_otp'),
+    path('forgot_password/',views.forgot_password,name = 'forgot_password'),
+    path('handle_otp/',views.validate_otp,name = 'validate_otp'),
+    path('google_login/',views.google_login, name = 'google_login'),
 
     path('Room/Booking/Details/', views.room_reservation_details, name = "room_reservation_details"),
 
