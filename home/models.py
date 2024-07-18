@@ -15,9 +15,7 @@ class User(AbstractUser):
         HOTEL = "HOTEL", "HOTEL"
 
     base_role = Role.ADMIN
-
     role = models.CharField(max_length = 50, choices = Role.choices)
-
 
 class Customer(User):
     base_role = User.Role.CUSTOMER
@@ -47,7 +45,7 @@ class Hotel(User):
     approved = models.BooleanField(default = False)
     is_deleted = models.BooleanField(default = False)
 
-    hotel_number = models.IntegerField(null=True,blank=True)
+    hotel_number = models.IntegerField(null = True, blank = True)
     class Meta:
         verbose_name = "Hotel User"
 
@@ -66,11 +64,11 @@ class Room(models.Model):
     )
 
     hotel = models.ForeignKey(Hotel, on_delete = models.CASCADE)
-    room_number = models.IntegerField(primary_key=True)
+    room_number = models.IntegerField(primary_key = True)
     capacity = models.SmallIntegerField()
     number_of_beds = models.SmallIntegerField()
-    room_type = models.CharField(max_length=20, choices=ROOM_TYPES)
-    price = models.CharField(max_length=7,null=True,blank=True)
+    room_type = models.CharField(max_length = 20, choices = ROOM_TYPES)
+    price = models.CharField(max_length = 7, null = True, blank = True)
 
     floor_number = models.IntegerField()
     photo = models.ImageField(upload_to = 'media', blank = True, null = True)
@@ -98,7 +96,7 @@ class Booking(models.Model):
     check_in = models.DateTimeField()
     check_out = models.DateTimeField()
     guest_number = models.IntegerField()
-    paid_amount = models.BooleanField(default=False)
+    paid_amount = models.BooleanField(default = False)
     cost = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
@@ -107,21 +105,21 @@ class Booking(models.Model):
 
 class Order(models.Model):
     
-    customer = models.CharField(max_length=40,null=True,blank=True)
-    email_id =models.CharField(max_length=150,null=True,blank=True)
+    customer = models.CharField(max_length = 40, null = True, blank = True)
+    email_id = models.CharField(max_length = 150, null = True, blank = True)
     room_id = models.IntegerField()
-    finder = models.CharField(max_length=150,null=True,blank=True)
-    razorpay_order_id = models.CharField(max_length=60)
-    signature_id = models.CharField(max_length=128, null=False, blank=False)
-    amount = models.CharField(max_length=7,null=True,blank=True)
-    paid_amount = models.BooleanField(default=False)
-    status = models.CharField(max_length=20,blank=True)
-    hotel = models.CharField(max_length=50,null=True,blank=True)
-    boock_date = models.DateTimeField(auto_now_add=True)
-    reason=models.CharField(max_length=250,null=True,blank=True)
-    code=models.CharField(max_length=250,null=True,blank=True)
-    source=models.CharField(max_length=250,null=True,blank=True)
-    step=models.CharField(max_length=250,null=True,blank=True) 
+    finder = models.CharField(max_length = 150, null = True, blank = True)
+    razorpay_order_id = models.CharField(max_length = 60)
+    signature_id = models.CharField(max_length = 128, null = False, blank = False)
+    amount = models.CharField(max_length = 7, null = True, blank = True)
+    paid_amount = models.BooleanField(default = False)
+    status = models.CharField(max_length = 20, blank = True)
+    hotel = models.CharField(max_length = 50, null = True, blank = True)
+    boock_date = models.DateTimeField(auto_now_add = True)
+    reason=models.CharField(max_length = 250, null = True, blank = True)
+    code=models.CharField(max_length = 250, null = True, blank = True)
+    source=models.CharField(max_length = 250, null = True, blank = True)
+    step=models.CharField(max_length=250, null = True, blank = True) 
 
 
     def _str_(self):
@@ -146,11 +144,11 @@ class Order(models.Model):
 #             return f"{self.order_id} {self.reason} {self.code} {self.source} {self.step} {self.payment_id} {self.date_time}"
       
 
-@receiver(post_save, sender=User)
+@receiver(post_save, sender = User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         if instance.role == User.Role.CUSTOMER:
-            Customer.objects.create(user=instance)
+            Customer.objects.create(user = instance)
         elif instance.role == User.Role.HOTEL:
-            Hotel.objects.create(user=instance)
+            Hotel.objects.create(user = instance)
 

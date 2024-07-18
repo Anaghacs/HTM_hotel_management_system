@@ -24,18 +24,12 @@ def contact(request):
 
 @never_cache
 def login_admin(request):
-      print("===============================")
       if request.method == "POST":
-            print("===============================")
             username = request.POST['username']
             password = request.POST['password']
 
             customers = auth.authenticate(username = username, password = password)
-            
-            print("===============================",username,password)
             # customer =Customer.objects.get(username = username, password = password)
-            print("+++++++++++++============",customers)
-
             if customers is not None:
                   if customers.role == 'ADMIN':
                         auth.login(request,customers)
@@ -53,9 +47,9 @@ def admin_home(request):
 
     # Assuming the username is stored in a field called 'username'
       admin_username = current_user.username
-      booking_customers_count = Booking.objects.values('customer').annotate(customer_count=Count('customer')).count()
+      booking_customers_count = Booking.objects.values('customer').annotate(customer_count = Count('customer')).count()
 
-      total_paid_amount = Order.objects.filter(paid_amount = True,).aggregate(total=Sum('amount'))['total']
+      total_paid_amount = Order.objects.filter(paid_amount = True,).aggregate(total = Sum('amount'))['total']
 
       hotel_count = Hotel.objects.count()
       hotels = Hotel.objects.all()
@@ -68,7 +62,6 @@ def admin_home(request):
 @never_cache
 def admin_view_hotel(request):
       current_user = request.user
-
       admin_username = current_user.username
       hotels = Hotel.objects.all()
       return render(request,'admin/admin-view-hotel.html',{'hotels' : hotels, 'admin_username' : admin_username})

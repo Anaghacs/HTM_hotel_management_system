@@ -114,15 +114,11 @@ def hotel_dashboard(request):
 
 # @login_required
 def add_hotel_room(request):
-      print("===========================================hiiiiiiiiiii")
       if 'hotel_id' in request.session:
         
             hotel_id = request.session['hotel_id']
-            print("=============================================",hotel_id)
             # hotel = Hotel.objects.get(id=hotel_id)
             hotel = get_object_or_404(Hotel, id = hotel_id)
-
-            print("==============================",hotel.hotel_name)
 
             if request.method == "POST":
             
@@ -134,7 +130,6 @@ def add_hotel_room(request):
                   floor_number = request.POST['floor_number']
                   photo = request.FILES.get('photo')
 
-                  print("========================================",hotel.hotel_name, room_number,capacity,number_of_beds,room_type,price)
                   room = Room.objects.create(
                         hotel = hotel,
                         room_number = room_number,
@@ -309,7 +304,7 @@ def hotel_update_facilities(request, id):
 def update_facilities(request, id):
       if 'hotel_id' in request.session:
         hotel_id = request.session['hotel_id']
-        hotel = get_object_or_404(Hotel, id=hotel_id)
+        hotel = get_object_or_404(Hotel, id = hotel_id)
         print("============================", hotel.hotel_name) 
 
         if 'facility' in request.POST and 'description' in request.POST:
@@ -317,7 +312,7 @@ def update_facilities(request, id):
             description = request.POST['description']
             photo = request.FILES.get('photo')
 
-            facilities = get_object_or_404(Facilities, id=id)
+            facilities = get_object_or_404(Facilities, id = id)
             
             facilities.facility = facility
             facilities.description = description
@@ -343,8 +338,8 @@ def room_booking_details(request):
             hotel_id = request.session['hotel_id']
             hotel = Hotel.objects.get(id = hotel_id)
             print("===============================",hotel.hotel_name)
-            booking = Booking.objects.filter(room__hotel=hotel)
+            booking = Booking.objects.filter(room__hotel = hotel)
             order = Order.objects.filter(hotel = hotel)
-            room = Room.objects.filter(hotel= hotel)
+            room = Room.objects.filter(hotel = hotel)
 
      return render(request, 'hotels/room_booking_details.html', {'hotel' : hotel, 'order' : order, 'booking' : booking, 'room' : room})
